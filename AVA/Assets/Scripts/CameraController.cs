@@ -5,7 +5,7 @@ public class CameraController : MonoBehaviour
 {
     public Transform target;
 
-    public float targetHeight = 1.7f;
+    public float targetHeight = 1.6f;
     public float distance = 5.0f;
     public float offsetFromWall = 0.1f;
 
