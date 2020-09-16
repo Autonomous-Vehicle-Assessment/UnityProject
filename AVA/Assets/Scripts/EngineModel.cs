@@ -82,6 +82,9 @@ public class EngineModel : MonoBehaviour
     public float m_FinalDriveEff = 1f;
     public float[] m_TransferCaseRatio = { 2.72f, 1.0f };
 
+    //TerrainTracker
+    public TerrainTracker terrainTracker;
+
     // Initialize
     private void Start()
     {
@@ -92,6 +95,7 @@ public class EngineModel : MonoBehaviour
         }
 
         m_Rigidbody = GetComponent<Rigidbody>();
+        terrainTracker = GetComponent<TerrainTracker>();
 
         NumberofDrivingWheels = 0;
         for (int i = 0; i < NumberofWheels; i++)
@@ -105,6 +109,7 @@ public class EngineModel : MonoBehaviour
 
     public void UpdateState()
     {
+        UpdateTerrainWheelParameters();
         m_TransmissionRPM = (m_Wheel[2].m_collider.rpm + m_Wheel[3].m_collider.rpm) / 2f;
         m_EngineRPM = m_TransmissionRPM * GearingRatioEff();
         m_EngineRPM = Mathf.Abs(m_EngineRPM);
@@ -126,7 +131,7 @@ public class EngineModel : MonoBehaviour
             Vector3 pos;
             m_Wheel[i].m_collider.GetWorldPose(out pos, out quat);
             m_Wheel[i].mesh.transform.position = pos;
-            m_Wheel[i].mesh.transform.rotation = quat * new Quaternion(1, 1, 1, 1);
+            m_Wheel[i].mesh.transform.rotation = quat; // * new Quaternion(1, 1, 1, 1);
         }
 
         // Clamp input values
@@ -207,6 +212,31 @@ public class EngineModel : MonoBehaviour
         return Gearing;
     }
 
+    public void UpdateTerrainWheelParameters()
+    {
+        float ForwardStiffness = 1f;
+        float SidewaysStiffness = 1f;
+
+        if (terrainTracker.surfaceIndex == 1)
+        {
+            ForwardStiffness = 0.3f;
+            SidewaysStiffness = 0.3f;
+        }
+        if (terrainTracker.surfaceIndex == 2)
+        {
+            ForwardStiffness = 0.6f;
+            SidewaysStiffness = 0.6f;
+        }
+        for (int i = 0; i < NumberofWheels; i++)
+        {
+            WheelFrictionCurve fFriction = m_Wheel[i].m_collider.forwardFriction;
+            WheelFrictionCurve sFriction = m_Wheel[i].m_collider.sidewaysFriction;
+            fFriction.stiffness = ForwardStiffness;
+            sFriction.stiffness = SidewaysStiffness;
+            m_Wheel[i].m_collider.forwardFriction = fFriction;
+            m_Wheel[i].m_collider.sidewaysFriction = sFriction;
+        }
+    }
 
     // ----- Gear shift scheduler - automatic gear ----- // 
     public void ShiftScheduler()

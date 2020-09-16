@@ -270,7 +270,6 @@ public class EngineEditor : Editor
         Engine.m_CenterofMass = (GameObject)EditorGUILayout.ObjectField("Center of Mass: ", Engine.m_CenterofMass, typeof(GameObject), true);
 
 
-
         if (!UnityEditor.EditorApplication.isPlaying)
         {
             EditorUtility.SetDirty(Engine);

@@ -37,10 +37,6 @@ public class LevelManager : MonoBehaviour
         {
             ReloadScene();
         }
-        if (Input.GetAxis("Infotab") != 0)
-        {
-            ReloadScene();
-        }
     }
 
     public void PauseGame()

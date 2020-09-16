@@ -14,6 +14,7 @@ namespace UnityStandardAssets.Vehicles.Car
         private Text GearField;
         private Rigidbody VehicleRigidBody;
         private EngineModel Engine;
+        private Graph graph;
 
         public SpeedType m_SpeedType;
         private string s_SpeedType;
@@ -27,7 +28,7 @@ namespace UnityStandardAssets.Vehicles.Car
             VehicleRigidBody = GetComponent<Rigidbody>();
             Speedometer = InterfaceObject.GetComponent<SpeedometerScript>();
             GraphObject = InterfaceObject.transform.Find("Canvas").gameObject.transform.Find("WindowGraph").GetComponent<WindowGraph>();
-
+            graph = InterfaceObject.GetComponent<Graph>();
             GearField = InterfaceObject.transform.Find("Canvas").gameObject.transform.Find("Gear").GetComponent<Text>();
 
             (s_SpeedType, m_SpeedCoefficient) = GenericFunctions.SpeedTypeConverter(m_SpeedType);
@@ -35,7 +36,7 @@ namespace UnityStandardAssets.Vehicles.Car
         }
 
         // Update is called once per frame
-        void FixedUpdate()
+        private void FixedUpdate()
         {
             switch (m_SpeedType)
             {
@@ -55,7 +56,7 @@ namespace UnityStandardAssets.Vehicles.Car
 
             Engine.m_Speed = VehicleRigidBody.velocity.magnitude * m_SpeedCoefficient;
 
-
+            graph.UpdateGraph(Engine.m_Speed,Engine.m_EngineRPM,Engine.m_CurrentGear + 1);
             Speedometer.UpdateDisplay(Engine.m_Speed, Engine.m_EngineRPM, s_SpeedType);
 
             GearField.text = string.Format("{0}{1}", Engine.m_CurrentGear+1,GenericFunctions.ToOrdinal(Engine.m_CurrentGear + 1));            

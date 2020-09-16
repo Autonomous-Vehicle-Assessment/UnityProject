@@ -1,4 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Emit;
+using System.Security.AccessControl;
+using TMPro;
 using UnityEngine;
 
 /// <summary>
@@ -10,60 +14,95 @@ using UnityEngine;
 /// </summary>
 public class Graph : MonoBehaviour
 {
-
     Material mat;
-    private Rect windowRect = new Rect(20, 20, 512, 256);
+    private Rect windowRect;
 
     // A list of random values to draw
-    private List<float> values;
+    private List<float>[] values;
+    public TextAnchor textAnchor;
+    public int labelWidth;
+    public int labelHeight;
+    public int labelX;
+    public int labelY;
 
-    // The list the drawing function uses...
-    private List<float> drawValues = new List<float>();
+    public int FontSize;
 
     // List of Windows
     private bool showWindow0 = false;
 
+    private Color[] colorList = new Color[] { Color.green, Color.red, Color.blue, Color.magenta, Color.cyan };
+
+    private GUIStyle myGUIStyle;
+    private GUIStyle rpmGUIStyle;
+    private bool initDone = false;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         mat = new Material(Shader.Find("Hidden/Internal-Colored"));
         // Should check for material but I'll leave that to you..
 
-        // Fill a list with ten random values
-        values = new List<float>();
-        for (int i = 0; i < 10; i++)
+        // Initialize list
+        values = new List<float>[3];
+
+        for (int i = 0; i < 3; i++)
         {
-            values.Add(Random.value * 200);
+            values[i] = new List<float>(1);
         }
     }
 
     // Update is called once per frame
-    void Update()
+    public void UpdateGraph(float Speed, float RPM, int CurrentGear)
     {
         // Keep adding values
-        values.Add(Random.value * 200);
+        values[0].Add(Speed);
+        values[1].Add(RPM/20f);
+        values[2].Add(CurrentGear * 50);
+
+    }
+
+    private void Update()
+    {
+        // Create a GUI.toggle to show graph window
+        //showWindow0 = GUI.Toggle(new Rect(10, 10, 100, 20), showWindow0, "Show Graph");
+        if (Input.GetButtonUp("Infotab"))
+        {
+            showWindow0 = !showWindow0;
+        }
     }
 
     private void OnGUI()
     {
-        // Create a GUI.toggle to show graph window
-        showWindow0 = GUI.Toggle(new Rect(10, 10, 100, 20), showWindow0, "Show Graph");
+        if (!initDone)
+        {
+            myGUIStyle = new GUIStyle(GUI.skin.label);
+            myGUIStyle.alignment = textAnchor;
+
+            // rpm Style
+            rpmGUIStyle = new GUIStyle(GUI.skin.label)
+            {
+                alignment = TextAnchor.UpperRight,
+                fontSize = 11
+            };
+
+            rpmGUIStyle.normal.textColor = Color.red;
+
+            // Graph window
+            windowRect = new Rect(Screen.width - 20 - 512, 20, 512, 256);
+        }
+
 
         if (showWindow0)
         {
-            // Set out drawValue list equal to the values list 
-            drawValues = values;
-            windowRect = GUI.Window(0, windowRect, DrawGraph, "");
+            // Set out drawValue list equal to the values list
+            //drawValues = values;
+            windowRect = GUI.Window(0, windowRect, DrawGraph, "Vehicle State");
         }
-
     }
 
 
     void DrawGraph(int windowID)
-    {
-        // Make Window Draggable
-        GUI.DragWindow(new Rect(0, 0, 10000, 10000));
-
+    {       
         // Draw the graph in the repaint cycle
         if (Event.current.type == EventType.Repaint)
         {
@@ -74,34 +113,46 @@ public class Graph : MonoBehaviour
 
             // Draw a black back ground Quad 
             GL.Begin(GL.QUADS);
-            GL.Color(Color.black);
-            GL.Vertex3(4, 4, 0);
-            GL.Vertex3(windowRect.width - 4, 4, 0);
-            GL.Vertex3(windowRect.width - 4, windowRect.height - 4, 0);
-            GL.Vertex3(4, windowRect.height - 4, 0);
+            GL.Color(new Color(0,0,0,0.2f));
+            GL.Vertex3(2, 15, 0);
+            GL.Vertex3(windowRect.width - 2, 15, 0);
+            GL.Vertex3(windowRect.width - 2, windowRect.height - 2, 0);
+            GL.Vertex3(2, windowRect.height - 2, 0);
             GL.End();
 
-            // Draw the lines of the graph
-            GL.Begin(GL.LINES);
-            GL.Color(Color.green);
-
-            int valueIndex = drawValues.Count - 1;
-            for (int i = (int)windowRect.width - 4; i > 3; i--)
+            for (int i = 0; i < values.Length; i++)
             {
-                float y1 = 0;
-                float y2 = 0;
-                if (valueIndex > 0)
-                {
-                    y2 = drawValues[valueIndex];
-                    y1 = drawValues[valueIndex - 1];
-                }
-                GL.Vertex3(i, windowRect.height - 4 - y2, 0);
-                GL.Vertex3((i - 1), windowRect.height - 4 - y1, 0);
-                valueIndex -= 1;
-            }
-            GL.End();
+                // Draw the lines of the graph
+                GL.Begin(GL.LINES);
+                GL.Color(colorList[i]);
 
+                int valueIndex = values[i].Count - 1;
+                for (int k = (int)windowRect.width - 100; k > 3; k--)
+                {
+                    float y1 = 0;
+                    float y2 = 0;
+                    if (valueIndex > 0)
+                    {
+                        y2 = values[i][valueIndex];
+                        y1 = values[i][valueIndex - 1];
+                    }
+                    GL.Vertex3(k, windowRect.height - 2 - y2, 0);
+                    GL.Vertex3((k - 1), windowRect.height - 2 - y1, 0);
+                    valueIndex -= 1;
+                }
+                GL.End();
+            }
             GL.PopMatrix();
         }
+
+        // Populate graph with text
+        Rect rpmRect = new Rect(windowRect.width - 104, 40, 100, 50);
+        Rect rpmRectLabel = new Rect(windowRect.width - 104, 40, 100, 50);
+        string rpmValue = ((int)(values[1][values[1].Count - 1] * 20)).ToString() + " rpm";
+        GUI.Label(rpmRect, rpmValue, rpmGUIStyle);
+
+        GUI.Label(new Rect(windowRect.width - labelX, labelY, labelWidth, labelHeight), "Text Position", myGUIStyle);
+
+        initDone = false;
     }
 }
