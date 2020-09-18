@@ -30,7 +30,7 @@ public class GPS
 
     private Vector3 UpdateState()
     {
-        Vector3 coordinates = transform.position + Vector3.one * GetNoise(); // Updates the position in xyz and adds noise.
+        Vector3 coordinates = transform.position + new Vector3(GetNoise(), GetNoise(), GetNoise()); // Updates the position in xyz and adds noise.
         float time_real = Time.time;  // Updates current time from start of program. Not yet returned for further use.
         return coordinates;
     }

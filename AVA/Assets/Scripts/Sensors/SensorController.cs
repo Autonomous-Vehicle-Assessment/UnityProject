@@ -6,21 +6,19 @@ public class SensorController : MonoBehaviour
     [Header("GPS Controls")]
     public  GameObject[]    gPSObjects;         // GPS objects
     private GPS[]           gPSStack;           // Instances of GPS class
-    private Vector3[]       gPSPos;             // Positions of GPS objects
+    public Vector3[]       gPSPos;             // Positions of GPS objects
     private IEnumerator     getData;            // Coroutine setup
     private bool            gPSActive_Prev;     // For determining change in activation state
     [Space(10)]
     public bool             gPSActive;          // Activation of GPS data stream
 
     [Header("GPS Data")]
-
     public Vector3 vehiclePosition;         // Position of vehicle center
     public Vector3 vehicleOrientation; // Orientation of vehicle arround the y axis
 
     // Setup GPS instances
     void Start()
     {
-
         getData = ActiveGPS(0.5f);                  // Set coroutine update frequency
         gPSPos = new Vector3[gPSObjects.Length];    // Initialize GPS position array
         gPSStack = new GPS[gPSObjects.Length];      // Initialize GPS instances array
@@ -68,8 +66,7 @@ public class SensorController : MonoBehaviour
             for (int i = 0; i < gPSObjects.Length; i++)
             {
                 // localPosition fucks up the data.. Why??
-                gPSPos[i] = gPSStack[i].GetGPSData();// - gPSObjects[i].GetComponent<Transform>().localPosition;
-                
+                gPSPos[i] = gPSStack[i].GetGPSData() - gPSObjects[i].GetComponent<Transform>().localPosition;
             }
 
             // Calculate orientation arround y-axis (based on first two GPS instances)
