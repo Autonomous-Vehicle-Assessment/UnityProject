@@ -280,6 +280,16 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 900966193508289107, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 900966193508289107, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 900966193508289108, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -339,6 +349,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Vehicle FED Alpha
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211430127117835933, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4105457999957302434, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
@@ -577,20 +592,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 257768629}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &570231156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 570231154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2738734333d12a94282d115dd005b1c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chassisMeshSimple: {fileID: 1702791171}
-  chassisMeshDetail: {fileID: 2110689628}
 --- !u!1 &676654621
 GameObject:
   m_ObjectHideFlags: 0
@@ -1445,12 +1446,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &1702791171 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 4970991173547953239, guid: e741e23d882cb8a4488ef50ec8c7bf18,
-    type: 3}
-  m_PrefabInstance: {fileID: 257768629}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1793959144
 GameObject:
   m_ObjectHideFlags: 0
@@ -1717,12 +1712,6 @@ Terrain:
   m_GroupingID: 0
   m_RenderingLayerMask: 1
   m_AllowAutoConnect: 1
---- !u!23 &2110689628 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 3408663201258528164, guid: e741e23d882cb8a4488ef50ec8c7bf18,
-    type: 3}
-  m_PrefabInstance: {fileID: 257768629}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &195079847468726091
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2098,6 +2087,11 @@ PrefabInstance:
       propertyPath: vehicleMesh
       value: 
       objectReference: {fileID: 570231154}
+    - target: {fileID: 1691778560577929475, guid: 6b873b308e787dc4090c3872b555a99d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b873b308e787dc4090c3872b555a99d, type: 3}
 --- !u!1001 &1948568224459218947
