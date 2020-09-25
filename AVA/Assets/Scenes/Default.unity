@@ -365,13 +365,91 @@ PrefabInstance:
       propertyPath: AntiRoll
       value: 18790
       objectReference: {fileID: 0}
+    - target: {fileID: 2315250435903404941, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4105457999957302434, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: InterfaceObject
       value: 
       objectReference: {fileID: 214610701}
+    - target: {fileID: 4105457999957302434, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e741e23d882cb8a4488ef50ec8c7bf18, type: 3}
+--- !u!1 &257768630 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 900966193508289119, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+    type: 3}
+  m_PrefabInstance: {fileID: 257768629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &257768631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 257768630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98c648f1ddb4166489327e5bd27dee56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  engineSoundStyle: 1
+  lowAccelClip: {fileID: 8300000, guid: 2c5d1ade481a7a541a4706b525f6d757, type: 3}
+  lowDecelClip: {fileID: 8300000, guid: 0c466626dc9e5d6408d6381cc2fd512b, type: 3}
+  highAccelClip: {fileID: 8300000, guid: 7958c591f26505640ba302d5b89575bc, type: 3}
+  highDecelClip: {fileID: 8300000, guid: 961346bfd15daac43bfc81d831f4145c, type: 3}
+  pitchMultiplier: 1
+  lowPitchMin: 1
+  lowPitchMax: 6
+  highPitchMultiplier: 0.25
+  maxRolloffDistance: 500
+  dopplerLevel: 1
+  useDoppler: 0
+--- !u!114 &257768632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 257768630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e74d9ffd43a6cb43b7dfa7095952031, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Engine: {fileID: 0}
+  m_CarDriveType: 2
+  NumberofWheels: 0
+  m_WheelColliders:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_WheelMeshes:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_CenterofMass: {fileID: 0}
+  m_MaximumSteerAngle: 0
+  m_SteerHelper: 0
+  m_TractionControl: 0
+  m_FullTorqueOverAllWheels: 0
+  m_ReverseTorque: 0
+  m_MaxHandbrakeTorque: 0
+  m_Downforce: 100
+  m_SpeedType: 0
+  m_Topspeed: 200
+  m_RevRangeBoundary: 1
+  m_SlipLimit: 0
+  m_BrakeTorque: 0
 --- !u!1 &302181966
 GameObject:
   m_ObjectHideFlags: 0
@@ -2005,6 +2083,7 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+
     - target: {fileID: 7553823338286120067, guid: b6d4eb1bc65c83b459ba6991220c17a0,
         type: 3}
       propertyPath: m_IsActive

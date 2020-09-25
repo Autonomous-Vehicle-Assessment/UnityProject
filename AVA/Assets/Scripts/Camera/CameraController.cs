@@ -35,6 +35,7 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
+        AudioListener.volume = 0.5f;
         Vector3 angles = transform.eulerAngles;
         xDeg = angles.x;
         yDeg = angles.y;
