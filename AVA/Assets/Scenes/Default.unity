@@ -125,6 +125,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!64 &84977539 stripped
+MeshCollider:
+  m_CorrespondingSourceObject: {fileID: 7450607604552738996, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+    type: 3}
+  m_PrefabInstance: {fileID: 257768629}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &107297963 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2279773400167839353, guid: 4b42b541160968743ba6cb8cb2af6216,
@@ -298,7 +304,7 @@ PrefabInstance:
     - target: {fileID: 900966193508289108, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.77
+      value: 0.94
       objectReference: {fileID: 0}
     - target: {fileID: 900966193508289108, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
@@ -350,10 +356,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vehicle FED Alpha
       objectReference: {fileID: 0}
+    - target: {fileID: 1424214297745528316, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2211430127117835933, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2292684301578817931, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 2315250435903404941, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
@@ -365,11 +381,46 @@ PrefabInstance:
       propertyPath: AntiRoll
       value: 18790
       objectReference: {fileID: 0}
+    - target: {fileID: 3073958550896980743, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 4105457999957302434, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: InterfaceObject
       value: 
       objectReference: {fileID: 214610701}
+    - target: {fileID: 4964615144030749111, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5337560623841706082, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 5750680858455525222, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7450607604552738996, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7458267608467049082, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7929282694958309065, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e741e23d882cb8a4488ef50ec8c7bf18, type: 3}
 --- !u!1 &302181966
@@ -907,6 +958,19 @@ MonoBehaviour:
   raysMaxAngle: 180
   wheelWidth: 0.25
   wheelModel: {fileID: 942000402}
+  meshCollider: {fileID: 1149794678}
+--- !u!64 &1092953345 stripped
+MeshCollider:
+  m_CorrespondingSourceObject: {fileID: 1424214297745528316, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+    type: 3}
+  m_PrefabInstance: {fileID: 257768629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1149794678 stripped
+MeshCollider:
+  m_CorrespondingSourceObject: {fileID: 7929282694958309065, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+    type: 3}
+  m_PrefabInstance: {fileID: 257768629}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1255721264
 GameObject:
   m_ObjectHideFlags: 0
@@ -918,7 +982,7 @@ GameObject:
   - component: {fileID: 1255721267}
   - component: {fileID: 1255721266}
   - component: {fileID: 1255721265}
-  m_Layer: 12
+  m_Layer: 10
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -983,6 +1047,28 @@ Transform:
   m_Father: {fileID: 1700092553}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1269156571 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3680660792670468386, guid: 0bec7b62fa57b5748a29fc0585b41e22,
+    type: 3}
+  m_PrefabInstance: {fileID: 1024242920114744774}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &1269156575
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269156571}
+  serializedVersion: 2
+  m_Mass: 10000
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!4 &1274844263 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7127231778606485519, guid: e741e23d882cb8a4488ef50ec8c7bf18,
@@ -1012,6 +1098,7 @@ MonoBehaviour:
   raysMaxAngle: 180
   wheelWidth: 0.25
   wheelModel: {fileID: 955518288}
+  meshCollider: {fileID: 84977539}
 --- !u!1 &1356476203
 GameObject:
   m_ObjectHideFlags: 0
@@ -1111,6 +1198,7 @@ MonoBehaviour:
   raysMaxAngle: 180
   wheelWidth: 0.25
   wheelModel: {fileID: 1684003455}
+  meshCollider: {fileID: 2096670631}
 --- !u!1001 &1462769000
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1433,6 +1521,25 @@ Terrain:
   m_GroupingID: 0
   m_RenderingLayerMask: 1
   m_AllowAutoConnect: 1
+--- !u!1 &1578740562 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 900966193508289119, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+    type: 3}
+  m_PrefabInstance: {fileID: 257768629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1578740570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578740562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a208ce5e5727b141ba74bcef810b682, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugCollisions: 1
 --- !u!1 &1596772119
 GameObject:
   m_ObjectHideFlags: 0
@@ -1572,6 +1679,7 @@ MonoBehaviour:
   raysMaxAngle: 180
   wheelWidth: 0.25
   wheelModel: {fileID: 1274844263}
+  meshCollider: {fileID: 1092953345}
 --- !u!1 &1793959144
 GameObject:
   m_ObjectHideFlags: 0
@@ -1838,6 +1946,33 @@ Terrain:
   m_GroupingID: 0
   m_RenderingLayerMask: 1
   m_AllowAutoConnect: 1
+--- !u!1 &2096670630 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3073958550896980743, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+    type: 3}
+  m_PrefabInstance: {fileID: 257768629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &2096670631 stripped
+MeshCollider:
+  m_CorrespondingSourceObject: {fileID: 7458267608467049082, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+    type: 3}
+  m_PrefabInstance: {fileID: 257768629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2096670634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2096670630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e0ccbe47f36bd84597f610ba1f6bffb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WheelRadius: 0.5
+  aboutToCollide: 0
+  distanceToCollision: 0
 --- !u!1001 &195079847468726091
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1845,6 +1980,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 152199534943711503, guid: b6d4eb1bc65c83b459ba6991220c17a0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 195079846283313701, guid: b6d4eb1bc65c83b459ba6991220c17a0,
         type: 3}
       propertyPath: m_Enabled

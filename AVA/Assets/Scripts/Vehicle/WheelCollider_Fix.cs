@@ -19,6 +19,7 @@ public class WheelCollider_Fix : MonoBehaviour
     private WheelCollider _wheelCollider;
     private EngineModel carController;
     private float orgRadius;
+    public Collider meshCollider;
 
     void Awake()
     {
@@ -35,12 +36,31 @@ public class WheelCollider_Fix : MonoBehaviour
                 return;
 
             float radiusOffset = 0f;
+            // RaycastHit hit;
 
+            #region Mesh Collider
+            /*
+            
+            if (meshCollider.SweepTest(transform.forward, out hit, _wheelCollider.radius))
+            {
+                if (!hit.transform.IsChildOf(carController.transform) && !hit.collider.isTrigger)
+                {
+                    Debug.DrawLine(wheelModel.position, hit.point, Color.red);
+
+                    radiusOffset = Mathf.Max(radiusOffset, _wheelCollider.radius - hit.distance);
+                }
+            }
+            */
+            #endregion
+
+            #region MultiRay model
+
+            /*
             for (int i = 0; i <= raysNumber; i++)
             {
                 Vector3 rayDirection = Quaternion.AngleAxis(_wheelCollider.steerAngle, transform.up) * Quaternion.AngleAxis(i * (raysMaxAngle / raysNumber) + ((180f - raysMaxAngle) / 2), transform.right) * transform.forward;
 
-                if (Physics.Raycast(wheelModel.position, rayDirection, out RaycastHit hit, _wheelCollider.radius))
+                if (Physics.Raycast(wheelModel.position, rayDirection, out hit, _wheelCollider.radius))
                 {
                     if (!hit.transform.IsChildOf(carController.transform) && !hit.collider.isTrigger)
                     {
@@ -73,9 +93,12 @@ public class WheelCollider_Fix : MonoBehaviour
                         radiusOffset = Mathf.Max(radiusOffset, _wheelCollider.radius - leftHit.distance);
                     }
                 }
-
+            
                 Debug.DrawRay(wheelModel.position - wheelModel.right * wheelWidth * .5f, rayDirection * orgRadius, Color.green);
             }
+            */
+
+            #endregion
 
             _wheelCollider.radius = Mathf.LerpUnclamped(_wheelCollider.radius, orgRadius + radiusOffset, Time.deltaTime * 10f);
         }
@@ -84,4 +107,6 @@ public class WheelCollider_Fix : MonoBehaviour
             _wheelCollider.radius = Mathf.LerpUnclamped(_wheelCollider.radius, orgRadius, Time.deltaTime * 10f);
         }
     }
+
+    
 }
