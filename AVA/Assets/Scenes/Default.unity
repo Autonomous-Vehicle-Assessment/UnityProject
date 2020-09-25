@@ -273,7 +273,7 @@ PrefabInstance:
     - target: {fileID: 900966193508289104, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: TrackPoints
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 900966193508289104, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
@@ -354,6 +354,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315250435903404941, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: swayBarActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315250435903404941, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: AntiRoll
+      value: 18790
       objectReference: {fileID: 0}
     - target: {fileID: 4105457999957302434, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
@@ -710,6 +720,12 @@ Terrain:
   m_GroupingID: 0
   m_RenderingLayerMask: 1
   m_AllowAutoConnect: 1
+--- !u!4 &942000402 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6731987763684333040, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+    type: 3}
+  m_PrefabInstance: {fileID: 257768629}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &946336802
 GameObject:
   m_ObjectHideFlags: 0
@@ -786,6 +802,12 @@ Terrain:
   m_GroupingID: 0
   m_RenderingLayerMask: 1
   m_AllowAutoConnect: 1
+--- !u!4 &955518288 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3430368714836715275, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+    type: 3}
+  m_PrefabInstance: {fileID: 257768629}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &994584383
 GameObject:
   m_ObjectHideFlags: 0
@@ -862,6 +884,29 @@ Terrain:
   m_GroupingID: 0
   m_RenderingLayerMask: 1
   m_AllowAutoConnect: 1
+--- !u!1 &1030873272 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3405419340758370661, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+    type: 3}
+  m_PrefabInstance: {fileID: 257768629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1030873275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030873272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d53b31ca35958d46b3ab970985b73b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useWheelAntiStuck: 1
+  raysNumber: 36
+  raysMaxAngle: 180
+  wheelWidth: 0.25
+  wheelModel: {fileID: 942000402}
 --- !u!1 &1255721264
 GameObject:
   m_ObjectHideFlags: 0
@@ -938,6 +983,35 @@ Transform:
   m_Father: {fileID: 1700092553}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1274844263 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7127231778606485519, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+    type: 3}
+  m_PrefabInstance: {fileID: 257768629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1290224909 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 900966194502703902, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+    type: 3}
+  m_PrefabInstance: {fileID: 257768629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1290224912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1290224909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d53b31ca35958d46b3ab970985b73b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useWheelAntiStuck: 1
+  raysNumber: 36
+  raysMaxAngle: 180
+  wheelWidth: 0.25
+  wheelModel: {fileID: 955518288}
 --- !u!1 &1356476203
 GameObject:
   m_ObjectHideFlags: 0
@@ -1014,6 +1088,29 @@ Terrain:
   m_GroupingID: 0
   m_RenderingLayerMask: 1
   m_AllowAutoConnect: 1
+--- !u!1 &1422745573 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 900966193465278887, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+    type: 3}
+  m_PrefabInstance: {fileID: 257768629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1422745576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1422745573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d53b31ca35958d46b3ab970985b73b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useWheelAntiStuck: 1
+  raysNumber: 36
+  raysMaxAngle: 180
+  wheelWidth: 0.25
+  wheelModel: {fileID: 1684003455}
 --- !u!1001 &1462769000
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1029,7 +1126,7 @@ PrefabInstance:
     - target: {fileID: 3680660792670468386, guid: 0bec7b62fa57b5748a29fc0585b41e22,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4110545108004448141, guid: 0bec7b62fa57b5748a29fc0585b41e22,
         type: 3}
@@ -1182,7 +1279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1466839867
 Transform:
   m_ObjectHideFlags: 0
@@ -1412,6 +1509,12 @@ Terrain:
   m_GroupingID: 0
   m_RenderingLayerMask: 1
   m_AllowAutoConnect: 1
+--- !u!4 &1684003455 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4866858336449457467, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+    type: 3}
+  m_PrefabInstance: {fileID: 257768629}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1700092552
 GameObject:
   m_ObjectHideFlags: 0
@@ -1446,6 +1549,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1772081889 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 900966192714249741, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+    type: 3}
+  m_PrefabInstance: {fileID: 257768629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1772081892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772081889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d53b31ca35958d46b3ab970985b73b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useWheelAntiStuck: 1
+  raysNumber: 36
+  raysMaxAngle: 180
+  wheelWidth: 0.25
+  wheelModel: {fileID: 1274844263}
 --- !u!1 &1793959144
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Animations;
 
 public class CameraController : MonoBehaviour
 {
@@ -65,6 +66,12 @@ public class CameraController : MonoBehaviour
             {
                 xDeg += Input.GetAxis("Mouse X") * xSpeed * 0.02f;
                 yDeg -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
+            }
+
+            else if (Input.GetAxis("HorizontalLook") != 0 || Input.GetAxis("VerticalLook") != 0)
+            {
+                xDeg += Input.GetAxis("HorizontalLook") * xSpeed * 0.01f;
+                yDeg -= Input.GetAxis("VerticalLook") * ySpeed * 0.01f;
             }
 
             // otherwise, ease behind the target if any of the directional keys are pressed

@@ -266,6 +266,9 @@ public class EngineEditor : Editor
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
 
+        // ----- Anti Sway Bar ----- //
+        Engine.swayBarActive = EditorGUILayout.Toggle("Anti-Sway Bar: ", Engine.swayBarActive);
+        Engine.AntiRoll = EditorGUILayout.FloatField("Anti Roll Value: ", Engine.AntiRoll);
 
         Engine.m_CenterofMass = (GameObject)EditorGUILayout.ObjectField("Center of Mass: ", Engine.m_CenterofMass, typeof(GameObject), true);
 

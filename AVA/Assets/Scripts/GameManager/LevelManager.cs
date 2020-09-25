@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     private bool Paused = false;
+    private bool Slowed = false;
+    public float SlowMotionValue = 0.2f;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +21,7 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7))
         {
             if (Paused)
             {
@@ -30,6 +32,20 @@ public class LevelManager : MonoBehaviour
             {
                 PauseGame();
                 Paused = true;
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.F) || Input.GetKeyDown(KeyCode.JoystickButton2))
+        {
+            if (Slowed)
+            {
+                Slowmotion(SlowMotionValue);
+                Slowed = false;
+            }
+            else
+            {
+                ResumeGame();
+                Slowed = true;
             }
         }
 
@@ -47,6 +63,11 @@ public class LevelManager : MonoBehaviour
     public void ResumeGame()
     {
         Time.timeScale = 1;
+    }
+
+    public void Slowmotion(float Scale)
+    {
+        Time.timeScale = Scale;
     }
 
 }

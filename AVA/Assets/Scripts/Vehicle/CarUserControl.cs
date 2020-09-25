@@ -26,7 +26,7 @@ namespace UnityStandardAssets.Vehicles.Car
         }
 
 
-        private void FixedUpdate()
+        private void LateUpdate()
         {
             // pass the input to the car!
             float h = Input.GetAxis("Horizontal");
@@ -34,6 +34,18 @@ namespace UnityStandardAssets.Vehicles.Car
             float footbrake = Input.GetAxis("FootBrake");
             float handbrake = Input.GetAxis("HandBrake");
 
+            if (Input.GetKeyDown(KeyCode.E)||Input.GetKeyDown(KeyCode.JoystickButton0))
+            {
+                if (m_CurrentTransfercase == TransferCase.High)
+                {
+                    m_CurrentTransfercase = TransferCase.Low;
+                }
+                else
+                {
+                    m_CurrentTransfercase = TransferCase.High;
+                }
+            }
+            
             Engine.m_CurrentTransferCase = m_CurrentTransfercase;
 
             Engine.UpdateState();

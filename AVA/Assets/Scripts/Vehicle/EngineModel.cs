@@ -82,6 +82,10 @@ public class EngineModel : MonoBehaviour
     public float m_FinalDriveEff = 1f;
     public float[] m_TransferCaseRatio = { 2.72f, 1.0f };
 
+    // Anti-Sway bar
+    public bool swayBarActive = false;
+    public float AntiRoll = 5000.0f;
+
     //TerrainTracker
     public TerrainTracker terrainTracker;
 
@@ -107,6 +111,41 @@ public class EngineModel : MonoBehaviour
         }
     }
 
+    public void FixedUpdate()
+    {
+        // Sway Bar (Anti-Roll bar)
+        if (swayBarActive)
+        {
+            float travelL = 1.0f;
+            float travelR = 1.0f;
+            for (int i = 0; i < NumberofWheels / 2;)
+            {
+                WheelCollider WheelL = m_Wheel[i].m_collider;
+                i++;
+                WheelCollider WheelR = m_Wheel[i].m_collider;
+                i++;
+
+                bool groundedL = WheelL.GetGroundHit(out WheelHit hitL);
+                if (groundedL)
+                    travelL = (-WheelL.transform.InverseTransformPoint(hitL.point).y - WheelL.radius) / WheelL.suspensionDistance;
+
+                bool groundedR = WheelR.GetGroundHit(out WheelHit hitR);
+                if (groundedR)
+                    travelR = (-WheelR.transform.InverseTransformPoint(hitR.point).y - WheelR.radius) / WheelR.suspensionDistance;
+
+                float antiRollForce = (travelL - travelR) * AntiRoll;
+            
+
+                if (groundedL)
+                    m_Rigidbody.AddForceAtPosition(WheelL.transform.up * -antiRollForce,
+                           WheelL.transform.position);
+                if (groundedR)
+                    m_Rigidbody.AddForceAtPosition(WheelR.transform.up * antiRollForce,
+                           WheelR.transform.position);
+            }
+
+        }
+    }
     public void UpdateState()
     {
         UpdateTerrainWheelParameters();
