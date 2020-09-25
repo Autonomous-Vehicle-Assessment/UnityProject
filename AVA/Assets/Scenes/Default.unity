@@ -1923,6 +1923,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 152199534943711503, guid: b6d4eb1bc65c83b459ba6991220c17a0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 195079846283313701, guid: b6d4eb1bc65c83b459ba6991220c17a0,
         type: 3}
       propertyPath: m_Enabled
@@ -2077,6 +2082,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+
+    - target: {fileID: 7553823338286120067, guid: b6d4eb1bc65c83b459ba6991220c17a0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6d4eb1bc65c83b459ba6991220c17a0, type: 3}

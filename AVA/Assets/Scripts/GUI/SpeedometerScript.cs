@@ -35,6 +35,7 @@ public class SpeedometerScript : MonoBehaviour
 
 
         SpeedField.text = "km/h";
+        canvas.gameObject.SetActive(true);
     }
 
     public void UpdateDisplay(float Speed, float RPM, string s_SpeedType)
