@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public enum SpeedType
@@ -8,6 +7,7 @@ public enum SpeedType
     MPH,
     MPS
 }
+
 
 
 public static class GenericFunctions
@@ -68,5 +68,69 @@ public static class GenericFunctions
         }
         return (SpeedString, SpeedCoefficient);
     }
+
+    public static float GetGaussian()
+    {
+        float v1, v2, x, s, gauss;
+        float mean = 0f;
+        float standardDeviation = 1f / 3.5f;
+
+        do
+        {
+            do
+            {
+                v1 = 2.0f * Random.Range(0f, 1f) - 1.0f;
+                v2 = 2.0f * Random.Range(0f, 1f) - 1.0f;
+                s = v1 * v1 + v2 * v2;
+            } while (s >= 1.0f || s == 0f);
+
+            s = Mathf.Sqrt((-2.0f * Mathf.Log(s)) / s);
+
+            x = v1 * s;
+
+            gauss = mean + x * standardDeviation;
+
+        } while (gauss < -1 || gauss > 1);
+
+        return gauss;
+    }
+
+    public static float GetGaussian(float standardDeviation)
+    {
+        float v1, v2, x, s, gauss;
+        float mean = 0f;
+
+        do
+        {
+            do
+            {
+                v1 = 2.0f * Random.Range(0f, 1f) - 1.0f;
+                v2 = 2.0f * Random.Range(0f, 1f) - 1.0f;
+                s = v1 * v1 + v2 * v2;
+            } while (s >= 1.0f || s == 0f);
+
+            s = Mathf.Sqrt((-2.0f * Mathf.Log(s)) / s);
+
+            x = v1 * s;
+
+            gauss = mean + x * standardDeviation;
+
+        } while (gauss < -standardDeviation*3.5f || gauss > standardDeviation*3.5f);
+
+        return gauss;
+    }
+
+    public static float GetUniform()
+    {
+        float Value = Random.Range(-1f, 1f);
+        return Value;
+    }
+
+    public static float GetUniform(float min, float max)
+    {
+        float Value = Random.Range(min, max);
+        return Value;
+    }
+
 
 }
