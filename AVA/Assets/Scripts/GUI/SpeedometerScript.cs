@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,7 +21,7 @@ public class SpeedometerScript : MonoBehaviour
     private const float DeltaAngleRPM = (-92.8f - 187.5f) / 7000f;
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         canvas = transform.Find("Canvas").gameObject;
         Speedometer = canvas.transform.Find("SpeedometerGroup").gameObject;
@@ -35,7 +36,15 @@ public class SpeedometerScript : MonoBehaviour
 
 
         SpeedField.text = "km/h";
-        canvas.gameObject.SetActive(true);
+    }
+
+    private void OnGUI()
+    {
+        EditorWindow window = EditorWindow.focusedWindow;
+        Debug.Log(window.maximized);
+
+        canvas.gameObject.SetActive(window.maximized);
+
     }
 
     public void UpdateDisplay(float Speed, float RPM, string s_SpeedType)
