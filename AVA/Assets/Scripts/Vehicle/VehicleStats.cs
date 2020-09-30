@@ -8,7 +8,7 @@ namespace UnityStandardAssets.Vehicles.Car
 {
     public class VehicleStats : MonoBehaviour
     {
-        public GameObject InterfaceObject;
+        private GameObject InterfaceObject;
         private SpeedometerScript Speedometer;
         private WindowGraph GraphObject;
         private Text GearField;
@@ -24,6 +24,7 @@ namespace UnityStandardAssets.Vehicles.Car
         // Start is called before the first frame update
         private void Awake()
         {
+            InterfaceObject = GameObject.Find("UI");
             Engine = GetComponent<EngineModel>();
             VehicleRigidBody = GetComponent<Rigidbody>();
             Speedometer = InterfaceObject.GetComponent<SpeedometerScript>();

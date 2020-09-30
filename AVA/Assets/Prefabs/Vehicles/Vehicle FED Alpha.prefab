@@ -167,6 +167,7 @@ GameObject:
   - component: {fileID: 2315250435903404941}
   - component: {fileID: 5462843028766989911}
   - component: {fileID: 2211430127117835933}
+  - component: {fileID: 454163007198815611}
   m_Layer: 11
   m_Name: Vehicle FED Alpha
   m_TagString: Untagged
@@ -221,7 +222,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bfa4d5e0e1b7c24d9f0530121bd93ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InterfaceObject: {fileID: 0}
   m_SpeedType: 0
 --- !u!114 &900966193508289104
 MonoBehaviour:
@@ -534,6 +534,8 @@ MonoBehaviour:
   m_TransferCaseRatio:
   - 2.72
   - 1
+  swayBarActive: 0
+  AntiRoll: 5000
   terrainTracker: {fileID: 0}
 --- !u!114 &5462843028766989911
 MonoBehaviour:
@@ -561,6 +563,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   surfaceIndex: 0
   surfaceValues: []
+--- !u!114 &454163007198815611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900966193508289119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98c648f1ddb4166489327e5bd27dee56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  engineSoundStyle: 1
+  lowAccelClip: {fileID: 8300000, guid: 2c5d1ade481a7a541a4706b525f6d757, type: 3}
+  lowDecelClip: {fileID: 8300000, guid: 0c466626dc9e5d6408d6381cc2fd512b, type: 3}
+  highAccelClip: {fileID: 8300000, guid: 7958c591f26505640ba302d5b89575bc, type: 3}
+  highDecelClip: {fileID: 8300000, guid: 961346bfd15daac43bfc81d831f4145c, type: 3}
+  pitchMultiplier: 1
+  lowPitchMin: 1
+  lowPitchMax: 6
+  highPitchMultiplier: 0.25
+  maxRolloffDistance: 500
+  dopplerLevel: 1
+  useDoppler: 0
 --- !u!1 &900966194502703902
 GameObject:
   m_ObjectHideFlags: 0

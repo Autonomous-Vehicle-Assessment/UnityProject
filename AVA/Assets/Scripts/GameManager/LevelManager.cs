@@ -7,17 +7,8 @@ public class LevelManager : MonoBehaviour
 {
     private bool Paused = false;
     private bool Slowed = false;
-    public float SlowMotionValue = 0.2f;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float SlowMotionValue = 0.1f;
 
-    public void ReloadScene()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
     // Update is called once per frame
     void LateUpdate()
     {
@@ -39,12 +30,12 @@ public class LevelManager : MonoBehaviour
         {
             if (Slowed)
             {
-                Slowmotion(SlowMotionValue);
+                ResumeGame();
                 Slowed = false;
             }
             else
             {
-                ResumeGame();
+                Slowmotion(SlowMotionValue);
                 Slowed = true;
             }
         }
@@ -52,7 +43,15 @@ public class LevelManager : MonoBehaviour
         if (Input.GetAxis("Restart")!= 0)
         {
             ReloadScene();
+            ResumeGame();
+            Slowed = false;
+            Paused = false;
         }
+    }
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void PauseGame()
