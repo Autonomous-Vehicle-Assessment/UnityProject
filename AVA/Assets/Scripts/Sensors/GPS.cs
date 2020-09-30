@@ -17,7 +17,7 @@ public class GPS
     public GPS(Transform _transform)
     {
         coordinates = new Vector3();    // Initialization of coordinate vector.
-        accuracy = 0.2f;                // Should to be dependant on signalMap/sateliteStrength parameters.
+        accuracy = 0.03f;                // Should to be dependant on signalMap/sateliteStrength parameters.
         transform = _transform;         // Gets transform for determining the position.
         time_real = Time.time;          // Not currently used.
     }
@@ -30,14 +30,16 @@ public class GPS
 
     private Vector3 UpdateState()
     {
-        Vector3 coordinates = transform.position + new Vector3(GetNoise(), GetNoise(), GetNoise()); // Updates the position in xyz and adds noise.
+        Vector3 coordinates = transform.position + new Vector3(GetNoise(), GetNoise()*2, GetNoise()); // Updates the position in xyz and adds noise.
+        //Debug.Log(transform.position);
         float time_real = Time.time;  // Updates current time from start of program. Not yet returned for further use.
         return coordinates;
     }
 
     private float GetNoise()
     {
-        float noise = Random.Range(-accuracy / 2f, accuracy / 2f);  // Adds RANDOM noise to a signal within given limits.
+        float noise = GenericFunctions.GetGaussian(accuracy);
+            //Random.Range(-accuracy / 2f, accuracy / 2f);  // Adds RANDOM noise to a signal within given limits.
         // the normal of the noise can be bigger due to same in all directions. Fix this.
         // Add noise distribution, gaussian or similar.
         return noise;
