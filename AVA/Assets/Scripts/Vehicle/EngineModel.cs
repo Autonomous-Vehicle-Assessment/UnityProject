@@ -90,7 +90,7 @@ public class EngineModel : MonoBehaviour
     public TerrainTracker terrainTracker;
 
     // Initialize
-    private void Start()
+    public void Awake()
     {
         // Update Center of Mass
         if (m_CenterofMass != null)
@@ -109,10 +109,12 @@ public class EngineModel : MonoBehaviour
                 NumberofDrivingWheels += 1;
             }
         }
+        m_Wheel[0].m_collider.suspensionExpansionLimited = true;
     }
 
     public void FixedUpdate()
     {
+        
         // Sway Bar (Anti-Roll bar)
         if (swayBarActive)
         {
@@ -295,4 +297,5 @@ public class EngineModel : MonoBehaviour
             }
         }
     }
+
 }
