@@ -5,21 +5,22 @@ public class SensorController : MonoBehaviour
 {
     [Header("GPS Controls")]
     public  GameObject[]    gPSObjects;         // GPS objects
+    public GameObject       gPSMeasurement;
     private GPS[]           gPSStack;           // Instances of GPS class
-    public Vector3[]       gPSPos;             // Positions of GPS objects
+    private Vector3[]       gPSPos;             // Positions of GPS objects
     private IEnumerator     getData;            // Coroutine setup
     private bool            gPSActive_Prev;     // For determining change in activation state
     [Space(10)]
     public bool             gPSActive;          // Activation of GPS data stream
 
-    [Header("GPS Data")]
-    public Vector3 vehiclePosition;         // Position of vehicle center
-    public Vector3 vehicleOrientation; // Orientation of vehicle arround the y axis
+    //[Header("GPS Data")]
+    //public Vector3 vehiclePosition;         // Position of vehicle center
+    //public Vector3 vehicleOrientation; // Orientation of vehicle arround the y axis
 
     // Setup GPS instances
     void Start()
     {
-        getData = ActiveGPS(0.5f);                  // Set coroutine update frequency
+        getData = ActiveGPS(20f);                  // Set coroutine update frequency
         gPSPos = new Vector3[gPSObjects.Length];    // Initialize GPS position array
         gPSStack = new GPS[gPSObjects.Length];      // Initialize GPS instances array
         gPSActive = true;
@@ -69,18 +70,22 @@ public class SensorController : MonoBehaviour
                 gPSPos[i] = gPSStack[i].GetGPSData() - gPSObjects[i].GetComponent<Transform>().localPosition;
             }
 
+
             // Calculate orientation arround y-axis (based on first two GPS instances)
-            vehicleOrientation = gPSPos[0] - gPSPos[1];
-            vehicleOrientation.y = 0f;
-            vehicleOrientation = vehicleOrientation.normalized;
-
+            Vector3 v31 = gPSStack[0].GetGPSData(); // Get position
+            Vector3 v32 = gPSStack[1].GetGPSData(); // Get position
+            v31.y = v31.z;          // Implicit conversion removes Z-component (which is used)
+            v32.y = v32.z;          // Implicit conversion removes Z-component (which is used)
+            Vector2 v21 = v31;      // Convert to Vector2
+            Vector2 v22 = v32;      // Convert to Vector2
+            float Angle2d = Vector2.SignedAngle(v21 - v22, new Vector2(0f,1f)); // Calculate signed angle in deg
+          
             // Calculate vehicle centre position
-            vehiclePosition = new Vector3(gPSPos[0].x + gPSPos[1].x, gPSPos[0].y + gPSPos[1].y, gPSPos[0].z + gPSPos[1].z)/2f;
+            Vector3 vehiclePosition = (gPSPos[0] + gPSPos[1])/2f;
 
-
-            // Maybe assemble into a transform (position and rotation) if possible. 
-            // Orientation normal vector just 
-
+            // Set GPSMeasurement GameObject transform values.
+            gPSMeasurement.GetComponent<Transform>().position = vehiclePosition;
+            gPSMeasurement.GetComponent<Transform>().rotation = Quaternion.AngleAxis(Angle2d, Vector3.up);
 
 
             // Waits for set ammount of time before running coroutine again
