@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace UnityStandardAssets.Vehicles.Car
 {
-    [RequireComponent(typeof(EngineModel))]
+    [RequireComponent(typeof(Engine))]
     public class CarUserControl : MonoBehaviour
     {
-        private EngineModel Engine;               // Engine model
+        private Engine engine;               // Engine model
         private DataLogging dataLogger;
 
 
@@ -19,7 +19,7 @@ namespace UnityStandardAssets.Vehicles.Car
         private void Awake()
         {
             // get the controller
-            Engine = GetComponent<EngineModel>();
+            engine = GetComponent<Engine>();
 
             // DataLogger
             dataLogger = GetComponent<DataLogging>();
@@ -46,33 +46,33 @@ namespace UnityStandardAssets.Vehicles.Car
                 }
             }
             
-            Engine.m_CurrentTransferCase = m_CurrentTransfercase;
+            engine.m_CurrentTransferCase = m_CurrentTransfercase;
 
-            Engine.UpdateState();
+            engine.UpdateState();
 
-            if (Engine != null)
+            if (engine != null)
             {
-                Engine.Move(h, v, footbrake, handbrake);
+                engine.Move(h, v, footbrake, handbrake);
             }
 
             string s_Time = Time.time.ToString();
-            string s_Velocity = Engine.m_Speed.ToString();
-            string s_EngineRPM = Engine.m_EngineRPM.ToString();
-            string s_EngineTorque = Engine.m_EngineTorque.ToString();
+            string s_Velocity = engine.m_Speed.ToString();
+            string s_EngineRPM = engine.m_EngineRPM.ToString();
+            string s_EngineTorque = engine.m_EngineTorque.ToString();
 
             float m_TransmissionTorque = 0;
             float m_WheelForce = 0;
 
-            for (int i = 0; i < Engine.m_Wheel.Count; i++)
+            for (int i = 0; i < engine.m_Wheel.Count; i++)
             {
-                m_TransmissionTorque += Engine.m_Wheel[i].m_collider.motorTorque;
-                m_WheelForce += Engine.m_Wheel[i].m_collider.motorTorque * Engine.m_Wheel[i].m_collider.radius;
+                m_TransmissionTorque += engine.m_Wheel[i].m_collider.motorTorque;
+                m_WheelForce += engine.m_Wheel[i].m_collider.motorTorque * engine.m_Wheel[i].m_collider.radius;
             }
 
             string s_WheelForce = m_WheelForce.ToString();
             string s_TransmissionTorque = m_TransmissionTorque.ToString();
 
-            string s_CurrentGear = (Engine.m_CurrentGear + 1).ToString();
+            string s_CurrentGear = (engine.m_CurrentGear + 1).ToString();
 
             // Log data
             dataLogger.WriteToFile(s_Time + ";" + s_Velocity + ";" + s_WheelForce + ";" + s_TransmissionTorque + ";" + s_CurrentGear + ";" + s_EngineRPM + ";" + s_EngineTorque + "\n");
@@ -86,7 +86,7 @@ namespace UnityStandardAssets.Vehicles.Car
                 points = new List<Vector3[]>();
                 for (int i = 0; i < 4; i++)
                 {
-                    lineRenderers[i] = Engine.m_Wheel[i].m_collider.gameObject.AddComponent<LineRenderer>();
+                    lineRenderers[i] = engine.m_Wheel[i].m_collider.gameObject.AddComponent<LineRenderer>();
                     lineRenderers[i].material = new Material(Shader.Find("Sprites/Default"));
                     lineRenderers[i].material.color = ColorArray[i];
                     lineRenderers[i].widthMultiplier = 0.02f;
@@ -95,7 +95,7 @@ namespace UnityStandardAssets.Vehicles.Car
                     points.Add(new Vector3[(int)(RenderTime / Time.fixedDeltaTime)]);
                     for (int k = 0; k < points[i].Length; k++)
                     {
-                        points[i][k] = Engine.m_Wheel[i].mesh.transform.position;
+                        points[i][k] = engine.m_Wheel[i].mesh.transform.position;
                     }
                     lineRenderers[i].SetPositions(points[i]);
                 }
@@ -107,7 +107,7 @@ namespace UnityStandardAssets.Vehicles.Car
                 {
                     points[i][k] = points[i][k + 1];
                 }
-                points[i][points[i].Length - 1] = Engine.m_Wheel[i].mesh.transform.position;
+                points[i][points[i].Length - 1] = engine.m_Wheel[i].mesh.transform.position;
                 lineRenderers[i].SetPositions(points[i]);
             }
 

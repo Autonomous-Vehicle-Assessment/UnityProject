@@ -17,13 +17,13 @@ public class WheelCollider_Fix : MonoBehaviour
     public Transform wheelModel;
 
     private WheelCollider _wheelCollider;
-    private EngineModel carController;
+    private Engine engine;
     private float orgRadius;
 
     void Awake()
     {
         _wheelCollider = GetComponent<WheelCollider>();
-        carController = GetComponentInParent<EngineModel>();
+        engine = GetComponentInParent<Engine>();
         orgRadius = _wheelCollider.radius;
     }
 

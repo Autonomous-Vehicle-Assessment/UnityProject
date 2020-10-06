@@ -13,7 +13,7 @@ namespace UnityStandardAssets.Vehicles.Car
         private WindowGraph GraphObject;
         private Text GearField;
         private Rigidbody VehicleRigidBody;
-        private EngineModel Engine;
+        private Engine engine;
         private Graph graph;
 
         public SpeedType m_SpeedType;
@@ -25,7 +25,7 @@ namespace UnityStandardAssets.Vehicles.Car
         private void Awake()
         {
             InterfaceObject = GameObject.Find("UI");
-            Engine = GetComponent<EngineModel>();
+            engine = GetComponent<Engine>();
             VehicleRigidBody = GetComponent<Rigidbody>();
             Speedometer = InterfaceObject.GetComponent<SpeedometerScript>();
             GraphObject = InterfaceObject.transform.Find("Canvas").gameObject.transform.Find("WindowGraph").GetComponent<WindowGraph>();
@@ -55,12 +55,12 @@ namespace UnityStandardAssets.Vehicles.Car
                     break;
             }
 
-            Engine.m_Speed = VehicleRigidBody.velocity.magnitude * m_SpeedCoefficient;
+            engine.m_Speed = VehicleRigidBody.velocity.magnitude * m_SpeedCoefficient;
 
-            graph.UpdateGraph(Engine.m_Speed,Engine.m_EngineRPM,Engine.m_CurrentGear + 1);
-            Speedometer.UpdateDisplay(Engine.m_Speed, Engine.m_EngineRPM, s_SpeedType);
+            graph.UpdateGraph(engine.m_Speed, engine.m_EngineRPM, engine.m_CurrentGear + 1);
+            Speedometer.UpdateDisplay(engine.m_Speed, engine.m_EngineRPM, s_SpeedType);
 
-            GearField.text = string.Format("{0}{1}", Engine.m_CurrentGear+1,GenericFunctions.ToOrdinal(Engine.m_CurrentGear + 1));            
+            GearField.text = string.Format("{0}{1}", engine.m_CurrentGear+1,GenericFunctions.ToOrdinal(engine.m_CurrentGear + 1));            
         }
     }
 

@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 namespace UnityStandardAssets.Vehicles.Car
 {
-    [RequireComponent(typeof (EngineModel))]
+    [RequireComponent(typeof (Engine))]
     public class CarAudio : MonoBehaviour
     {
         // This script reads some of the car's current properties and plays sounds accordingly.
@@ -48,7 +48,7 @@ namespace UnityStandardAssets.Vehicles.Car
         private AudioSource m_HighAccel; // Source for the high acceleration sounds
         private AudioSource m_HighDecel; // Source for the high deceleration sounds
         private bool m_StartedSound; // flag for knowing if we have started sounds
-        private EngineModel Engine; // Reference to car we are controlling
+        private Engine Engine; // Reference to car we are controlling
 
 
 
@@ -56,7 +56,7 @@ namespace UnityStandardAssets.Vehicles.Car
         private void StartSound()
         {
             // get the carcontroller ( this will not be null as we have require component)
-            Engine = GetComponent<EngineModel>();
+            Engine = GetComponent<Engine>();
 
             // setup the simple audio source
             m_HighAccel = SetUpEngineAudioSource(highAccelClip);

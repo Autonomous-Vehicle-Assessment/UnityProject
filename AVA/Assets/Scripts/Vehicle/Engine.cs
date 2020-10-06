@@ -30,7 +30,7 @@ public class StandardWheel
     public WheelSide wheelSide;
 }
 
-public class EngineModel : MonoBehaviour
+public class Engine : MonoBehaviour
 {
     // ----- Engine ----- // 
     public int m_MaxTorque = 450;           // [Nm]

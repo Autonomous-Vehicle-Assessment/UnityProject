@@ -4,7 +4,7 @@ using UnityEditor;
 using System.Linq;
 using UnityEditor.SceneManagement;
 
-[CustomEditor(typeof(EngineModel))]
+[CustomEditor(typeof(Engine))]
 public class EngineEditor : Editor
 {
     private bool e_EngineStats = true;

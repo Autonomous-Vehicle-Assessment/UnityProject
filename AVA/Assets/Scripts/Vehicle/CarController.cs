@@ -11,7 +11,7 @@ namespace UnityStandardAssets.Vehicles.Car
 
     public class CarController : MonoBehaviour
     {
-        [SerializeField] private EngineModel Engine;
+        [SerializeField] private Engine engine;
         [SerializeField] private CarDriveType m_CarDriveType = CarDriveType.FourWheelDrive;
         [SerializeField] private int NumberofWheels;
         [SerializeField] public WheelCollider[] m_WheelColliders = new WheelCollider[4];
@@ -207,7 +207,7 @@ namespace UnityStandardAssets.Vehicles.Car
 
         private void ApplyDrive(float accel, float footbrake)
         {
-            float TransmissionTorque = accel * Engine.TransmissionTorque();
+            float TransmissionTorque = accel * engine.TransmissionTorque();
             
             switch (m_CarDriveType)
             {
