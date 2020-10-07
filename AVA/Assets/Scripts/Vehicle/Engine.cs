@@ -39,8 +39,11 @@ public class Engine : MonoBehaviour
     public int m_MaxTorqueRpm = 3500;       // [rpm]
     public int m_MaxPowerRpm = 6500;        // [rpm]
 
-    public float m_EngineRPM = 1000;          // [rpm]
-    public float m_EngineTorque = 306;      // [rpm]
+    public int m_MinRpm = 1000;             // [rpm]
+    public int m_MaxRpm = 6500;             // [rpm]
+
+    public float m_EngineRPM = 1000;        // [rpm]
+    public float m_EngineTorque = 306;      // [Nm]
 
     // ----- Vehicle ----- //
     public float m_TransmissionRPM = 0;       // [rpm]
@@ -62,8 +65,6 @@ public class Engine : MonoBehaviour
     public List<int> e_TorqueCurveValues = new List<int> { 306, 385, 439, 450, 450, 367 };
     public int e_CurvePoints = 6;
 
-    public int m_MinRpm = 1000;
-    public int m_MaxRpm = 6500;
 
     public int m_MinRpmTorque;
     public int m_PeakRpmTorque;

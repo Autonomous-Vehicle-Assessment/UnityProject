@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Transmission
+public class GearBox
 {
-
     // ----- Gearbox - STATUS ----- //
     private int m_CurrentGear;
     private int m_CurrentTransferCaseIndex;
@@ -21,15 +20,4 @@ public class Transmission
     private float finalDriveRatio = 1.0f;
     private float finalDriveEff = 1.0f;
 
-    // ----- Differential ----- //
-    private float diffSlipLimitFront = 1.0f;
-    private float diffSlipLimitRear = 1.0f;
-    private float diffTransferLimitFront = 1.0f;
-    private float diffTransferLimitRear = 1.0f;
-
-    
-    public Transmission(GearBox gearBox)
-    {
-
-    }
 }

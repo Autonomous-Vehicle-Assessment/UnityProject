@@ -42,7 +42,7 @@ public class WheelCollider_Fix : MonoBehaviour
 
                 if (Physics.Raycast(wheelModel.position, rayDirection, out RaycastHit hit, _wheelCollider.radius))
                 {
-                    if (!hit.transform.IsChildOf(carController.transform) && !hit.collider.isTrigger)
+                    if (!hit.transform.IsChildOf(engine.transform) && !hit.collider.isTrigger)
                     {
                         Debug.DrawLine(wheelModel.position, hit.point, Color.red);
 
@@ -54,7 +54,7 @@ public class WheelCollider_Fix : MonoBehaviour
 
                 if (Physics.Raycast(wheelModel.position + wheelModel.right * wheelWidth * .5f, rayDirection, out RaycastHit rightHit, _wheelCollider.radius))
                 {
-                    if (!rightHit.transform.IsChildOf(carController.transform) && !rightHit.collider.isTrigger)
+                    if (!rightHit.transform.IsChildOf(engine.transform) && !rightHit.collider.isTrigger)
                     {
                         Debug.DrawLine(wheelModel.position + wheelModel.right * wheelWidth * .5f, rightHit.point, Color.red);
 
@@ -66,7 +66,7 @@ public class WheelCollider_Fix : MonoBehaviour
 
                 if (Physics.Raycast(wheelModel.position - wheelModel.right * wheelWidth * .5f, rayDirection, out RaycastHit leftHit, _wheelCollider.radius))
                 {
-                    if (!leftHit.transform.IsChildOf(carController.transform) && !leftHit.collider.isTrigger)
+                    if (!leftHit.transform.IsChildOf(engine.transform) && !leftHit.collider.isTrigger)
                     {
                         Debug.DrawLine(wheelModel.position - wheelModel.right * wheelWidth * .5f, leftHit.point, Color.red);
 
