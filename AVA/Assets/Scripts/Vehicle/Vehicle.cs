@@ -80,7 +80,18 @@ public enum SettingsData : int
 /// </summary>
 public class Vehicle
 {
-    public int[,] data;
+    public int[][] data;                    // Data array (Jagged)
+    private VehicleSetup vehicleSetup;      // Vehicle parameters 
+    
+    public Vehicle(VehicleSetup _vehicleSetup)
+    {
+        data = new int[3][];
+        data[0] = new int[10];
+        data[1] = new int[23];
+        data[2] = new int[8];
+
+        vehicleSetup = _vehicleSetup;
+    }
 
     public void Set(Channel channel, InputData inputData, int Data)
     {
@@ -94,7 +105,6 @@ public class Vehicle
     {
         data[(int)channel][(int)settingsData] = Data;
     }
-
 
     public int Get(Channel channel, InputData inputData)
     {
