@@ -13,15 +13,23 @@ public class Engine
     private AnimationCurve PowerCurve;
 
     // ----- Engine ----- // 
-    private int MinRpm, MaxRpm;                             // Engine maximum/minimum RPM
-    private int MaxTorqueRpm, MaxPowerRpm;                  // RPM at maximum Torque and Power
-    private float EngineRpm, EngineTorque, EnginePower;     // Current engine status
+    public int MinRpm, MaxRpm;                  // Engine maximum/minimum RPM
+    public int MaxTorqueRpm, MaxPowerRpm;       // RPM at maximum Torque and Power
+    public float Rpm;                           // Current engine status
+    private float Inertia;                      // Mass moment of inertia [kg*m^2]
+    private float AngularAccel;                 // Engine Angular acceleration 
 
-    
-    public Engine(AnimationCurve torqueCurve, AnimationCurve powerCurve)
+    /// <summary>
+    /// Instantiate an engine model from torque and power curves.
+    /// </summary>
+    /// <param name="torqueCurve">Engine torque curve (Torque/RPM)</param>
+    /// <param name="powerCurve">Engine torque curve (Power/RPM)</param>
+    /// <param name="inertia">Engine mass moment of inertia [kg m^3]</param>
+    public Engine(AnimationCurve torqueCurve, AnimationCurve powerCurve, float inertia)
     {
         TorqueCurve = torqueCurve;
         PowerCurve = powerCurve;
+        Inertia = inertia;
 
         // Extract MaxTorqueRpm from TorqueCurve
         int MaxTorque = 0;
@@ -46,216 +54,51 @@ public class Engine
         }
     }
 
-    // Initialize
-    public void Awake()
+    /// <summary>
+    /// Calculates engine torque from engine torque curve and current RPM.
+    /// </summary>
+    /// <param name="rpm">Current engine RPM.</param>
+    /// <returns>Current engine torque.</returns>
+    public float Torque()
     {
-
-
-
-        // Update Center of Mass
-        if (m_CenterofMass != null)
-        {
-            m_Wheel[0].m_collider.attachedRigidbody.centerOfMass = m_CenterofMass.transform.localPosition;
-        }
-
-        m_Rigidbody = GetComponent<Rigidbody>();
-        terrainTracker = GetComponent<TerrainTracker>();
-
-        NumberofDrivingWheels = 0;
-        for (int i = 0; i < NumberofWheels; i++)
-        {
-            if (m_Wheel[i].drive)
-            {
-                NumberofDrivingWheels += 1;
-            }
-        }
-        m_Wheel[0].m_collider.suspensionExpansionLimited = true;
+        return TorqueCurve.Evaluate(Rpm);
     }
 
-    public void FixedUpdate()
+    /// <summary>
+    /// Calculates engine power from engine power curve and current RPM.
+    /// </summary>
+    /// <param name="rpm">Current engine RPM</param>
+    /// <returns>Current engine power.</returns>
+    public float Power()
     {
-        
-        // Sway Bar (Anti-Roll bar)
-        if (swayBarActive)
-        {
-            float travelL = 1.0f;
-            float travelR = 1.0f;
-            for (int i = 0; i < NumberofWheels / 2;)
-            {
-                WheelCollider WheelL = m_Wheel[i].m_collider;
-                i++;
-                WheelCollider WheelR = m_Wheel[i].m_collider;
-                i++;
-
-                bool groundedL = WheelL.GetGroundHit(out WheelHit hitL);
-                if (groundedL)
-                    travelL = (-WheelL.transform.InverseTransformPoint(hitL.point).y - WheelL.radius) / WheelL.suspensionDistance;
-
-                bool groundedR = WheelR.GetGroundHit(out WheelHit hitR);
-                if (groundedR)
-                    travelR = (-WheelR.transform.InverseTransformPoint(hitR.point).y - WheelR.radius) / WheelR.suspensionDistance;
-
-                float antiRollForce = (travelL - travelR) * AntiRoll;
-            
-
-                if (groundedL)
-                    m_Rigidbody.AddForceAtPosition(WheelL.transform.up * -antiRollForce,
-                           WheelL.transform.position);
-                if (groundedR)
-                    m_Rigidbody.AddForceAtPosition(WheelR.transform.up * antiRollForce,
-                           WheelR.transform.position);
-            }
-
-        }
-    }
-    public void UpdateState()
-    {
-        //UpdateTerrainWheelParameters();
-        m_TransmissionRPM = (m_Wheel[2].m_collider.rpm + m_Wheel[3].m_collider.rpm) / 2f;
-        m_EngineRPM = m_TransmissionRPM * GearingRatioEff();
-        m_EngineRPM = Mathf.Abs(m_EngineRPM);
-        m_EngineRPM = Mathf.Clamp(m_EngineRPM, m_MinRpm, m_MaxRpm);
-
-        ShiftScheduler();
-        m_EngineRPM = m_TransmissionRPM * GearingRatioEff();
-        m_EngineRPM = Mathf.Abs(m_EngineRPM);
-        m_EngineRPM = Mathf.Clamp(m_EngineRPM, m_MinRpm, m_MaxRpm);
-
-        m_EngineTorque = m_MotorCurve.Evaluate(m_EngineRPM);
-    }
-    public void Move(float steering, float accel, float footbrake, float handbrake)
-    {
-        // Update mesh position and rotation
-        for (int i = 0; i < NumberofWheels; i++)
-        {
-            Quaternion quat;
-            Vector3 pos;
-            m_Wheel[i].m_collider.GetWorldPose(out pos, out quat);
-            m_Wheel[i].mesh.transform.position = pos;
-            m_Wheel[i].mesh.transform.rotation = quat; // * new Quaternion(1, 1, 1, 1);
-        }
-
-        // Clamp input values
-        steering = Mathf.Clamp(steering, -1, 1);
-        accel = Mathf.Clamp(accel, -1, 1); // <------  Throttle cap
-        footbrake = -1 * Mathf.Clamp(footbrake, 0, 1);
-        handbrake = Mathf.Clamp(handbrake, 0, 1);
-
-        // Input to colliders
-        float m_SteerAngleInner = steering * m_MaximumInnerSteerAngle;
-        float m_SteerAngleOuter = steering * m_MaximumOuterSteerAngle;
-        float m_TransmissionTorque = TransmissionTorque() / (float)NumberofDrivingWheels;
-
-        for (int i = 0; i < NumberofWheels; i++)
-        {
-            if (m_Wheel[i].steering)        // Apply steering
-            {
-                if (steering > 0) // Turning right, apply outer and inner steering angle
-                {
-                    switch (m_Wheel[i].wheelSide)
-                    {
-                        case WheelSide.Left:
-                            m_Wheel[i].m_collider.steerAngle = m_SteerAngleOuter;
-                            break;
-                        case WheelSide.Right:
-                            m_Wheel[i].m_collider.steerAngle = m_SteerAngleInner;
-                            break;
-                    }
-                }
-                else
-                {
-                    switch (m_Wheel[i].wheelSide)
-                    {
-                        case WheelSide.Left:
-                            m_Wheel[i].m_collider.steerAngle = m_SteerAngleInner;
-                            break;
-                        case WheelSide.Right:
-                            m_Wheel[i].m_collider.steerAngle = m_SteerAngleOuter;
-                            break;
-                    }
-                }
-                
-            }
-
-            if (m_Wheel[i].drive)           // Apply torque
-            {
-                m_Wheel[i].m_collider.motorTorque = m_TransmissionTorque * accel;             
-            }
-
-            if (m_Wheel[i].handBrake)       // Apply handbrake
-            {
-                m_Wheel[i].m_collider.brakeTorque = m_HandbrakeTorque * -handbrake;
-            }
-
-            if (m_Wheel[i].serviceBrake)    // Apply servicebrake (footbrake)
-            {
-                m_Wheel[i].m_collider.brakeTorque = m_BrakeTorque * -footbrake;
-            }
-
-            if (footbrake == 0 && accel == 0 && handbrake == 0)     // Motor braking
-            {
-                m_Wheel[i].m_collider.brakeTorque = m_TransmissionTorque * 0.5f;
-            }
-        }
-
-    }
-      
-    public float TransmissionTorque()
-    {
-        float TransmissionTorque = m_EngineTorque * GearingRatioEff();
-
-        return TransmissionTorque;
+        return PowerCurve.Evaluate(Rpm);
     }
 
-    public float GearingRatioEff()
+    /// <summary>
+    /// Updates the engine RPM based on clutch and accelerator. When clutch is fully engaged transmission rpm = engine rpm.
+    /// </summary>
+    /// <param name="clutch">Clutch values (1 fully disengaged (pedel pressed), 0 fully engaged (pedal released))</param>
+    /// <param name="throttle">Accelerator pedal (1 fully pressed, 0 fully released)</param>
+    /// <param name="TransmissionRpm">Current transmission rpm (engine side)</param>
+    public int[][] Update(int[][] data)
     {
-        float Gearing = m_GearRatio[m_CurrentGear] * m_GearEff[m_CurrentGear] * m_TransferCaseRatio[(int)m_CurrentTransferCase] * m_TransferCaseEff[(int)m_CurrentTransferCase] * m_FinalDriveRatio * m_FinalDriveEff;
-        return Gearing;
+        float clutch = data[(int)Channel.Input][(int)InputData.Clutch] / 10000.0f;
+        float throttle = data[(int)Channel.Input][(int)InputData.Throttle] / 10000.0f;
+        float transmissionRpm = data[(int)Channel.Vehicle][(int)VehicleData.TransmissionRpm] / 10000.0f;
+
+        if (clutch == 1.0f)
+        {
+            Rpm += AngularAccel * Time.deltaTime;
+            AngularAccel = Torque() / Inertia * throttle;
+        }
+        else
+        {
+            // To do: Differential equation during gear shift - RPM difference between engine and transmission.
+            Rpm = transmissionRpm;
+        }
+
+        data[(int)Channel.Vehicle][(int)VehicleData.EngineRpm] = (int)(Rpm * 10000f);
+
+        return data;
     }
-
-    public void UpdateTerrainWheelParameters()
-    {
-        float ForwardStiffness = 1f;
-        float SidewaysStiffness = 1f;
-
-        if (terrainTracker.surfaceIndex == 1)
-        {
-            ForwardStiffness = 0.3f;
-            SidewaysStiffness = 0.3f;
-        }
-        if (terrainTracker.surfaceIndex == 2)
-        {
-            ForwardStiffness = 0.6f;
-            SidewaysStiffness = 0.6f;
-        }
-        for (int i = 0; i < NumberofWheels; i++)
-        {
-            WheelFrictionCurve fFriction = m_Wheel[i].m_collider.forwardFriction;
-            WheelFrictionCurve sFriction = m_Wheel[i].m_collider.sidewaysFriction;
-            fFriction.stiffness = ForwardStiffness;
-            sFriction.stiffness = SidewaysStiffness;
-            m_Wheel[i].m_collider.forwardFriction = fFriction;
-            m_Wheel[i].m_collider.sidewaysFriction = sFriction;
-        }
-    }
-
-    // ----- Gear shift scheduler - automatic gear ----- // 
-    public void ShiftScheduler()
-    {
-        if (m_CurrentGear != m_NumberOfGears - 1)   // Highest gear
-        {
-            if (m_EngineRPM >= m_MaxPowerRpm)
-            {
-                m_CurrentGear += 1;
-            }
-        }
-        if (m_CurrentGear != 0)                     // Lowest gear
-        {
-            if (m_EngineRPM <= m_MaxTorqueRpm)
-            {
-                m_CurrentGear -= 1;
-            }
-        }
-    }
-
 }

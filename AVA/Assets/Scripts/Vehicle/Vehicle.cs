@@ -93,6 +93,12 @@ public class Vehicle
         vehicleSetup = _vehicleSetup;
     }
 
+    public void Update()
+    {
+        data = vehicleSetup.engine.Update(data);
+
+    }
+
     public void Set(Channel channel, InputData inputData, int Data)
     {
         data[(int)channel][(int)inputData] = Data;

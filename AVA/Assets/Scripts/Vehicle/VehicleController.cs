@@ -15,7 +15,7 @@ public class VehicleController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        vehicle.Update();
     }
 
 
@@ -34,7 +34,7 @@ public class VehicleController : MonoBehaviour
 
     public Engine EngineSetup()
     {
-        return new Engine();
+        return new Engine(new AnimationCurve(), new AnimationCurve());
     }
 
     public Transmission TransmissionSetup()
