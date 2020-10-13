@@ -20,7 +20,7 @@ public class TerrainMechanics : MonoBehaviour
     public void Start()
     {
         SoilList = new List<SoilType>();
-        SoilList.Add(new SoilType(TerrainType.LETESand));
+        SoilList.Add(new SoilType(TerrainType.SandyBrendan));
         Debug.Log(SoilList[0].terrainName);
     }
 }
