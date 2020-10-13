@@ -32,4 +32,28 @@ public class Transmission
     {
 
     }
+
+    /// <summary>
+    /// Calculates transmission slip.
+    /// </summary>
+    /// <param name="EngineRpm">Engine output RPM.</param>
+    /// <param name="TransmissionRpm">Transmission RPM on engine side.</param>
+    /// <returns>Slipvalue 
+    /// (   1: EngineRpm >> TransmissionRpm) 
+    /// (  -1: EngineRpm << TransmissionRpm) 
+    /// (   0: EngineRpm == TransmissionRpm
+    /// </returns>
+    public float Slip(float EngineRpm, float TransmissionRpm)
+    {
+        float slip;
+        if (EngineRpm >= TransmissionRpm)
+        {
+            slip = 1 - TransmissionRpm / EngineRpm;
+        }
+        else
+        {
+            slip = EngineRpm / TransmissionRpm;
+        }
+        return slip;
+    }
 }

@@ -89,6 +89,7 @@ namespace UnityStandardAssets.Vehicles.Car
         // Update is called once per frame
         private void Update()
         {
+            /*
             // get the distance to main camera
             float camDist = (Camera.main.transform.position - transform.position).sqrMagnitude;
 
@@ -156,6 +157,7 @@ namespace UnityStandardAssets.Vehicles.Car
                     m_LowDecel.dopplerLevel = useDoppler ? dopplerLevel : 0;
                 }
             }
+            */
         }
 
 

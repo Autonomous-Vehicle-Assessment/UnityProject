@@ -17,6 +17,7 @@ public class EngineEditor : Editor
 
     public override void OnInspectorGUI()
     {
+        /*
         // ----- Initialization ----- //
         //base.OnInspectorGUI();                        // Default inspector
         Engine engine = (Engine)target;       // Target object (Engine)
@@ -278,7 +279,7 @@ public class EngineEditor : Editor
             EditorUtility.SetDirty(engine);
             EditorSceneManager.MarkSceneDirty(engine.gameObject.scene);
         }
+        */
     }
-
 }
 

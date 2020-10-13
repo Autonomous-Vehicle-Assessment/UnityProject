@@ -45,7 +45,8 @@ namespace UnityStandardAssets.Vehicles.Car
                     m_CurrentTransfercase = TransferCase.High;
                 }
             }
-            
+
+            /*
             engine.m_CurrentTransferCase = m_CurrentTransfercase;
 
             engine.UpdateState();
@@ -115,6 +116,8 @@ namespace UnityStandardAssets.Vehicles.Car
             {
                 lineRenderers[i].enabled = TrackPoints;
             }
+            */
         }
+
     }
 }

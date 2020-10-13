@@ -29,6 +29,7 @@ public class WheelCollider_Fix : MonoBehaviour
 
     void Update()
     {
+        /*
         if (useWheelAntiStuck)
         {
             if (!wheelModel)
@@ -83,5 +84,7 @@ public class WheelCollider_Fix : MonoBehaviour
         {
             _wheelCollider.radius = Mathf.LerpUnclamped(_wheelCollider.radius, orgRadius, Time.deltaTime * 10f);
         }
+        */
     }
+
 }

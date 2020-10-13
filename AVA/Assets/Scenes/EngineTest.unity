@@ -43,7 +43,7 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 11
+  serializedVersion: 12
   m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -118,6 +118,8 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
+    maxJobWorkers: 0
+    preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
@@ -260,6 +262,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -284,6 +287,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &602782739
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -415,117 +419,203 @@ MonoBehaviour:
   m_GameObject: {fileID: 982760577}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40329aa80c3cea44a742fa4bf4c31d5, type: 3}
+  m_Script: {fileID: 11500000, guid: c81e3392c245acb448384c4e4795b8bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaxTorque: 0
-  m_MaxPower: 0
-  m_MaxTorqueRpm: 3500
-  m_MaxPowerRpm: 6500
-  m_EngineRPM: 1000
-  m_EngineTorque: 306
-  m_TransmissionRPM: 0
-  m_MaximumInnerSteerAngle: 34
-  m_MaximumOuterSteerAngle: 30
-  m_HandbrakeTorque: 50000
-  m_BrakeTorque: 3000
-  m_TransferCase: 0
-  m_Rigidbody: {fileID: 0}
-  NumberofWheels: 4
-  NumberofDrivingWheels: 0
-  m_Speed: 0
-  m_CenterofMass: {fileID: 0}
-  m_Wheel: []
-  m_MotorCurve:
+  TorqueCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 1000
-      value: 306
-      inSlope: 0.07745098
-      outSlope: 0.07745098
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 2020
-      value: 385
-      inSlope: 0.07745098
-      outSlope: 0.07745098
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 2990
-      value: 439
-      inSlope: 0.055670105
-      outSlope: 0.055670105
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 3500
-      value: 450
-      inSlope: 0
-      outSlope: 0
+      time: 700
+      value: 400
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 5000
-      value: 450
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 6500
-      value: 367
-      inSlope: -0.055333335
-      outSlope: -0.055333335
+      time: 1200
+      value: 700
+      inSlope: 0.011851748
+      outSlope: 0.011851748
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
+      outWeight: 0.076620944
+    - serializedVersion: 3
+      time: 1700
+      value: 698
+      inSlope: -0.042767994
+      outSlope: -0.042767994
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.23731616
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2500
+      value: 520
+      inSlope: -0.42591766
+      outSlope: -0.42591766
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2850
+      value: 0
+      inSlope: -1.577189
+      outSlope: -1.577189
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.11856654
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  e_SpeedCurveValues: e8030000e4070000ae0b0000ac0d00008813000064190000
-  e_TorqueCurveValues: 3201000081010000b7010000c2010000c20100006f010000
-  e_CurvePoints: 6
-  m_MinRpm: 1000
-  m_MaxRpm: 6500
-  m_MinRpmTorque: 0
-  m_PeakRpmTorque: 0
-  m_CurrentGear: 0
-  m_NumberOfGears: 1
-  m_CurrentTransferCaseIndex: 0
-  m_CurrentTransferCase: 0
-  m_GearEff: 0
-  m_GearRatio:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  m_ReverseGearRatio: -1
-  m_FinalDriveRatio: 1
-  m_TransferCaseRatio:
-  - 2.72
-  - 1
+  PowerCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  ThrottleCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.14317851
+      value: -0.2722955
+      inSlope: 2.416666
+      outSlope: 2.416666
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.30246088
+      value: 0.6869929
+      inSlope: 1.3600376
+      outSlope: 1.3600376
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.04875361
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  EngineFriction:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 600
+      value: -50
+      inSlope: 0.5
+      outSlope: 0.5
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 700
+      value: 0
+      inSlope: 0.28082672
+      outSlope: 0.28082672
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.09973608
+    - serializedVersion: 3
+      time: 1294.3995
+      value: 135.7773
+      inSlope: 0.13485625
+      outSlope: 0.13485625
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2850
+      value: 200
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  ClutchCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.2504024
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.5
+      inSlope: 5.484234
+      outSlope: 5.484234
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.052082933
+    - serializedVersion: 3
+      time: 0.8
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  EngineRpm: 0
+  EngineTorque: 0
 --- !u!4 &982760579
 Transform:
   m_ObjectHideFlags: 0

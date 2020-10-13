@@ -4,16 +4,17 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.UIElements;
 
 public class Engine
 {
     // ----- Curves ----- // 
     private AnimationCurve TorqueCurve;
     private AnimationCurve PowerCurve;
+    private AnimationCurve FrictionCurve;
 
     // ----- Engine ----- // 
-    public int MinRpm, MaxRpm;                  // Engine maximum/minimum RPM
+    public int MinRpm, MaxRpm, StallRpm;        // Engine maximum/minimum RPM
     public int MaxTorqueRpm, MaxPowerRpm;       // RPM at maximum Torque and Power
     public float Rpm;                           // Current engine status
     private float Inertia;                      // Mass moment of inertia [kg*m^2]
@@ -25,11 +26,15 @@ public class Engine
     /// <param name="torqueCurve">Engine torque curve (Torque/RPM)</param>
     /// <param name="powerCurve">Engine torque curve (Power/RPM)</param>
     /// <param name="inertia">Engine mass moment of inertia [kg m^3]</param>
-    public Engine(AnimationCurve torqueCurve, AnimationCurve powerCurve, float inertia)
+    public Engine(AnimationCurve torqueCurve, AnimationCurve powerCurve, AnimationCurve frictionCurve, float inertia)
     {
         TorqueCurve = torqueCurve;
         PowerCurve = powerCurve;
+        FrictionCurve = frictionCurve;
         Inertia = inertia;
+
+        MinRpm = (int)torqueCurve.keys[0].time;
+        MaxRpm = (int)torqueCurve.keys[torqueCurve.length - 1].time;
 
         // Extract MaxTorqueRpm from TorqueCurve
         int MaxTorque = 0;
@@ -59,9 +64,10 @@ public class Engine
     /// </summary>
     /// <param name="rpm">Current engine RPM.</param>
     /// <returns>Current engine torque.</returns>
-    public float Torque()
+    public float Torque(float throttle)
     {
-        return TorqueCurve.Evaluate(Rpm);
+        float friction = FrictionCurve.Evaluate(Rpm);
+        return (TorqueCurve.Evaluate(Rpm) + friction) * throttle - friction;
     }
 
     /// <summary>
@@ -82,23 +88,72 @@ public class Engine
     /// <param name="TransmissionRpm">Current transmission rpm (engine side)</param>
     public int[][] Update(int[][] data)
     {
-        float clutch = data[(int)Channel.Input][(int)InputData.Clutch] / 10000.0f;
-        float throttle = data[(int)Channel.Input][(int)InputData.Throttle] / 10000.0f;
-        float transmissionRpm = data[(int)Channel.Vehicle][(int)VehicleData.TransmissionRpm] / 10000.0f;
+        //To do: differential equation during gear shift - RPM difference between engine and transmission.
 
-        if (clutch == 1.0f)
+        // Engine up and running
+        if (data[Channel.Vehicle][VehicleData.EngineWorking] == 1)
         {
+            float ClutchLock = data[Channel.Vehicle][VehicleData.ClutchLock] / 10000f;
+            float throttle = data[Channel.Input][InputData.Throttle] / 10000.0f;            
+            Rpm = data[Channel.Vehicle][VehicleData.EngineRpm] / 10000.0f;
             Rpm += AngularAccel * Time.deltaTime;
-            AngularAccel = Torque() / Inertia * throttle;
-        }
-        else
-        {
-            // To do: Differential equation during gear shift - RPM difference between engine and transmission.
-            Rpm = transmissionRpm;
-        }
 
-        data[(int)Channel.Vehicle][(int)VehicleData.EngineRpm] = (int)(Rpm * 10000f);
+            // Clutch disengaged fully, engine free rotation
+            if (ClutchLock == 0f)
+            {
+                AngularAccel = Torque(throttle) / Inertia;
+            }
+            // Clutch engaged, friction and torque transfer between transmission and engine
+            else
+            {
+                // To do: friction pad, torque transfer
+                float transmissionRpm = data[Channel.Vehicle][VehicleData.TransmissionRpm] / 10000.0f;
+                float ClutchSlip = Slip(Rpm, transmissionRpm);
+                float ClutchTorque = ClutchLock * ClutchSlip * 10000;
+                AngularAccel = (-ClutchTorque+Torque(throttle)) / Inertia;
+
+                data[Channel.Vehicle][VehicleData.ClutchTorque] = (int)(ClutchTorque * 10000);
+                data[Channel.Vehicle][VehicleData.TransmissionRpm] += (int)(ClutchTorque/(Inertia*100) * 10000); // <- Manual vehicle acceleration
+            }
+
+            if(Rpm < StallRpm)
+            {
+                Rpm = 0;
+                data[Channel.Vehicle][VehicleData.EngineStalled] = 1;
+                data[Channel.Vehicle][VehicleData.EngineWorking] = 0;
+            }
+
+            data[Channel.Vehicle][VehicleData.EngineTorque] = (int)(Torque(throttle) * 10000.0f);
+            data[Channel.Vehicle][VehicleData.EnginePower] = (int)(Power() * throttle * 10000.0f);
+            data[Channel.Vehicle][VehicleData.EngineLoad] = (int)(throttle * 10000.0f);
+            data[Channel.Vehicle][VehicleData.EngineRpm] = (int)(Rpm * 10000.0f);
+        }
 
         return data;
     }
+
+    /// <summary>
+    /// Calculates transmission slip.
+    /// </summary>
+    /// <param name="EngineRpm">Engine output RPM.</param>
+    /// <param name="TransmissionRpm">Transmission RPM on engine side.</param>
+    /// <returns>Slipvalue 
+    /// (   1: EngineRpm >> TransmissionRpm) 
+    /// (  -1: EngineRpm << TransmissionRpm) 
+    /// (   0: EngineRpm == TransmissionRpm
+    /// </returns>
+    public float Slip(float EngineRpm, float TransmissionRpm)
+    {
+        float slip;
+        if (EngineRpm >= TransmissionRpm)
+        {
+            slip = 1 - TransmissionRpm / EngineRpm;
+        }
+        else
+        {
+            slip = EngineRpm / TransmissionRpm - 1;
+        }
+        return slip;
+    }
 }
+
