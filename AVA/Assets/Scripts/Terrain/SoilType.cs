@@ -1,6 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System;
+using MathNet.Numerics.Optimization;
+using MathNet.Numerics.
+
 
 /// <summary>
 /// Soil class containing relevant soil parameters and all relevant terramechanical functions.
@@ -35,6 +37,7 @@ public class SoilType
     private float Kx;       //[m]
     private float Ky;       //[m]
     private float gamma_s;  //Density [kg/m^3]
+    private const float DeltaT_desired = 0.001f; //[rad]
 
     public SoilType(TerrainType _terrainType)
     {
@@ -82,10 +85,44 @@ public class SoilType
         gamma_s = _gamma_s;
     }
 
+    private float VerticalStress(float theta_e, float tyreWidth, float tyreRadius, float pressurePlateMainDimension, float slipRatio)
+    {
+        float sum = 0;
+        float theta_tot = theta_e - ExitAngle();
+
+        int Steps = (int)(theta_tot / DeltaT_desired + 1);
+        float DeltaT = theta_tot / (Steps - 1);
+
+        for (int i = 0; i < Steps; i++)
+        {
+            float theta = ExitAngle() + DeltaT * i;
+            float normalPressure = RadialStress(theta, slipRatio, tyreRadius, pressurePlateMainDimension);
+            if (theta < 0)
+            {
+                sum -= (normalPressure * Mathf.Cos(theta) + ShearStress(normalPressure, theta, tyreRadius, slipRatio) * Mathf.Sin(theta)) * DeltaT;
+            }
+            else
+            {
+
+                sum += (normalPressure * Mathf.Cos(theta) - ShearStress(normalPressure, theta, tyreRadius, slipRatio) * Mathf.Sin(theta)) * DeltaT;
+            }
+
+        }
+
+
+        return (tyreWidth * tyreRadius) / 2 * sum;
+
+    }
+
     public float EntryAngle()
     {
         // Insert fminsearch here, currently fixed.
-        return Mathf.PI / 6;
+        //return Mathf.PI / 6;
+
+        
+
+        float theta_e = 1f;// FindMinimum();
+        return theta_e;
     }
     public float ExitAngle()
     {
@@ -114,28 +151,51 @@ public class SoilType
     {
         float k = Mathf.Tan(Mathf.PI / 4f - phi / 2f); // kappa/my
 
-        float y = -(Mathf.Pow(k,2f) - Mathf.Sqrt(Mathf.Pow(k,4f) * Mathf.Pow(slipRatio, 2f) - 2 * Mathf.Pow(k,4f) * slipRatio + Mathf.Pow(k,4f) + Mathf.Pow(k,2f) * Mathf.Pow(slipRatio, 2) - 2 * Mathf.Pow(k,2f) * slipRatio)) / (k * (slipRatio - 1) * (Mathf.Pow(k,2f) + 1));
-        float x = -(Mathf.Sqrt(Mathf.Pow(k,4f) * Mathf.Pow(slipRatio,2) - 2 * Mathf.Pow(k,4f) * slipRatio + Mathf.Pow(k,4f) + Mathf.Pow(k,2f) * Mathf.Pow(slipRatio, 2) - 2 * Mathf.Pow(k,2f) * slipRatio) + 1) / ((slipRatio - 1) * (Mathf.Pow(k,2) + 1));
+        float y = -(Mathf.Pow(k, 2f) - Mathf.Sqrt(Mathf.Pow(k, 4f) * Mathf.Pow(slipRatio, 2f) - 2 * Mathf.Pow(k, 4f) 
+            * slipRatio + Mathf.Pow(k, 4f) + Mathf.Pow(k, 2f) * Mathf.Pow(slipRatio, 2) - 2 * Mathf.Pow(k, 2f) 
+            * slipRatio)) / (k * (slipRatio - 1) * (Mathf.Pow(k, 2f) + 1));
+        float x = -(Mathf.Sqrt(Mathf.Pow(k,4f) * Mathf.Pow(slipRatio,2) - 2 * Mathf.Pow(k,4f) * slipRatio 
+            + Mathf.Pow(k,4f) + Mathf.Pow(k,2f) * Mathf.Pow(slipRatio, 2) - 2 * Mathf.Pow(k,2f) * slipRatio) + 1) 
+            / ((slipRatio - 1) * (Mathf.Pow(k,2) + 1));
+
         float angle = Mathf.Abs(Mathf.Atan2(Mathf.Abs(y), Mathf.Abs(x)));
 
         return Mathf.Min(Mathf.Max(angle,0f),(1f / 3f) * phi);
     }
 
 
-    public float RadialShearStressFront(float angle, float entryAngle, float tyreRadius, float pressurePlateDimension)
+    private float RadialStressFront(float angle, float tyreRadius, float pressurePlateMainDimension)
     {
-        return (c * k_1 + gamma_s * pressurePlateDimension * k_2) * Mathf.Pow((tyreRadius / pressurePlateDimension), n) * Mathf.Pow((Mathf.Cos(angle) - Mathf.Cos(entryAngle)), n);
+        return (c * k_1 + gamma_s * pressurePlateMainDimension * k_2) * Mathf.Pow((tyreRadius / pressurePlateMainDimension), n) 
+            * Mathf.Pow((Mathf.Cos(angle) - Mathf.Cos(EntryAngle())), n);
     }
 
-    public float RadialShearStressRear(float angle, float slipRatio, float tyreRadius, float pressurePlateDimension)
+    private float RadialStressRear(float angle, float slipRatio, float tyreRadius, float pressurePlateMainDimension)
     {
-        float var1 = c * k_1 + gamma_s * pressurePlateDimension * k_2;
-        float var2 = Mathf.Pow((tyreRadius / pressurePlateDimension), n);
-        float var3 = EntryAngle() - ((angle - EntryAngle()) / (MaxRadialStressAngle(slipRatio) - ExitAngle())) * (ExitAngle() - MaxRadialStressAngle(slipRatio));
-        float var4 = Mathf.Pow((Mathf.Cos(var3) - Mathf.Cos(EntryAngle())), n);
-        float sigma_nr = var1 * var2 * var4;
-        return sigma_nr;
+        float sigma_nr = c * k_1 + gamma_s * pressurePlateMainDimension * k_2 
+            * Mathf.Pow((tyreRadius / pressurePlateMainDimension), n) 
+            * Mathf.Pow((Mathf.Cos(EntryAngle() - ((angle - EntryAngle()) / (MaxRadialStressAngle(slipRatio) - ExitAngle())) 
+            * (EntryAngle() - MaxRadialStressAngle(slipRatio))) - Mathf.Cos(EntryAngle())), n);
 
+        return sigma_nr;
+    }
+
+    public float RadialStress(float angle, float slipRatio, float tyreRadius, float pressurePlateMainDimension)
+    {
+        float sigma_n = 0f;
+
+        if (angle <= EntryAngle() && angle >= ExitAngle())
+        {
+            if (angle >= MaxRadialStressAngle(slipRatio))
+            {
+                sigma_n = RadialStressFront(angle, tyreRadius, pressurePlateMainDimension);
+            }
+            else
+            {
+                sigma_n = RadialStressRear(angle, slipRatio, tyreRadius, pressurePlateMainDimension);
+            }
+        }
+        return sigma_n;
     }
 
 
