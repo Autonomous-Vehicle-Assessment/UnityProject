@@ -56,6 +56,6 @@ public class VehicleController : MonoBehaviour
     public Transmission TransmissionSetup()
     {
         GearBox gearBox = new GearBox();
-        return new Transmission(gearBox);
+        return new Transmission(gearBox, ClutchCurve);
     }
 }

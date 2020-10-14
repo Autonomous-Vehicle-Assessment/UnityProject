@@ -93,28 +93,9 @@ public class Engine
         // Engine up and running
         if (data[Channel.Vehicle][VehicleData.EngineWorking] == 1)
         {
-            float ClutchLock = data[Channel.Vehicle][VehicleData.ClutchLock] / 10000f;
             float throttle = data[Channel.Input][InputData.Throttle] / 10000.0f;            
             Rpm = data[Channel.Vehicle][VehicleData.EngineRpm] / 10000.0f;
             Rpm += AngularAccel * Time.deltaTime;
-
-            // Clutch disengaged fully, engine free rotation
-            if (ClutchLock == 0f)
-            {
-                AngularAccel = Torque(throttle) / Inertia;
-            }
-            // Clutch engaged, friction and torque transfer between transmission and engine
-            else
-            {
-                // To do: friction pad, torque transfer
-                float transmissionRpm = data[Channel.Vehicle][VehicleData.TransmissionRpm] / 10000.0f;
-                float ClutchSlip = Slip(Rpm, transmissionRpm);
-                float ClutchTorque = ClutchLock * ClutchSlip * 10000;
-                AngularAccel = (-ClutchTorque+Torque(throttle)) / Inertia;
-
-                data[Channel.Vehicle][VehicleData.ClutchTorque] = (int)(ClutchTorque * 10000);
-                data[Channel.Vehicle][VehicleData.TransmissionRpm] += (int)(ClutchTorque/(Inertia*100) * 10000); // <- Manual vehicle acceleration
-            }
 
             if(Rpm < StallRpm)
             {
@@ -130,6 +111,11 @@ public class Engine
         }
 
         return data;
+    }
+
+    public void Equilibrium(float torque)
+    {
+        AngularAccel = torque / Inertia;
     }
 
     /// <summary>
