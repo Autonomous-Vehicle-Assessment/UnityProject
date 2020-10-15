@@ -89,12 +89,13 @@ public class Engine
     public int[][] Update(int[][] data)
     {
         //To do: differential equation during gear shift - RPM difference between engine and transmission.
-
+        
         // Engine up and running
         if (data[Channel.Vehicle][VehicleData.EngineWorking] == 1)
         {
-            float throttle = data[Channel.Input][InputData.Throttle] / 10000.0f;            
-            Rpm = data[Channel.Vehicle][VehicleData.EngineRpm] / 10000.0f;
+            float throttle = data[Channel.Input][InputData.Throttle] / 10000.0f;
+            Debug.Log(throttle);
+            Rpm = data[Channel.Vehicle][VehicleData.EngineRpm] / 1000.0f;
             Rpm += AngularAccel * Time.deltaTime;
 
             if(Rpm < StallRpm)
@@ -104,42 +105,20 @@ public class Engine
                 data[Channel.Vehicle][VehicleData.EngineWorking] = 0;
             }
 
-            data[Channel.Vehicle][VehicleData.EngineTorque] = (int)(Torque(throttle) * 10000.0f);
-            data[Channel.Vehicle][VehicleData.EnginePower] = (int)(Power() * throttle * 10000.0f);
-            data[Channel.Vehicle][VehicleData.EngineLoad] = (int)(throttle * 10000.0f);
-            data[Channel.Vehicle][VehicleData.EngineRpm] = (int)(Rpm * 10000.0f);
+            data[Channel.Vehicle][VehicleData.EngineTorque] = (int)(Torque(throttle) * 1000.0f);
+            data[Channel.Vehicle][VehicleData.EnginePower] = (int)(Power() * throttle * 1000.0f);
+            data[Channel.Vehicle][VehicleData.EngineLoad] = (int)(throttle * 1000.0f);
+            data[Channel.Vehicle][VehicleData.EngineRpm] = (int)(Rpm * 1000.0f);
         }
 
         return data;
     }
 
-    public void Equilibrium(float torque)
+    public void Equilibrium(int[][] data)
     {
-        AngularAccel = torque / Inertia;
-    }
-
-    /// <summary>
-    /// Calculates transmission slip.
-    /// </summary>
-    /// <param name="EngineRpm">Engine output RPM.</param>
-    /// <param name="TransmissionRpm">Transmission RPM on engine side.</param>
-    /// <returns>Slipvalue 
-    /// (   1: EngineRpm >> TransmissionRpm) 
-    /// (  -1: EngineRpm << TransmissionRpm) 
-    /// (   0: EngineRpm == TransmissionRpm
-    /// </returns>
-    public float Slip(float EngineRpm, float TransmissionRpm)
-    {
-        float slip;
-        if (EngineRpm >= TransmissionRpm)
-        {
-            slip = 1 - TransmissionRpm / EngineRpm;
-        }
-        else
-        {
-            slip = EngineRpm / TransmissionRpm - 1;
-        }
-        return slip;
+        float EngineTorque = data[Channel.Vehicle][VehicleData.EngineTorque] / 1000.0f;
+        float ClutchSlipTorque = data[Channel.Vehicle][VehicleData.ClutchSlipTorque] / 1000.0f;
+        AngularAccel = (EngineTorque - ClutchSlipTorque) / Inertia;
     }
 }
 

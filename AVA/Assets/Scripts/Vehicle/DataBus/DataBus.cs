@@ -58,7 +58,7 @@ public static class InputData
     /// Manual gear level position (gear number)
     /// <para>-1 (reverse), 0 (neutral), 1, 2, 3, ...</para>
     /// </summary>
-    public const int ManualGear     = 5;
+    public const int ManualGear = 5;
     /// <summary>
     /// Automatic transmission mode (gear mode): 0, 1, 2, 3, 4, 5 = M, P, R, N, D, L
     /// <para>M (0): Manual: do not automatically engage gears. Use manual gear shifting.</para>
@@ -75,17 +75,23 @@ public static class InputData
     /// </summary>
     public const int GearShift      = 7;
     /// <summary>
+    /// Transfer case selector switch
+    /// <para> 0 = Low</para>
+    /// <para> 1 = High</para>
+    /// </summary>
+    public const int TransferCase   = 8;
+    /// <summary>
     /// Retarder brake stick position (retarder level)
     /// <para>0 (off), 1, 2, 3, ...</para>
     /// </summary>
-    public const int Retarder       = 8;
+    public const int Retarder       = 9;
     /// <summary>
     /// Ignition key position
     /// <para>-1 = off</para>
     /// <para> 0 = acc-on</para>
     /// <para> 1 = start</para>
     /// </summary>
-    public const int Key            = 9;
+    public const int Key            = 10;
 }
 
 /// <summary>
@@ -160,18 +166,30 @@ public static class VehicleData
     /// </summary>
     public const int ClutchTorque       = 10;
     /// <summary>
+    /// Torque at the output of the clutch from slip(Nm)
+    /// <para>Resolution: 1000</para>
+    /// <para>150000 = 150 Nm</para>
+    /// </summary>
+    public const int ClutchSlipTorque = 10;
+    /// <summary>
+    /// Clutch RPMs (rpm), transmission engine-side RPMs.
+    /// <para>Resolution: 1000</para>
+    /// <para>1200000 = 1200 rpm</para>
+    /// </summary>
+    public const int ClutchRpm          = 11;
+    /// <summary>
     /// Lock ratio of the clutch (%)
     /// <para>Resolution: 1000</para>
     /// <para>800 = 0.8 = 80%</para>
     /// </summary>
-    public const int ClutchLock         = 11;
+    public const int ClutchLock         = 12;
     /// <summary>
     /// Engaged gear (gear number)
     /// <para>Negative = reverse</para>
     /// <para>       0 = Neutral or Park</para>
     /// <para>Positive = forward</para>
     /// </summary>
-    public const int GearboxGear        = 12;
+    public const int GearboxGear        = 13;
     /// <summary>
     /// Actual transmission mode (gear mode): 0, 1, 2, 3, 4, 5 = M, P, R, N, D, L
     /// <para>M (0): Manual: do not automatically engage gears. Use manual gear shifting.</para>
@@ -181,49 +199,55 @@ public static class VehicleData
     /// <para>D (4): Drive: automatically engage forward gears.</para>
     /// <para>L (5): Low: first gear only.</para>
     /// </summary>
-    public const int GearboxMode        = 13;
+    public const int GearboxMode        = 14;
     /// <summary>
     /// Is the gearbox in the middle of a gear shift operation?
     /// <para>0 = no</para>
     /// <para>1 = yes</para>
     /// </summary>
-    public const int GearboxShifting    = 14;
+    public const int GearboxShifting    = 15;
     /// <summary>
     /// Brake torque injected in the driveline by the retarder (Nm)
     /// <para>Resolution: 1000</para>
     /// <para>2000000 = 2000 Nm</para>
     /// </summary>
-    public const int RetarderTorque     = 15;
+    public const int RetarderTorque     = 16;
     /// <summary>
     /// Rpms at the output of the gearbox (rpm)
     /// <para>Resolution: 1000</para>
     /// <para>100000 = 100 rpm</para>
     /// </summary>
-    public const int TransmissionRpm    = 16;
+    public const int TransmissionRpm    = 17;
+    /// <summary>
+    /// Torque at the output of the transmission (Nm)
+    /// <para>Resolution: 1000</para>
+    /// <para>150000 = 150 Nm</para>
+    /// </summary>
+    public const int TransmissionTorque = 18;
     /// <summary>
     /// Is the ABS being engaged in any wheel?
     /// <para>       0 = no</para>
     /// <para>non-zero = yes</para>
     /// </summary>
-    public const int AbsEngaged         = 17;
+    public const int AbsEngaged         = 19;
     /// <summary>
     /// Is the TCS limiting the engine throttle?
     /// <para>       0 = no</para>
     /// <para>non-zero = yes</para>
     /// </summary>
-    public const int TcsEngaged         = 18;
+    public const int TcsEngaged         = 20;
     /// <summary>
     /// Is the ESC applying brakes for keeping stability?
     /// <para>       0 = no</para>
     /// <para>non-zero = yes</para>
     /// </summary>
-    public const int EscEngaged         = 19;
+    public const int EscEngaged         = 21;
     /// <summary>
     /// Is the ASR applying brakes for reducing wheel slip?
     /// <para>       0 = no</para>
     /// <para>non-zero = yes</para>
     /// </summary>
-    public const int AsrEngaged         = 20;
+    public const int AsrEngaged         = 22;
     /// <summary>
     /// Steering wheel position after steering aids (%)
     /// <para>Resolution 10000</para>
@@ -231,13 +255,13 @@ public static class VehicleData
     /// <para>     0 = center</para>
     /// <para> 10000 = full right</para>
     /// </summary>
-    public const int AidedSteer         = 21;
+    public const int AidedSteer         = 23;
     /// <summary>
     /// Overall fuel consumption (L/100km)
     /// <para>Resolution: 1000</para>
     /// <para>20230 = 20.23 L/100km</para>
     /// </summary>
-    public const int FuelConsumption    = 22;
+    public const int FuelConsumption    = 24;
 }
 
 /// <summary>

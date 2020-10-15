@@ -24,6 +24,8 @@ public class Vehicle
     public void Update()
     {
         data = vehicleSetup.engine.Update(data);
+        data = vehicleSetup.transmission.Update(data);
+        vehicleSetup.engine.Equilibrium(data);
     }
 
     public void Set(int Channel, int DataChannel, int Data)

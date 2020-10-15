@@ -40,7 +40,7 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        if (Input.GetAxis("Restart")!= 0)
+        if (Input.GetAxis("Restart")!= 0 ||Input.GetKeyUp(KeyCode.JoystickButton7))
         {
             ReloadScene();
             ResumeGame();

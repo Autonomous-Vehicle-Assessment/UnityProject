@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using UnityEngine;
+﻿using UnityEngine;
 
 public enum GearMode
 {
@@ -20,6 +17,7 @@ public class Transmission
     // ----- GearBox ----- //
     private GearBox gearBox;
     private int CurrentGear;
+    private TransferCase transferCase;
 
     // ----- Differential ----- //
     private float diffSlipLimitFront = 1.0f;
@@ -38,103 +36,40 @@ public class Transmission
     {
         float Clutch = data[Channel.Input][InputData.Clutch] / 10000f;
         float ClutchLock = ClutchCurve.Evaluate(Clutch);
-        float EngineTorque = data[Channel.Vehicle][VehicleData.EngineTorque] / 10000f;
-        float ClutchSlipTorque;
-        data[Channel.Vehicle][VehicleData.ClutchLock] = (int)(ClutchLock * 10000f);
-        //data[Channel.Vehicle][VehicleData.TransmissionRpm] = 
+        float EngineTorque = data[Channel.Vehicle][VehicleData.EngineTorque] / 1000f;
+        float ClutchTorque, ClutchSlipTorque;
+        data[Channel.Vehicle][VehicleData.ClutchLock] = (int)(ClutchLock * 1000f);
+        //data[Channel.Vehicle][VehicleData.TransmissionRpm] = Wheel and Differential Data
 
         // Clutch disengaged fully, engine free rotation
         if (ClutchLock == 0f)
         {
             ClutchSlipTorque = 0f;
+            ClutchTorque = 0f;
         }
         // Clutch engaged, friction and torque transfer between transmission and engine
         else
         {
-            float TransmissionRpm = data[Channel.Vehicle][VehicleData.TransmissionRpm] / 10000.0f;
-            float EngineRpm = data[Channel.Vehicle][VehicleData.EngineRpm] / 10000.0f;
-            float ClutchSlip = Slip(EngineRpm, TransmissionRpm);
+            float ClutchRpm = data[Channel.Vehicle][VehicleData.ClutchRpm] / 1000.0f;
+            float EngineRpm = data[Channel.Vehicle][VehicleData.EngineRpm] / 1000.0f;
+            float ClutchSlip = Slip(EngineRpm, ClutchRpm);
 
             // Frictiondisc force based on slip (To do: add slip-friction curve, currently linear)
             ClutchSlipTorque = ClutchLock * ClutchSlip * 10000;
+            ClutchTorque = ClutchLock * EngineTorque + ClutchSlipTorque;
         }
 
-        data[Channel.Vehicle][VehicleData.ClutchTorque] = (int)((ClutchSlipTorque + EngineTorque) * 10000);
+        data[Channel.Vehicle][VehicleData.ClutchTorque] = (int)(ClutchTorque * 1000);
+        data[Channel.Vehicle][VehicleData.ClutchSlipTorque] = (int)(ClutchSlipTorque * 1000);
+        
+
+        // ----- Gearbox Update ----- //
+        data = gearBox.Update(data);
+
+
         return data;
     }
 
-    public int[][] GearStatus(int[][] data)
-    {
-        GearMode gearMode = (GearMode)data[Channel.Input][InputData.AutomaticGear];
-        CurrentGear = data[Channel.Vehicle][VehicleData.GearboxGear];
-
-        switch (gearMode)
-        {
-            case GearMode.Manual:
-                break;
-            case GearMode.Park:
-                if (CurrentGear != 0)
-                {
-                    ShiftNeutral();
-                    SetPark();
-                }
-                break;
-            case GearMode.Reverse:
-                if (CurrentGear != -1)
-                {
-                    ShiftGear(-1);
-                }
-                break;
-            case GearMode.Neutral:
-                if (CurrentGear != 0)
-                {
-                    ShiftNeutral();
-                }
-                break;
-            case GearMode.Drive:
-                break;
-            case GearMode.Low:
-                break;
-            default:
-                break;
-        }
-
-        data[Channel.Vehicle][VehicleData.GearboxMode] = (int)gearMode;
-        data[Channel.Vehicle][VehicleData.GearboxGear] = CurrentGear;
-        return data;
-    }
-
-    /// <summary>
-    /// Shifting out of current gear and into desired gear.
-    /// </summary>
-    public void ShiftGear(int DesiredGear)
-    {
-        ShiftNeutral();
-        ShiftIntoGear(DesiredGear);
-    }
-
-    /// <summary>
-    /// Shifting out to the Neutral gear, disconnecting the gearbox from the engine.
-    /// </summary>
-    public void ShiftNeutral()
-    {
-        // Set gear to neutral
-        CurrentGear = 0;
-    }
-
-    /// <summary>
-    /// Shifting into desired gear.
-    /// </summary>
-    public void ShiftIntoGear(int DesiredGear)
-    {
-        // Set gear to desired gear
-        CurrentGear = DesiredGear;
-    }
-
-    public void SetPark()
-    {
-
-    }
     /// <summary>
     /// Calculates transmission slip.
     /// </summary>
