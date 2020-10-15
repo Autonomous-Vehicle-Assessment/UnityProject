@@ -1,8 +1,4 @@
 ﻿using UnityEngine;
-using System;
-using MathNet.Numerics.Optimization;
-using MathNet.Numerics.
-
 
 /// <summary>
 /// Soil class containing relevant soil parameters and all relevant terramechanical functions.
@@ -89,7 +85,6 @@ public class SoilType
     {
         float sum = 0;
         float theta_tot = theta_e - ExitAngle();
-
         int Steps = (int)(theta_tot / DeltaT_desired + 1);
         float DeltaT = theta_tot / (Steps - 1);
 
@@ -103,25 +98,162 @@ public class SoilType
             }
             else
             {
-
                 sum += (normalPressure * Mathf.Cos(theta) - ShearStress(normalPressure, theta, tyreRadius, slipRatio) * Mathf.Sin(theta)) * DeltaT;
             }
+        }
+        return (tyreWidth * tyreRadius) / 2 * sum;
+    }
 
+    private float LineSearch(float delta, int kmax, float tol, float tyreWidth, float tyreRadius, float pressurePlateMainDimension, float slipRatio)
+    {
+        int n = 0; 
+        float step = delta;
+        while (VerticalStress(0f, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio) < VerticalStress(step, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio) && n <kmax)
+        {
+            step /= 2f;
+            n++;
         }
 
 
-        return (tyreWidth * tyreRadius) / 2 * sum;
+        /// Phase 1 - Golden Section Search ///
+        // Golden section search values for first iteration (0 as lower bracket)
+        int q = 0;  // Golden section search exponent
+        float alpha_l = 0;
+        float alpha_i = Alpha(q, step);
+        float alpha_u = Alpha(q + 1, step);
 
+        // Golden section loop for bracketing of the optimum point
+        n = 1;
+        float VerticalStress0 = VerticalStress(Alpha(q, step), tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
+        float VerticalStress1 = VerticalStress(Alpha(q + 1, step), tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
+        while (n < kmax && VerticalStress0  > VerticalStress1)
+        {
+            q++;
+            alpha_l = Alpha(q - 1, step);
+            alpha_i = Alpha(q, step);
+            alpha_u = Alpha(q + 1, step);
+            n++;
+        }
+
+        // If flat optimum, make one more iteration
+        VerticalStress0 = VerticalStress(Alpha(q, step), tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
+        VerticalStress1 = VerticalStress(Alpha(q + 1, step), tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
+        if (VerticalStress0 == VerticalStress1)
+        {
+            q++;
+            alpha_l = Alpha(q - 1, step);
+            alpha_i = Alpha(q, step);
+            alpha_u = Alpha(q + 1, step);
+        }
+
+        if (n == kmax)
+        {
+            Debug.Log("No Brackets found in Linesearch");
+        }
+
+        /// Phase 2 - Polynomial Interpolation ///
+        n = 1;
+
+        // Check initial polynomial point
+        // Calculates top point of interpolated polynomial based on a1 and a2
+        float alpha_bar = -A1(alpha_l, alpha_i, alpha_u, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio) 
+                    / (2 * A2(alpha_l, alpha_i, alpha_u, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio));
+
+        // Deviation between top point and intermediate point
+        float dev = Mathf.Abs(alpha_bar - alpha_i);
+
+        if (VerticalStress(alpha_l, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio) == VerticalStress(alpha_u, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio))
+        {
+            alpha_bar = alpha_l; // Returns first minimum point
+        }
+        else
+        {
+            while (n < kmax && dev > tol)
+            {
+                n++;
+                alpha_bar = -A1(alpha_l, alpha_i, alpha_u, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio)
+                / (2 * A2(alpha_l, alpha_i, alpha_u, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio));
+                dev = Mathf.Abs(alpha_bar - alpha_i);
+
+                if (alpha_i < alpha_bar)   // Step 4
+                {
+                    if (VerticalStress(alpha_i, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio) < VerticalStress(alpha_bar, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio))   // Step 4a
+                    {
+                        alpha_u = alpha_bar;
+                    }
+                    else        // Step 4b
+                    {
+                        alpha_l = alpha_i;
+                        alpha_i = alpha_bar;
+                    }
+                }
+                else    // Step 5
+                {
+                    if (VerticalStress(alpha_i, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio) < VerticalStress(alpha_bar, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio))   // Step 5a
+                    {
+                        alpha_l = alpha_bar;
+                    }
+                    else        // Step 5b
+                    {
+                        alpha_u = alpha_i;
+                        alpha_i = alpha_bar;
+                    }
+                }
+            }
+        }
+
+        float finalStepSize = alpha_bar;
+
+
+        float theta_e = 20f * Mathf.Deg2Rad;
+        return theta_e;
     }
 
-    public float EntryAngle()
+    private float Alpha(float q, float delta)
+    {
+        float alpha_q = delta;
+        for (int i = 0; i < q; i++)
+        {
+            alpha_q += delta * Mathf.Pow((1 + Mathf.Sqrt(5))/2f,i);
+        }
+        return alpha_q;
+    }
+
+    private float A1(float alpha_l, float alpha_i, float alpha_u, float tyreWidth, float tyreRadius, float pressurePlateMainDimension, float slipRatio)
+    {
+        float f_l = VerticalStress(alpha_l, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
+        float f_i = VerticalStress(alpha_i, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
+        float f_u = VerticalStress(alpha_u, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
+        return (f_i - f_l) / (alpha_i - alpha_l) 
+            - A2(alpha_l, alpha_i, alpha_u, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio) 
+            * (alpha_l + alpha_i);
+    }
+
+    private float A2(float alpha_l, float alpha_i, float alpha_u, float tyreWidth, float tyreRadius, float pressurePlateMainDimension, float slipRatio)
+    {
+        float f_l = VerticalStress(alpha_l, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
+        float f_i = VerticalStress(alpha_i, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
+        float f_u = VerticalStress(alpha_u, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
+        return 1 / (alpha_u - alpha_i) * ((f_u - f_l) / (alpha_u - alpha_l) - (f_i - f_l) / (alpha_i - alpha_l));
+    }
+
+
+
+
+
+
+
+
+
+
+    public float EntryAngle(float delta, int kmax, float tol, float tyreWidth, float tyreRadius, float pressurePlateMainDimension, float slipRatio)
     {
         // Insert fminsearch here, currently fixed.
         //return Mathf.PI / 6;
 
-        
+        float theta_e = LineSearch(delta, kmax, tol, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
 
-        float theta_e = 1f;// FindMinimum();
+        //float theta_e = 20f * Mathf.Deg2Rad;// FindMinimum();
         return theta_e;
     }
     public float ExitAngle()
@@ -172,10 +304,10 @@ public class SoilType
 
     private float RadialStressRear(float angle, float slipRatio, float tyreRadius, float pressurePlateMainDimension)
     {
-        float sigma_nr = c * k_1 + gamma_s * pressurePlateMainDimension * k_2 
-            * Mathf.Pow((tyreRadius / pressurePlateMainDimension), n) 
-            * Mathf.Pow((Mathf.Cos(EntryAngle() - ((angle - EntryAngle()) / (MaxRadialStressAngle(slipRatio) - ExitAngle())) 
-            * (EntryAngle() - MaxRadialStressAngle(slipRatio))) - Mathf.Cos(EntryAngle())), n);
+        float sigma_nr = (c * k_1 + gamma_s * pressurePlateMainDimension * k_2) 
+            * Mathf.Pow(tyreRadius / pressurePlateMainDimension, n) 
+            * Mathf.Pow(Mathf.Cos(EntryAngle() - (angle - ExitAngle()) / (MaxRadialStressAngle(slipRatio) - ExitAngle()) 
+            * (EntryAngle() - MaxRadialStressAngle(slipRatio))) - Mathf.Cos(EntryAngle()), n);
 
         return sigma_nr;
     }
@@ -186,12 +318,15 @@ public class SoilType
 
         if (angle <= EntryAngle() && angle >= ExitAngle())
         {
+            //Debug.Log("Inside angles");
             if (angle >= MaxRadialStressAngle(slipRatio))
             {
+                //Debug.Log("Angle is in front of Max");
                 sigma_n = RadialStressFront(angle, tyreRadius, pressurePlateMainDimension);
             }
             else
             {
+                //Debug.Log("Angle is in behind of Max");
                 sigma_n = RadialStressRear(angle, slipRatio, tyreRadius, pressurePlateMainDimension);
             }
         }
