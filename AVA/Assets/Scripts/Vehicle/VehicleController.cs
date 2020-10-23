@@ -1,18 +1,37 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
 
 public class VehicleController : MonoBehaviour
 {
     private Vehicle vehicle;
-    public AnimationCurve TorqueCurve;
-    public AnimationCurve PowerCurve;
-    public AnimationCurve ThrottleCurve;
-    public AnimationCurve EngineFriction;
-    public AnimationCurve ClutchCurve;
-    public float EngineRpm;
-    public float EngineTorque;
-    public float TransmissionRpm;
+
+    // ----- Engine Curves ----- //
+    public AnimationCurve torqueCurve;
+    public List<int> torqueCurveRpm;
+    public List<int> torqueCurveValues;
+
+    public AnimationCurve powerCurve;
+    public List<int> powerCurveRpm;
+    public List<int> powerCurveValues;
+
+    public AnimationCurve torqueConverterCurve;
+    public List<float> torqueConverterCurveSpeedRatio;
+    public List<float> torqueConverterCurveValues;
+
+    public AnimationCurve torqueConverterEfficiencyCurve;
+    public List<float> torqueConverterEfficiencyCurveSpeedRatio;
+    public List<float> torqueConverterEfficiencyCurveValues;
+
+    public AnimationCurve throttleCurve;
+    public AnimationCurve engineFriction;
+    public AnimationCurve clutchPedalCurve;
+    public float engineRpm;
+    public float engineTorque;
+    public float transmissionRpm;
 
     public int CurrentGear;
+    public GearMode gearMode;
 
     // ----- Gearbox - SETUP ----- //
     /// <summary>
@@ -72,6 +91,7 @@ public class VehicleController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        SetupCurves();
         vehicle = new Vehicle(VehicleSetupAssemble());
         vehicle.data[Channel.Vehicle][VehicleData.EngineRpm] = 700 * 1000;
         vehicle.data[Channel.Vehicle][VehicleData.EngineWorking] = 1;
@@ -80,9 +100,12 @@ public class VehicleController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        vehicle.data[Channel.Input][InputData.Throttle] = (int)(ThrottleCurve.Evaluate(Input.GetAxis("Throttle")) * 10000);
+        vehicle.data[Channel.Input][InputData.Throttle] = (int)(throttleCurve.Evaluate(Input.GetAxis("Throttle")) * 10000);
         vehicle.data[Channel.Input][InputData.Clutch] = (int)(Input.GetAxis("Clutch") * 10000);
-        vehicle.data[Channel.Vehicle][VehicleData.ClutchLock] = (int)(ClutchCurve.Evaluate(Mathf.Max(0,Input.GetAxis("Clutch"))) * 1000);
+        
+        vehicle.data[Channel.Input][InputData.Clutch] = 1 * 10000;
+        vehicle.data[Channel.Input][InputData.AutomaticGear] = (int)gearMode;
+
         int GearShift = 0;
         if (Input.GetButtonUp("ShiftUp"))
         {
@@ -94,9 +117,9 @@ public class VehicleController : MonoBehaviour
         }
         vehicle.data[Channel.Input][InputData.GearShift] = GearShift;
         vehicle.Update();
-        EngineRpm = vehicle.data[Channel.Vehicle][VehicleData.EngineRpm] / 1000.0f;
-        EngineTorque = vehicle.data[Channel.Vehicle][VehicleData.EngineTorque] / 1000.0f;
-        TransmissionRpm = vehicle.data[Channel.Vehicle][VehicleData.TransmissionRpm] / 1000.0f;
+        engineRpm = vehicle.data[Channel.Vehicle][VehicleData.EngineRpm] / 1000.0f;
+        engineTorque = vehicle.data[Channel.Vehicle][VehicleData.EngineTorque] / 1000.0f;
+        transmissionRpm = vehicle.data[Channel.Vehicle][VehicleData.TransmissionRpm] / 1000.0f;
 
         CurrentGear = vehicle.data[Channel.Vehicle][VehicleData.GearboxGear];
 
@@ -118,12 +141,101 @@ public class VehicleController : MonoBehaviour
 
     public Engine EngineSetup()
     {
-        return new Engine(TorqueCurve, PowerCurve, EngineFriction, 0.15f);
+        return new Engine(torqueCurve, powerCurve, engineFriction, 0.15f);
     }
 
     public Transmission TransmissionSetup()
     {
         GearBox gearBox = new GearBox(GearRatio,GearEff,ReverseGearRatio,ReverseGearEff,TransferCaseRatio,TransferCaseEff,FinalDriveRatio,FinalDriveEff);
-        return new Transmission(gearBox, ClutchCurve);
+        return new Transmission(gearBox, clutchPedalCurve, torqueConverterCurve, torqueConverterEfficiencyCurve);
+    }
+    
+    public void SetupCurves()
+    {
+        torqueCurve = new AnimationCurve();
+        powerCurve = new AnimationCurve();
+        torqueConverterCurve = new AnimationCurve();
+        torqueConverterEfficiencyCurve = new AnimationCurve();
+
+        torqueCurve.keys = ListToKeyframes(torqueCurveRpm, torqueCurveValues);
+        powerCurve.keys = ListToKeyframes(powerCurveRpm, powerCurveValues);
+        torqueConverterCurve.keys = ListToKeyframes(torqueConverterCurveSpeedRatio, torqueConverterCurveValues);
+        torqueConverterEfficiencyCurve.keys = ListToKeyframes(torqueConverterEfficiencyCurveSpeedRatio, torqueConverterEfficiencyCurveValues);
+
+        torqueCurve = SmoothCurve(torqueCurve);
+        powerCurve = SmoothCurve(powerCurve);
+        torqueConverterCurve = SmoothCurve(torqueConverterCurve);
+        torqueConverterEfficiencyCurve = SmoothCurve(torqueConverterEfficiencyCurve);
+    }
+
+    /// <summary>
+    /// Converts two lists into an array of keyframes.
+    /// </summary>
+    /// <param name="time">x - values of the graph.</param>
+    /// <param name="values">y - values of the graph.</param>
+    /// <returns>Array of keyframes for constructing </returns>
+    public Keyframe[] ListToKeyframes(List<int> time,List<int> values)
+    {
+        Keyframe[] keyframes = new Keyframe[time.Count];
+
+        for (int i = 0; i < time.Count; i++)
+        {
+            keyframes[i] = new Keyframe(time[i], values[i]);
+        }
+
+        return keyframes;
+    }
+
+    /// <summary>
+    /// Converts two lists into an array of keyframes.
+    /// </summary>
+    /// <param name="time">x - values of the graph.</param>
+    /// <param name="values">y - values of the graph.</param>
+    /// <returns>Array of keyframes for constructing </returns>
+    public Keyframe[] ListToKeyframes(List<float> time, List<float> values)
+    {
+        Keyframe[] keyframes = new Keyframe[time.Count];
+
+        for (int i = 0; i < time.Count; i++)
+        {
+            keyframes[i] = new Keyframe(time[i], values[i]);
+        }
+
+        return keyframes;
+    }
+
+    /// <summary>
+    /// Smoothen animation curves, neighboring equal values sets tangents to 0.
+    /// </summary>
+    /// <param name="curve">Animation Curve to be smoothed</param>
+    /// <returns>Smoothed animation curve</returns>
+    public AnimationCurve SmoothCurve(AnimationCurve curve)
+    {
+        for (int i = 0; i < curve.keys.Length; i++)
+        {
+
+            if (i != 0 && i != curve.keys.Length-1)
+            {
+                float current = curve.keys[i].value;
+                float previous = curve.keys[i - 1].value;
+                float next = curve.keys[i + 1].value;
+
+                if (current == next || current == previous)
+                {
+                    curve.keys[0].inTangent = 0;
+                    curve.keys[0].outTangent = 0;
+                }
+                else
+                {
+                    curve.SmoothTangents(i, 0);
+                }
+            }
+            else
+            {
+                curve.SmoothTangents(i, 0);
+            }            
+        }
+
+        return curve;
     }
 }

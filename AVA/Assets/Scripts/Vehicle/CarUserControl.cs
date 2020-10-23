@@ -10,7 +10,7 @@ namespace UnityStandardAssets.Vehicles.Car
         private DataLogging dataLogger;
 
 
-        [SerializeField] public TransferCase m_CurrentTransfercase;
+        //[SerializeField] public TransferCase m_CurrentTransfercase;
         [SerializeField] public bool TrackPoints;
         [SerializeField] public int RenderTime = 1;
         private LineRenderer[] lineRenderers;
@@ -34,17 +34,17 @@ namespace UnityStandardAssets.Vehicles.Car
             float footbrake = Input.GetAxis("FootBrake");
             float handbrake = Input.GetAxis("HandBrake");
 
-            if (Input.GetKeyDown(KeyCode.E)||Input.GetKeyDown(KeyCode.JoystickButton0))
-            {
-                if (m_CurrentTransfercase == TransferCase.High)
-                {
-                    m_CurrentTransfercase = TransferCase.Low;
-                }
-                else
-                {
-                    m_CurrentTransfercase = TransferCase.High;
-                }
-            }
+            //if (Input.GetKeyDown(KeyCode.E)||Input.GetKeyDown(KeyCode.JoystickButton0))
+            //{
+            //    if (m_CurrentTransfercase == TransferCase.High)
+            //    {
+            //        m_CurrentTransfercase = TransferCase.Low;
+            //    }
+            //    else
+            //    {
+            //        m_CurrentTransfercase = TransferCase.High;
+            //    }
+            //}
 
             /*
             engine.m_CurrentTransferCase = m_CurrentTransfercase;

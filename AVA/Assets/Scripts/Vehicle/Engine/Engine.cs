@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
+﻿using UnityEngine;
 
 public class Engine
 {
@@ -94,9 +88,9 @@ public class Engine
         if (data[Channel.Vehicle][VehicleData.EngineWorking] == 1)
         {
             float throttle = data[Channel.Input][InputData.Throttle] / 10000.0f;
-            Debug.Log(throttle);
             Rpm = data[Channel.Vehicle][VehicleData.EngineRpm] / 1000.0f;
             Rpm += AngularAccel * Time.deltaTime;
+            Rpm = Mathf.Max(Rpm, StallRpm);
 
             if(Rpm < StallRpm)
             {
@@ -118,6 +112,7 @@ public class Engine
     {
         float EngineTorque = data[Channel.Vehicle][VehicleData.EngineTorque] / 1000.0f;
         float ClutchSlipTorque = data[Channel.Vehicle][VehicleData.ClutchSlipTorque] / 1000.0f;
+              
         AngularAccel = (EngineTorque - ClutchSlipTorque) / Inertia;
     }
 }

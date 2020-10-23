@@ -6,11 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public enum TransferCase
-{
-    Low,
-    High
-}
+
 
 public enum WheelSide
 {
@@ -51,7 +47,7 @@ public class EngineOld : MonoBehaviour
     public float m_MaximumOuterSteerAngle = 30f;
     public float m_HandbrakeTorque = 50000f;
     public float m_BrakeTorque = 3000f;
-    public TransferCase m_TransferCase;
+    // public TransferCase m_TransferCase;
     public Rigidbody m_Rigidbody;
     public int NumberofWheels = 4;
     public int NumberofDrivingWheels;
@@ -73,7 +69,7 @@ public class EngineOld : MonoBehaviour
     public int m_CurrentGear;
     public int m_NumberOfGears;
     public int m_CurrentTransferCaseIndex;
-    public TransferCase m_CurrentTransferCase;
+    // public TransferCase m_CurrentTransferCase;
     public float[] m_TransferCaseEff = new float[2];
     public float[] m_GearRatio = new float[10];
     public float[] m_GearEff = new float[10];
@@ -250,7 +246,7 @@ public class EngineOld : MonoBehaviour
 
     public float GearingRatioEff()
     {
-        float Gearing = m_GearRatio[m_CurrentGear] * m_GearEff[m_CurrentGear] * m_TransferCaseRatio[(int)m_CurrentTransferCase] * m_TransferCaseEff[(int)m_CurrentTransferCase] * m_FinalDriveRatio * m_FinalDriveEff;
+        float Gearing = 0;// = m_GearRatio[m_CurrentGear] * m_GearEff[m_CurrentGear] * m_TransferCaseRatio[(int)m_CurrentTransferCase] * m_TransferCaseEff[(int)m_CurrentTransferCase] * m_FinalDriveRatio * m_FinalDriveEff;
         return Gearing;
     }
 

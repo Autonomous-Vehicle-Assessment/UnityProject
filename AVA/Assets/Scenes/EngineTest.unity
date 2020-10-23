@@ -404,7 +404,7 @@ GameObject:
   - component: {fileID: 982760579}
   - component: {fileID: 982760578}
   m_Layer: 0
-  m_Name: Engine
+  m_Name: 135
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -422,202 +422,145 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c81e3392c245acb448384c4e4795b8bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TorqueCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 700
-      value: 400
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1200
-      value: 700
-      inSlope: 0.011851748
-      outSlope: 0.011851748
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.076620944
-    - serializedVersion: 3
-      time: 1700
-      value: 698
-      inSlope: -0.042767994
-      outSlope: -0.042767994
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.23731616
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 2500
-      value: 520
-      inSlope: -0.42591766
-      outSlope: -0.42591766
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 2850
-      value: 0
-      inSlope: -1.577189
-      outSlope: -1.577189
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.11856654
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  PowerCurve:
+  torqueCurve:
     serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  ThrottleCurve:
+  torqueCurveRpm: bc0200002003000084030000e80300004c040000b00400001405000078050000dc05000040060000a4060000080700006c070000d00700003408000098080000fc08000060090000c4090000dd090000220b0000
+  torqueCurveValues: 900100009a010000c20100002602000071020000bc020000bc020000bc020000bc020000bc020000ba020000b70200009d0200007f020000640200004a020000320200001c02000008020000f901000000000000
+  powerCurve:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -0.14317851
-      value: -0.2722955
-      inSlope: 2.416666
-      outSlope: 2.416666
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.30246088
-      value: 0.6869929
-      inSlope: 1.3600376
-      outSlope: 1.3600376
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.04875361
-      outWeight: 0
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  EngineFriction:
+  powerCurveRpm: bc0200002003000084030000e80300004c040000b00400001405000078050000dc05000040060000a4060000080700006c070000d00700003408000098080000fc08000060090000c4090000dd090000220b0000
+  powerCurveValues: 1d000000220000002a0000003a00000048000000580000005f000000670000006e000000750000007c00000083000000850000008600000087000000870000008700000088000000880000008600000000000000
+  torqueConverterCurve:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 600
-      value: -50
-      inSlope: 0.5
-      outSlope: 0.5
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 700
-      value: 0
-      inSlope: 0.28082672
-      outSlope: 0.28082672
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.09973608
-    - serializedVersion: 3
-      time: 1294.3995
-      value: 135.7773
-      inSlope: 0.13485625
-      outSlope: 0.13485625
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 2850
-      value: 200
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  ClutchCurve:
+  torqueConverterCurveSpeedRatio:
+  - 0
+  - 0.121
+  - 0.242
+  - 0.365
+  - 0.484
+  - 0.599
+  - 0.708
+  - 0.787
+  - 0.848
+  - 0.874
+  - 0.895
+  - 0.91
+  - 0.917
+  - 0.924
+  - 0.93
+  - 0.935
+  - 0.94
+  - 0.944
+  - 0.947
+  - 0.949
+  - 0.951
+  - 0.953
+  - 0.963
+  - 0.958
+  - 0.96
+  - 0.962
+  - 0.964
+  - 0.965
+  - 0.967
+  - 0.968
+  - 0.97
+  torqueConverterCurveValues:
+  - 1.747
+  - 1.65
+  - 1.574
+  - 1.481
+  - 1.386
+  - 1.294
+  - 1.205
+  - 1.127
+  - 1.065
+  - 1.035
+  - 1.009
+  - 0.994
+  - 0.992
+  - 0.993
+  - 0.993
+  - 0.993
+  - 0.993
+  - 0.992
+  - 0.991
+  - 0.99
+  - 0.99
+  - 0.989
+  - 0.993
+  - 0.991
+  - 0.991
+  - 0.992
+  - 0.996
+  - 0.995
+  - 0.994
+  - 0.994
+  - 0.993
+  torqueConverterEfficiencyCurve:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.2504024
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.5
-      value: 0.5
-      inSlope: 5.484234
-      outSlope: 5.484234
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.052082933
-    - serializedVersion: 3
-      time: 0.8
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  EngineRpm: 0
-  EngineTorque: 0
-  TransmissionRpm: 0
+  torqueConverterEfficiencyCurveSpeedRatio:
+  - 0
+  - 0.1
+  - 0.2
+  - 0.3
+  - 0.4
+  - 0.5
+  - 0.6
+  - 0.7
+  - 0.8
+  - 0.9
+  - 1
+  torqueConverterEfficiencyCurveValues:
+  - 0
+  - 0.2
+  - 0.35
+  - 0.525
+  - 0.64
+  - 0.75
+  - 0.8125
+  - 0.875
+  - 0.91
+  - 0.91
+  - 1
+  throttleCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  engineFriction:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  clutchPedalCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  engineRpm: 0
+  engineTorque: 0
+  transmissionRpm: 0
   CurrentGear: 0
+  gearMode: 0
   GearRatio:
   - 0
   - 0

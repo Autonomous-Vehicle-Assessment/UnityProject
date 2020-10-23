@@ -12,85 +12,109 @@ public enum GearMode
 public class Transmission
 {
     // ----- Clutch ----- //
-    private AnimationCurve ClutchCurve;
+    private AnimationCurve ClutchPedalCurve;
 
     // ----- GearBox ----- //
     private GearBox gearBox;
-    private int CurrentGear;
-    private TransferCase transferCase;
 
-    // ----- Differential ----- //
-    private float diffSlipLimitFront = 1.0f;
-    private float diffSlipLimitRear = 1.0f;
-    private float diffTransferLimitFront = 1.0f;
-    private float diffTransferLimitRear = 1.0f;
+    // ----- Torque Converter ---- //
+    private AnimationCurve torqueConverterCurve;
+    private AnimationCurve torqueConverterEfficiencyCurve;
 
-    
-    public Transmission(GearBox _gearBox, AnimationCurve clutchCurve)
+    // ----- DataBus ----- //
+    private int[][] Data;
+
+
+    public Transmission(GearBox _gearBox, AnimationCurve clutchCurve, AnimationCurve _torqueConverterCurve, AnimationCurve _torqueConverterEfficiencyCurve)
     {
         gearBox = _gearBox;
-        ClutchCurve = clutchCurve;
+        ClutchPedalCurve = clutchCurve;
+        torqueConverterCurve = _torqueConverterCurve;
+        torqueConverterEfficiencyCurve = _torqueConverterEfficiencyCurve;
     }
 
     public int[][] Update(int[][] data)
     {
-        float Clutch = data[Channel.Input][InputData.Clutch] / 10000f;
-        float ClutchLock = ClutchCurve.Evaluate(Clutch);
-        float EngineTorque = data[Channel.Vehicle][VehicleData.EngineTorque] / 1000f;
-        float ClutchTorque, ClutchSlipTorque;
-        data[Channel.Vehicle][VehicleData.ClutchLock] = (int)(ClutchLock * 1000f);
-        //data[Channel.Vehicle][VehicleData.TransmissionRpm] = Wheel and Differential Data
+        Data = data;
 
-        // Clutch disengaged fully, engine free rotation
-        if (ClutchLock == 0f)
-        {
-            ClutchSlipTorque = 0f;
-            ClutchTorque = 0f;
-        }
-        // Clutch engaged, friction and torque transfer between transmission and engine
-        else
-        {
-            float ClutchRpm = data[Channel.Vehicle][VehicleData.ClutchRpm] / 1000.0f;
-            float EngineRpm = data[Channel.Vehicle][VehicleData.EngineRpm] / 1000.0f;
-            float ClutchSlip = Slip(EngineRpm, ClutchRpm);
-
-            // Frictiondisc force based on slip (To do: add slip-friction curve, currently linear)
-            ClutchSlipTorque = ClutchLock * ClutchSlip * 10000;
-            ClutchTorque = ClutchLock * EngineTorque + ClutchSlipTorque;
-        }
-
-        data[Channel.Vehicle][VehicleData.ClutchTorque] = (int)(ClutchTorque * 1000);
-        data[Channel.Vehicle][VehicleData.ClutchSlipTorque] = (int)(ClutchSlipTorque * 1000);
-        
+        TorqueConverter();
 
         // ----- Gearbox Update ----- //
-        data = gearBox.Update(data);
+        Data = gearBox.Update(Data);
+
+        float clutchLock = ClutchLock();
+        Data[Channel.Vehicle][VehicleData.ClutchLock] = (int)(clutchLock * 1000f);
+        //data[Channel.Vehicle][VehicleData.TransmissionRpm] = Wheel and Differential Data
+
+        
+
+        return Data;
+    }
 
 
-        return data;
+    /// <summary>
+    /// Calculates ClutchLock based on Gear Mode.
+    /// <para>Manual: Clutch pedal.</para>
+    /// <para>Park and Neutral: Gearbox disengaged from engine.</para>
+    /// <para>Reverse, Drive and Low: Automatic gearbox and clutch.</para>
+    /// </summary>
+    /// <returns>Clutch Lock ratio
+    /// <para>0: Clutch fully disengaged.</para>
+    /// <para>1: Clutch fully engaged.</para></returns>
+    public float ClutchLock()
+    {
+        GearMode gearMode = (GearMode)Data[Channel.Input][InputData.AutomaticGear];
+        float clutchLock = 0;
+
+        switch (gearMode)
+        {
+            case GearMode.Manual:
+                float Clutch = Data[Channel.Input][InputData.Clutch] / 10000f;
+                clutchLock = ClutchPedalCurve.Evaluate(Clutch);
+                break;
+            case GearMode.Park:
+                clutchLock = 0;
+                break;
+            case GearMode.Neutral:
+                clutchLock = 0;
+                break;
+            case GearMode.Reverse:
+                // ClutchLock in automatic
+                break;
+            case GearMode.Drive:
+                // ClutchLock in automatic
+                break;
+            case GearMode.Low:
+                // ClutchLock in automatic
+                break;
+        }
+
+        return clutchLock;
     }
 
     /// <summary>
-    /// Calculates transmission slip.
+    /// Calculates the torque output of the Torque Converter.
     /// </summary>
-    /// <param name="EngineRpm">Engine output RPM.</param>
-    /// <param name="TransmissionRpm">Transmission RPM on engine side.</param>
-    /// <returns>Slipvalue 
-    /// (   1: EngineRpm >> TransmissionRpm) 
-    /// (  -1: EngineRpm << TransmissionRpm) 
-    /// (   0: EngineRpm == TransmissionRpm
-    /// </returns>
-    public float Slip(float EngineRpm, float TransmissionRpm)
+    public void TorqueConverter()
     {
-        float slip;
-        if (EngineRpm >= TransmissionRpm)
-        {
-            slip = 1 - TransmissionRpm / EngineRpm;
-        }
-        else
-        {
-            slip = EngineRpm / TransmissionRpm - 1;
-        }
-        return slip;
+        float engineTorque = Data[Channel.Vehicle][VehicleData.EngineTorque];
+        float clutchTorque = engineTorque * torqueConverterCurve.Evaluate(TorqueConverterSpeedRatio());
+        Data[Channel.Vehicle][VehicleData.ClutchTorque] = (int)(clutchTorque * 1000);
     }
+
+    /// <summary>
+    /// Calculates Speed Ratio in the torque converter (Out/In).
+    /// </summary>
+    /// <returns>Speed Ratio
+    /// </returns>    
+    private float TorqueConverterSpeedRatio()
+    {
+        int ClutchRpm = Data[Channel.Vehicle][VehicleData.ClutchRpm];
+        int EngineRpm = Data[Channel.Vehicle][VehicleData.EngineRpm];
+
+        float speedRatio = ClutchRpm/EngineRpm;
+
+        return Mathf.Min(speedRatio,1);
+    }
+
 }

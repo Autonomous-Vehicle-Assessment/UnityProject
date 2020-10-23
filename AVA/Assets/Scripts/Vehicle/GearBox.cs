@@ -2,6 +2,7 @@
 
 public class GearBox
 {
+
     // ----- Gearbox Data ----- //
     private int[][] Data;
 
@@ -125,6 +126,7 @@ public class GearBox
         switch (gearMode)
         {
             case GearMode.Manual:
+
                 int SelectedGear = Data[Channel.Input][InputData.ManualGear];
                 int GearIncrement = Data[Channel.Input][InputData.GearShift];
                 
@@ -148,17 +150,17 @@ public class GearBox
                 }
                 break;
 
-            case GearMode.Reverse:
-                if (CurrentGear != -1)
-                {
-                    ShiftGear(-1);
-                }
-                break;
-
             case GearMode.Neutral:
                 if (CurrentGear != 0)
                 {
                     ShiftNeutral();
+                }
+                break;
+
+            case GearMode.Reverse:
+                if (CurrentGear != -1)
+                {
+                    ShiftGear(-1);
                 }
                 break;
 
