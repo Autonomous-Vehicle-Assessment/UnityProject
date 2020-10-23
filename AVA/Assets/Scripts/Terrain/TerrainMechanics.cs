@@ -38,6 +38,9 @@ public class TerrainMechanics : MonoBehaviour
         //Debug.Log("Vertical stress");
         //Debug.Log(SoilList[0].VerticalStress(SoilList[0].EntryAngle() - 0.01f, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio));
 
+        float W = SoilList[0].VerticalStress(Mathf.PI, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
+        Debug.Log($"Total Vertical stress at 45deg = {W}");
+        Debug.Log($"Test {Mathf.PI / 4f}");
     }
     public void FixedUpdate()
     {
