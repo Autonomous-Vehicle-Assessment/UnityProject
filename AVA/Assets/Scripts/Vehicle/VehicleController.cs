@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class VehicleController : MonoBehaviour
@@ -129,14 +128,14 @@ public class VehicleController : MonoBehaviour
     public VehicleSetup VehicleSetupAssemble()
     {
         Engine engine = EngineSetup();
-        Transmission transmission = TransmissionSetup();
+        DriveTrain driveTrain = DriveTrainSetup();
         Suspension suspension = new Suspension();
         Wheels wheels = new Wheels();
         Brakes brakes = new Brakes();
         Steering steering = new Steering();
         AeroDynamics aeroDynamics = new AeroDynamics();
 
-        return new VehicleSetup(engine, transmission, suspension, wheels, brakes, steering, aeroDynamics);
+        return new VehicleSetup(engine, driveTrain, suspension, wheels, brakes, steering, aeroDynamics);
     }
 
     public Engine EngineSetup()
@@ -144,10 +143,11 @@ public class VehicleController : MonoBehaviour
         return new Engine(torqueCurve, powerCurve, engineFriction, 0.15f);
     }
 
-    public Transmission TransmissionSetup()
+    public DriveTrain DriveTrainSetup()
     {
-        GearBox gearBox = new GearBox(GearRatio,GearEff,ReverseGearRatio,ReverseGearEff,TransferCaseRatio,TransferCaseEff,FinalDriveRatio,FinalDriveEff);
-        return new Transmission(gearBox, clutchPedalCurve, torqueConverterCurve, torqueConverterEfficiencyCurve);
+        GearBox gearBox = new GearBox(GearRatio, GearEff, ReverseGearRatio, ReverseGearEff);
+        TransferCase transferCase = new TransferCase(TransferCaseRatio, TransferCaseEff);
+        return new DriveTrain(gearBox, transferCase, clutchPedalCurve, torqueConverterCurve);
     }
     
     public void SetupCurves()

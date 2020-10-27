@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-
+﻿
 /// <summary>
 /// Base Vehicle Class
 /// </summary>
@@ -23,9 +19,7 @@ public class Vehicle
 
     public void Update()
     {
-        data = vehicleSetup.engine.Update(data);
-        data = vehicleSetup.transmission.Update(data);
-        vehicleSetup.engine.Equilibrium(data);
+        data = vehicleSetup.Update(data);
     }
 
     public void Set(int Channel, int DataChannel, int Data)
