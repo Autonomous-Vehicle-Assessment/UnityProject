@@ -34,7 +34,7 @@ public class SoilType
     private float Kx;       //[m]
     private float Ky;       //[m]
     private float gamma_s;  //Density [kg/m^3]
-    private const float DeltaT_desired = 0.001f; //[rad]
+    private const float DeltaT_desired = Mathf.Deg2Rad * 10f;//0.01f; //[rad]
     private const float delta = 0.1f;
     private const int kmax = 100;
     private const float tol = 0.01f;
@@ -109,13 +109,15 @@ public class SoilType
     {
         float sum = 0;
         float theta_tot = theta_e - ExitAngle();
-        int Steps = (int)(theta_tot / DeltaT_desired + 1);
-        float DeltaT = theta_tot / (Steps - 1);
-        for (int i = 0; i < Steps; i++)
+        int Steps = (int)(theta_tot / DeltaT_desired);
+        float DeltaT = theta_tot / Steps;
+        for (int i = 0; i < Steps+1; i++)
         {
             float theta = ExitAngle() + DeltaT * i;
             float normalPressure = RadialStress(theta, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
+            Debug.Log($"Normal Stress at {theta}[rad] = {normalPressure}[Pa]");
             float shearStress = ShearStress(theta, normalPressure,  tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
+            Debug.Log($"Shear Stress at {theta}[rad] = {shearStress}[Pa]");
             if (theta < 0)  // Rear part, theta2 (exit) -> 0
             {
                 sum -= (normalPressure * Mathf.Cos(theta) - shearStress * Mathf.Sin(theta)) * DeltaT;
@@ -405,7 +407,7 @@ public class SoilType
     /// </summary>
     /// <param name="normalPressure">Applied normal pressure at current point.</param>
     /// <returns>s_max [N/m^2] or [Pa]</returns>
-    private float MaxShear(float normalPressure)
+    public float MaxShear(float normalPressure)
     {
         return c + normalPressure * Mathf.Tan(phi);
     }
@@ -422,7 +424,8 @@ public class SoilType
     public float ShearStress(float angle, float normalPressure, float tyreWidth, float tyreRadius, float pressurePlateMainDimension, float slipRatio)
     {
         float shearDisplacement = ShearDisplacement(angle, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
-        return MaxShear(normalPressure) * (1f - Mathf.Exp(-shearDisplacement / Kx));
+        Debug.Log($"Shear Displacement at {angle}[rad] = {shearDisplacement}[m]");
+        return MaxShear(normalPressure) * (1f - Mathf.Exp(- shearDisplacement / Kx));
     }
     /// <summary>
     /// Calculates the angle corresponding with the highest radial stress along the contact interface, where the radial functions switch from (4.14) to (4.15). 
@@ -451,11 +454,11 @@ public class SoilType
     /// <param name="pressurePlateMainDimension"></param>
     /// <param name="slipRatio"></param>
     /// <returns>sigma_nf [Pa] or [N/m^2]</returns>
-    private float RadialStressFront(float angle, float tyreWidth, float tyreRadius, float pressurePlateMainDimension, float slipRatio)
+    public float RadialStressFront(float angle, float tyreWidth, float tyreRadius, float pressurePlateMainDimension, float slipRatio)
     {
         float entryAngle = EntryAngle(tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
-        return (c * k_1 + gamma_s * pressurePlateMainDimension * k_2) * Mathf.Pow((tyreRadius / pressurePlateMainDimension), n) 
-            * Mathf.Pow((Mathf.Cos(angle) - Mathf.Cos(entryAngle)), n);
+        return (c * k_1 + gamma_s * pressurePlateMainDimension * k_2) * Mathf.Pow(tyreRadius / pressurePlateMainDimension, n) 
+            * Mathf.Pow(Mathf.Cos(angle) - Mathf.Cos(entryAngle), n);
     }
     /// <summary>
     /// Calculates the Radial Stress for the rear part of the contact interface. (4.15) Chan 2008
@@ -491,12 +494,15 @@ public class SoilType
         float sigma_n = 0f;
         if (angle <= entryAngle && angle >= ExitAngle())
         {
+            //Debug.Log("Inside angles!!!");
             if (angle >= MaxRadialStressAngle(slipRatio))
             {
+                //Debug.Log("In front of maximum");
                 sigma_n = RadialStressFront(angle, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
             }
             else
             {
+                //Debug.Log("Behind maximum");
                 sigma_n = RadialStressRear(angle, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
             }
         }

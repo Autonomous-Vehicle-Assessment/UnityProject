@@ -38,10 +38,33 @@ public class TerrainMechanics : MonoBehaviour
         //Debug.Log("Vertical stress");
         //Debug.Log(SoilList[0].VerticalStress(SoilList[0].EntryAngle() - 0.01f, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio));
 
-        float W = SoilList[0].VerticalStress(Mathf.PI, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
-        Debug.Log($"Total Vertical stress at 45deg = {W}");
-        Debug.Log($"Test {Mathf.PI / 4f}");
+        Debug.Log($"Entry angle = {Mathf.PI / 4}[rad]");
+        float W45 = SoilList[0].VerticalStress(Mathf.PI/4, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
+        Debug.Log($"Total Vertical stress at 45deg = {W45}");
+        //float W30 = SoilList[0].VerticalStress(Mathf.PI / 6, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
+        //Debug.Log($"Total Vertical stress at 30deg = {W30}");
+        //float W20 = SoilList[0].VerticalStress(Mathf.PI / 9, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
+        //Debug.Log($"Total Vertical stress at 20deg = {W20}");
+
+        //float thetaN = SoilList[0].MaxRadialStressAngle(slipRatio);
+        //Debug.Log($"Max radial Stress angle {thetaN} [rad], {thetaN * Mathf.Rad2Deg} [deg]");
+        //float entryAngle = SoilList[0].EntryAngle(tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
+        //Debug.Log($"Entry angle {entryAngle} [rad], {entryAngle * Mathf.Rad2Deg} [deg]");
+
+        //float sigmaN_30deg = SoilList[0].RadialStressFront(Mathf.PI / 6, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
+        //Debug.Log($"Radial Stress at 30deg {sigmaN_30deg} [Pa]");
+        ////float sigmaN_m2deg = SoilList[0].RadialStress(-2f*Mathf.Deg2Rad, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
+        ////Debug.Log($"Radial Stress at -2deg {sigmaN_m2deg} [Pa]");
+        //float s_max30deg = SoilList[0].MaxShear(sigmaN_30deg);
+        //Debug.Log($"Max Shear stress at 30deg {s_max30deg} [Pa]");
+        //float j_x30deg = SoilList[0].ShearDisplacement(Mathf.PI / 6, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
+        //Debug.Log($"Shear Displacement at 30deg {j_x30deg} [m]");
+        //float tau_x30deg = SoilList[0].ShearStress(Mathf.PI/6, sigmaN_30deg,tyreWidth,tyreRadius,pressurePlateMainDimension,slipRatio);
+        //Debug.Log($"Shear Stress at 30deg {tau_x30deg} [Pa]");
+
+        //Debug.Log($"Test of cosine to pi/4 - 45deg = {Mathf.Cos(Mathf.PI / 4)}");
     }
+
     public void FixedUpdate()
     {
         //Debug.Log(SoilList[0].VerticalStress(20f*Mathf.Deg2Rad, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio));
