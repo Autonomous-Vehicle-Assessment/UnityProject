@@ -173,6 +173,7 @@ public class EngineModel : MonoBehaviour
             m_Wheel[i].m_collider.GetWorldPose(out pos, out quat);
             m_Wheel[i].mesh.transform.position = pos;
             m_Wheel[i].mesh.transform.rotation = quat; // * new Quaternion(1, 1, 1, 1);
+            m_Wheel[i].mesh.transform.Rotate(0, 0, 180f, Space.Self);
         }
 
         // Clamp input values
