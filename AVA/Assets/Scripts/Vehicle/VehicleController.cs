@@ -29,6 +29,8 @@ public class VehicleController : MonoBehaviour
     public float engineTorque;
     public float transmissionRpm;
 
+    public float EngineInertia;
+
     public int CurrentGear;
     public GearMode gearMode;
 
@@ -140,7 +142,7 @@ public class VehicleController : MonoBehaviour
 
     public Engine EngineSetup()
     {
-        return new Engine(torqueCurve, powerCurve, engineFriction, 0.15f);
+        return new Engine(torqueCurve, powerCurve, engineFriction, EngineInertia);
     }
 
     public DriveTrain DriveTrainSetup()

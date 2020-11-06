@@ -577,6 +577,7 @@ MonoBehaviour:
   engineRpm: 0
   engineTorque: 0
   transmissionRpm: 0
+  EngineInertia: 0.35
   CurrentGear: 0
   gearMode: 0
   GearRatio:

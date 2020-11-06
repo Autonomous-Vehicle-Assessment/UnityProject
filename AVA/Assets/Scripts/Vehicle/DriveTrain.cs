@@ -126,7 +126,7 @@ public class DriveTrain
     private void TorqueConverterUpdate()
     {
         float speedRatio = TorqueConverterSpeedRatio();
-        float engineTorque = Data[Channel.Vehicle][VehicleData.EngineTorque];
+        float engineTorque = Data[Channel.Vehicle][VehicleData.EngineTorque] / 1000f;
 
         // To do: 
         // ClutchLock strategy
@@ -135,6 +135,19 @@ public class DriveTrain
         float clutchTorque = engineTorque * torqueConverterRatio;
 
         Data[Channel.Vehicle][VehicleData.ClutchTorque] = (int)(clutchTorque * 1000);
+    }
+
+    /// <summary>
+    /// Calculates Speed Ratio in the torque converter (Out/In).
+    /// </summary>
+    /// <returns></returns>
+    private float TorqueConverterSpeedRatio()
+    {
+        float clutchRpm = Data[Channel.Vehicle][VehicleData.ClutchRpm] / 1000f;
+        float engineRpm = Data[Channel.Vehicle][VehicleData.EngineRpm] / 1000f;
+        float speedRatio = clutchRpm / engineRpm;
+
+        return Mathf.Min(speedRatio, 1);
     }
 
     /// <summary>
