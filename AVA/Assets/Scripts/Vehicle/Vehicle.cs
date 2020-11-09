@@ -11,7 +11,7 @@ public class Vehicle
     {
         data = new int[3][];
         data[0] = new int[10];
-        data[1] = new int[23];
+        data[1] = new int[38];
         data[2] = new int[8];
 
         vehicleSetup = _vehicleSetup;

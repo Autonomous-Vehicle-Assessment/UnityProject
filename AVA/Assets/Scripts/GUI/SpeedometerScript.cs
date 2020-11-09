@@ -42,7 +42,7 @@ public class SpeedometerScript : MonoBehaviour
     {
         EditorWindow window = EditorWindow.focusedWindow;
 
-        canvas.gameObject.SetActive(window.maximized);
+        // canvas.gameObject.SetActive(window.maximized);
 
     }
 

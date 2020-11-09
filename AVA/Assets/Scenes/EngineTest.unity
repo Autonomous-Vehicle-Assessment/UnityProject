@@ -628,8 +628,40 @@ MonoBehaviour:
   TransferCaseEff:
   - 0
   - 0
-  FinalDriveRatio: 1
-  FinalDriveEff: 1
+  finalDriveRatio: 0
+  finalDriveEff: 1
+  axleEfficiency: 0
+  propshaftEfficiency: 0
+  wheels:
+  - collider: {fileID: 0}
+    mesh: {fileID: 0}
+    steering: 0
+    drive: 0
+    serviceBrake: 0
+    handBrake: 0
+    wheelSide: 0
+  - collider: {fileID: 0}
+    mesh: {fileID: 0}
+    steering: 0
+    drive: 0
+    serviceBrake: 0
+    handBrake: 0
+    wheelSide: 0
+  - collider: {fileID: 0}
+    mesh: {fileID: 0}
+    steering: 0
+    drive: 0
+    serviceBrake: 0
+    handBrake: 0
+    wheelSide: 0
+  - collider: {fileID: 0}
+    mesh: {fileID: 0}
+    steering: 0
+    drive: 0
+    serviceBrake: 0
+    handBrake: 0
+    wheelSide: 0
+  centerofMass: {fileID: 0}
 --- !u!4 &982760579
 Transform:
   m_ObjectHideFlags: 0

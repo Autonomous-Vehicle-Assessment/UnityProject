@@ -8,23 +8,23 @@ using UnityEngine.UI;
 
 
 
-public enum WheelSide
-{
-    Left,
-    Right
-}
+//public enum WheelSide
+//{
+//    Left,
+//    Right
+//}
 
-[System.Serializable]
-public class StandardWheel
-{
-    public WheelCollider m_collider;
-    public GameObject mesh;
-    public bool steering;
-    public bool drive;
-    public bool serviceBrake;
-    public bool handBrake;
-    public WheelSide wheelSide;
-}
+//[System.Serializable]
+//public class StandardWheel
+//{
+//    public WheelCollider m_collider;
+//    public GameObject mesh;
+//    public bool steering;
+//    public bool drive;
+//    public bool serviceBrake;
+//    public bool handBrake;
+//    public WheelSide wheelSide;
+//}
 
 public class EngineOld : MonoBehaviour
 {
@@ -92,7 +92,7 @@ public class EngineOld : MonoBehaviour
         // Update Center of Mass
         if (m_CenterofMass != null)
         {
-            m_Wheel[0].m_collider.attachedRigidbody.centerOfMass = m_CenterofMass.transform.localPosition;
+            m_Wheel[0].collider.attachedRigidbody.centerOfMass = m_CenterofMass.transform.localPosition;
         }
 
         m_Rigidbody = GetComponent<Rigidbody>();
@@ -106,7 +106,7 @@ public class EngineOld : MonoBehaviour
                 NumberofDrivingWheels += 1;
             }
         }
-        m_Wheel[0].m_collider.suspensionExpansionLimited = true;
+        m_Wheel[0].collider.suspensionExpansionLimited = true;
     }
 
     public void FixedUpdate()
@@ -119,9 +119,9 @@ public class EngineOld : MonoBehaviour
             float travelR = 1.0f;
             for (int i = 0; i < NumberofWheels / 2;)
             {
-                WheelCollider WheelL = m_Wheel[i].m_collider;
+                WheelCollider WheelL = m_Wheel[i].collider;
                 i++;
-                WheelCollider WheelR = m_Wheel[i].m_collider;
+                WheelCollider WheelR = m_Wheel[i].collider;
                 i++;
 
                 bool groundedL = WheelL.GetGroundHit(out WheelHit hitL);
@@ -148,7 +148,7 @@ public class EngineOld : MonoBehaviour
     public void UpdateState()
     {
         //UpdateTerrainWheelParameters();
-        m_TransmissionRPM = (m_Wheel[2].m_collider.rpm + m_Wheel[3].m_collider.rpm) / 2f;
+        m_TransmissionRPM = (m_Wheel[2].collider.rpm + m_Wheel[3].collider.rpm) / 2f;
         m_EngineRPM = m_TransmissionRPM * GearingRatioEff();
         m_EngineRPM = Mathf.Abs(m_EngineRPM);
         m_EngineRPM = Mathf.Clamp(m_EngineRPM, m_MinRpm, m_MaxRpm);
@@ -167,7 +167,7 @@ public class EngineOld : MonoBehaviour
         {
             Quaternion quat;
             Vector3 pos;
-            m_Wheel[i].m_collider.GetWorldPose(out pos, out quat);
+            m_Wheel[i].collider.GetWorldPose(out pos, out quat);
             m_Wheel[i].mesh.transform.position = pos;
             m_Wheel[i].mesh.transform.rotation = quat; // * new Quaternion(1, 1, 1, 1);
         }
@@ -192,10 +192,10 @@ public class EngineOld : MonoBehaviour
                     switch (m_Wheel[i].wheelSide)
                     {
                         case WheelSide.Left:
-                            m_Wheel[i].m_collider.steerAngle = m_SteerAngleOuter;
+                            m_Wheel[i].collider.steerAngle = m_SteerAngleOuter;
                             break;
                         case WheelSide.Right:
-                            m_Wheel[i].m_collider.steerAngle = m_SteerAngleInner;
+                            m_Wheel[i].collider.steerAngle = m_SteerAngleInner;
                             break;
                     }
                 }
@@ -204,10 +204,10 @@ public class EngineOld : MonoBehaviour
                     switch (m_Wheel[i].wheelSide)
                     {
                         case WheelSide.Left:
-                            m_Wheel[i].m_collider.steerAngle = m_SteerAngleInner;
+                            m_Wheel[i].collider.steerAngle = m_SteerAngleInner;
                             break;
                         case WheelSide.Right:
-                            m_Wheel[i].m_collider.steerAngle = m_SteerAngleOuter;
+                            m_Wheel[i].collider.steerAngle = m_SteerAngleOuter;
                             break;
                     }
                 }
@@ -216,22 +216,22 @@ public class EngineOld : MonoBehaviour
 
             if (m_Wheel[i].drive)           // Apply torque
             {
-                m_Wheel[i].m_collider.motorTorque = m_TransmissionTorque * accel;             
+                m_Wheel[i].collider.motorTorque = m_TransmissionTorque * accel;             
             }
 
             if (m_Wheel[i].handBrake)       // Apply handbrake
             {
-                m_Wheel[i].m_collider.brakeTorque = m_HandbrakeTorque * -handbrake;
+                m_Wheel[i].collider.brakeTorque = m_HandbrakeTorque * -handbrake;
             }
 
             if (m_Wheel[i].serviceBrake)    // Apply servicebrake (footbrake)
             {
-                m_Wheel[i].m_collider.brakeTorque = m_BrakeTorque * -footbrake;
+                m_Wheel[i].collider.brakeTorque = m_BrakeTorque * -footbrake;
             }
 
             if (footbrake == 0 && accel == 0 && handbrake == 0)     // Motor braking
             {
-                m_Wheel[i].m_collider.brakeTorque = m_TransmissionTorque * 0.5f;
+                m_Wheel[i].collider.brakeTorque = m_TransmissionTorque * 0.5f;
             }
         }
 
@@ -267,12 +267,12 @@ public class EngineOld : MonoBehaviour
         }
         for (int i = 0; i < NumberofWheels; i++)
         {
-            WheelFrictionCurve fFriction = m_Wheel[i].m_collider.forwardFriction;
-            WheelFrictionCurve sFriction = m_Wheel[i].m_collider.sidewaysFriction;
+            WheelFrictionCurve fFriction = m_Wheel[i].collider.forwardFriction;
+            WheelFrictionCurve sFriction = m_Wheel[i].collider.sidewaysFriction;
             fFriction.stiffness = ForwardStiffness;
             sFriction.stiffness = SidewaysStiffness;
-            m_Wheel[i].m_collider.forwardFriction = fFriction;
-            m_Wheel[i].m_collider.sidewaysFriction = sFriction;
+            m_Wheel[i].collider.forwardFriction = fFriction;
+            m_Wheel[i].collider.sidewaysFriction = sFriction;
         }
     }
 

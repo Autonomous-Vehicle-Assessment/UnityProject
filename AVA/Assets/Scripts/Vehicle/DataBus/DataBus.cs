@@ -243,77 +243,89 @@ public static class VehicleData
     /// </summary>
     public const int TransferCaseTorque     = 22;
     /// <summary>
+    /// Total torque available at the front Differential (Nm)
+    /// <para>Resolution: 1000</para>
+    /// <para>150000 = 150 Nm</para>
+    /// </summary>
+    public const int DifferentialTorqueFront= 23;
+    /// <summary>
+    /// Total torque available at the rear Differential (Nm)
+    /// <para>Resolution: 1000</para>
+    /// <para>150000 = 150 Nm</para>
+    /// </summary>
+    public const int DifferentialTorqueRear = 24;
+    /// <summary>
     /// Rpms at the output of the front left axle (rpm)
     /// <para>Resolution: 1000</para>
     /// <para>100000 = 100 rpm</para>
     /// </summary>
-    public const int FrontAxleLeftRpm       = 23;
+    public const int FrontAxleLeftRpm       = 25;
     /// <summary>
     /// Rpms at the output of the front right axle (rpm)
     /// <para>Resolution: 1000</para>
     /// <para>100000 = 100 rpm</para>
     /// </summary>
-    public const int FrontAxleLeftRight     = 24;
+    public const int FrontAxleRightRpm      = 26;
     /// <summary>
     /// Torque at the output of the front left axle (Nm)
     /// <para>Resolution: 1000</para>
     /// <para>150000 = 150 Nm</para>
     /// </summary>
-    public const int FrontAxleLeftTorque    = 25;
+    public const int FrontAxleLeftTorque    = 27;
     /// <summary>
     /// Torque at the output of the front right axle (Nm)
     /// <para>Resolution: 1000</para>
     /// <para>150000 = 150 Nm</para>
     /// </summary>
-    public const int FrontAxleRightTorque   = 26;
+    public const int FrontAxleRightTorque   = 28;
     /// <summary>
     /// Rpms at the output of the rear left axle (rpm)
     /// <para>Resolution: 1000</para>
     /// <para>100000 = 100 rpm</para>
     /// </summary>
-    public const int RearAxleLeftRpm        = 27;
+    public const int RearAxleLeftRpm        = 29;
     /// <summary>
     /// Rpms at the output of the rear right axle (rpm)
     /// <para>Resolution: 1000</para>
     /// <para>100000 = 100 rpm</para>
     /// </summary>
-    public const int RearAxleLeftRight      = 28;
+    public const int RearAxleRightRpm       = 30;
     /// <summary>
     /// Torque at the output of the rear left axle (Nm)
     /// <para>Resolution: 1000</para>
     /// <para>150000 = 150 Nm</para>
     /// </summary>
-    public const int RearAxleLeftTorque     = 29;
+    public const int RearAxleLeftTorque     = 31;
     /// <summary>
     /// Torque at the output of the rear right axle (Nm)
     /// <para>Resolution: 1000</para>
     /// <para>150000 = 150 Nm</para>
     /// </summary>
-    public const int RearAxleRightTorque    = 30;
+    public const int RearAxleRightTorque    = 32;
     /// <summary>
     /// Is the ABS being engaged in any wheel?
     /// <para>       0 = no</para>
     /// <para>non-zero = yes</para>
     /// </summary>
-    public const int AbsEngaged             = 31;
+    public const int AbsEngaged             = 33;
     /// <summary>
     /// Is the TCS limiting the engine throttle?
     /// <para>       0 = no</para>
     /// <para>non-zero = yes</para>
     /// </summary>
-    public const int TcsEngaged             = 32;
+    public const int TcsEngaged             = 34;
     /// <summary>
     /// Is the ESC applying brakes for keeping stability?
     /// <para>       0 = no</para>
     /// <para>non-zero = yes</para>
     /// </summary>
-    public const int EscEngaged             = 33;
+    public const int EscEngaged             = 35;
     /// <summary>
     /// Is the ASR applying brakes for reducing wheel slip?
     /// <para>       0 = no</para>
     /// <para>non-zero = yes</para>
     /// </summary>
-    public const int AsrEngaged             = 34;
+    public const int AsrEngaged             = 36;
     /// <summary>
     /// Steering wheel position after steering aids (%)
     /// <para>Resolution 10000</para>
@@ -321,13 +333,13 @@ public static class VehicleData
     /// <para>     0 = center</para>
     /// <para> 10000 = full right</para>
     /// </summary>
-    public const int AidedSteer             = 35;
+    public const int AidedSteer             = 37;
     /// <summary>
     /// Overall fuel consumption (L/100km)
     /// <para>Resolution: 1000</para>
     /// <para>20230 = 20.23 L/100km</para>
     /// </summary>
-    public const int FuelConsumption        = 36;
+    public const int FuelConsumption        = 38;
 }
 
 /// <summary>

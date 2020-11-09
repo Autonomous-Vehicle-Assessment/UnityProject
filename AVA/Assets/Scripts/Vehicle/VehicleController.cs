@@ -25,14 +25,20 @@ public class VehicleController : MonoBehaviour
     public AnimationCurve throttleCurve;
     public AnimationCurve engineFriction;
     public AnimationCurve clutchPedalCurve;
+
+    public float EngineInertia;
+
+
     public float engineRpm;
     public float engineTorque;
     public float transmissionRpm;
 
-    public float EngineInertia;
 
-    public int CurrentGear;
+    public float currentGearRatio;
+    public int currentGear;
     public GearMode gearMode;
+
+
 
     // ----- Gearbox - SETUP ----- //
     /// <summary>
@@ -82,16 +88,29 @@ public class VehicleController : MonoBehaviour
     /// <summary>
     /// Gearing ratio of the final drive
     /// </summary>
-    public float FinalDriveRatio = 1.0f;
+    public float finalDriveRatio = 1.0f;
     /// <summary>
     /// Gearing efficiency of the final drive
     /// </summary>
-    public float FinalDriveEff = 1.0f;
+    public float finalDriveEff = 1.0f;
+
+    public float axleEfficiency;
+    public float propshaftEfficiency;
+
+    public List<StandardWheel> wheels;
+
+    public GameObject m_centerofMass;
 
 
     // Start is called before the first frame update
     void Awake()
     {
+        // Update Center of Mass
+        if (m_centerofMass != null)
+        {
+            wheels[0].collider.attachedRigidbody.centerOfMass = m_centerofMass.transform.localPosition;
+        }
+
         SetupCurves();
         vehicle = new Vehicle(VehicleSetupAssemble());
         vehicle.data[Channel.Vehicle][VehicleData.EngineRpm] = 700 * 1000;
@@ -99,9 +118,12 @@ public class VehicleController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         vehicle.data[Channel.Input][InputData.Throttle] = (int)(throttleCurve.Evaluate(Input.GetAxis("Throttle")) * 10000);
+        vehicle.data[Channel.Input][InputData.Steer] = (int)(Input.GetAxis("Horizontal") * 10000);
+
+
         vehicle.data[Channel.Input][InputData.Clutch] = (int)(Input.GetAxis("Clutch") * 10000);
         
         vehicle.data[Channel.Input][InputData.Clutch] = 1 * 10000;
@@ -120,9 +142,10 @@ public class VehicleController : MonoBehaviour
         vehicle.Update();
         engineRpm = vehicle.data[Channel.Vehicle][VehicleData.EngineRpm] / 1000.0f;
         engineTorque = vehicle.data[Channel.Vehicle][VehicleData.EngineTorque] / 1000.0f;
+
         transmissionRpm = vehicle.data[Channel.Vehicle][VehicleData.TransmissionRpm] / 1000.0f;
 
-        CurrentGear = vehicle.data[Channel.Vehicle][VehicleData.GearboxGear];
+        currentGear = vehicle.data[Channel.Vehicle][VehicleData.GearboxGear];
 
     }
 
@@ -149,7 +172,9 @@ public class VehicleController : MonoBehaviour
     {
         GearBox gearBox = new GearBox(GearRatio, GearEff, ReverseGearRatio, ReverseGearEff);
         TransferCase transferCase = new TransferCase(TransferCaseRatio, TransferCaseEff);
-        return new DriveTrain(gearBox, transferCase, clutchPedalCurve, torqueConverterCurve);
+        TorqueConverter torqueConverter = new TorqueConverter(torqueConverterCurve);
+        Differential differential = new Differential(propshaftEfficiency, axleEfficiency, finalDriveEff, finalDriveRatio);
+        return new DriveTrain(gearBox, transferCase, clutchPedalCurve, torqueConverter, differential, wheels);
     }
     
     public void SetupCurves()
