@@ -366,6 +366,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2315250435903404941, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
+      propertyPath: wheels.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315250435903404941, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
       propertyPath: swayBarActive
       value: 1
       objectReference: {fileID: 0}
@@ -378,6 +383,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315250435903404941, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_FinalDriveEff
+      value: 0.9524936
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315250435903404941, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_EngineRPM
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 3337513734554038593, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}

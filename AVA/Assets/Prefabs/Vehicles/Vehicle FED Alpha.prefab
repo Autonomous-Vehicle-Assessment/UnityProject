@@ -463,53 +463,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f40329aa80c3cea44a742fa4bf4c31d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaxTorque: 450
-  m_MaxPower: 340
-  m_MaxTorqueRpm: 1200
-  m_MaxPowerRpm: 2500
-  m_EngineRPM: 700
-  m_EngineTorque: 400
-  m_TransmissionRPM: 0
-  m_MaximumInnerSteerAngle: 34
-  m_MaximumOuterSteerAngle: 30
-  m_HandbrakeTorque: 50000
-  m_BrakeTorque: 3000
-  m_TransferCase: 0
-  m_Rigidbody: {fileID: 0}
-  NumberofWheels: 4
-  NumberofDrivingWheels: 0
-  m_Speed: 0
-  m_CenterofMass: {fileID: 6541586017840734402}
-  m_Wheel:
-  - m_collider: {fileID: 900966193465278873}
+  maxTorque: 450
+  maxPower: 340
+  maxTorqueRpm: 1200
+  maxPowerRpm: 2500
+  engineRPM: 700
+  engineTorque: 306
+  transmissionRPM: 0
+  maximumInnerSteerAngle: 34
+  maximumOuterSteerAngle: 30
+  handbrakeTorque: 50000
+  brakeTorque: 3000
+  transferCase: 0
+  rigidbody: {fileID: 0}
+  numberofWheels: 4
+  numberofDrivingWheels: 0
+  speed: 0
+  centerofMass: {fileID: 0}
+  wheels:
+  - collider: {fileID: 900966193465278873}
     mesh: {fileID: 3642062902440318843}
     steering: 1
     drive: 1
     serviceBrake: 1
     handBrake: 0
     wheelSide: 0
-  - m_collider: {fileID: 3337513734554038593}
+  - collider: {fileID: 3337513734554038593}
     mesh: {fileID: 7491476627657225526}
     steering: 1
     drive: 1
     serviceBrake: 1
     handBrake: 0
-    wheelSide: 1
-  - m_collider: {fileID: 900966194502703888}
+    wheelSide: 0
+  - collider: {fileID: 900966194502703888}
     mesh: {fileID: 8825865948218048849}
     steering: 0
     drive: 1
     serviceBrake: 1
     handBrake: 1
     wheelSide: 0
-  - m_collider: {fileID: 900966192714249743}
+  - collider: {fileID: 900966192714249743}
     mesh: {fileID: 1138624215324162195}
     steering: 0
     drive: 1
     serviceBrake: 1
     handBrake: 1
-    wheelSide: 1
-  m_MotorCurve:
+    wheelSide: 0
+  motorCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -704,21 +704,21 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  e_SpeedCurveValues: bc0200002003000084030000e80300004c040000b00400001405000078050000dc05000040060000a4060000080700006c070000d00700003408000098080000fc08000060090000c4090000dd090000220b0000
-  e_TorqueCurveValues: 900100009a010000c20100002602000071020000bc020000bc020000bc020000bc020000bc020000ba020000b70200009d0200007f020000640200004a020000320200001c02000008020000f901000000000000
-  e_CurvePoints: 21
-  m_MinRpm: 700
-  m_MaxRpm: 2850
-  m_MinRpmTorque: 0
-  m_PeakRpmTorque: 0
-  m_CurrentGear: 0
-  m_NumberOfGears: 6
-  m_CurrentTransferCaseIndex: 0
-  m_CurrentTransferCase: 0
-  m_TransferCaseEff:
+  speedCurveValues: bc0200002003000084030000e80300004c040000b00400001405000078050000dc05000040060000a4060000080700006c070000d00700003408000098080000fc08000060090000c4090000dd090000220b0000
+  torqueCurveValues: 900100009a010000c20100002602000071020000bc020000bc020000bc020000bc020000bc020000ba020000b70200009d0200007f020000640200004a020000320200001c02000008020000f901000000000000
+  curvePoints: 21
+  minRpm: 700
+  maxRpm: 2850
+  minRpmTorque: 0
+  peakRpmTorque: 0
+  currentGear: 0
+  numberOfGears: 6
+  currentTransferCaseIndex: 0
+  currentTransferCase: 0
+  transferCaseEff:
   - 0.944
   - 0.99
-  m_GearRatio:
+  gearRatio:
   - 3.74
   - 2.003
   - 1.343
@@ -729,7 +729,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  m_GearEff:
+  gearEff:
   - 0.91
   - 0.92
   - 0.925
@@ -740,15 +740,15 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  m_ReverseGearRatio: -3
-  m_ReverseGearEff: 0.92
-  m_FinalDriveRatio: 4.88
-  m_FinalDriveEff: 0.995
-  m_TransferCaseRatio:
+  reverseGearRatio: -3.74
+  reverseGearEff: 0.91
+  finalDriveRatio: 4.88
+  finalDriveEff: 0.9524936
+  transferCaseRatio:
   - 2.72
   - 1
-  swayBarActive: 0
-  AntiRoll: 5000
+  swayBarActive: 1
+  antiRoll: 5000
   terrainTracker: {fileID: 0}
 --- !u!114 &5462843028766989911
 MonoBehaviour:
