@@ -151,7 +151,7 @@ public class EngineModel : MonoBehaviour
     public void UpdateState()
     {
         //UpdateTerrainWheelParameters();
-        m_TransmissionRPM = (m_Wheel[2].m_collider.rpm + m_Wheel[3].m_collider.rpm) / 2f;
+        m_TransmissionRPM = Mathf.Max(m_Wheel[0].m_collider.rpm, m_Wheel[1].m_collider.rpm, m_Wheel[2].m_collider.rpm, m_Wheel[3].m_collider.rpm);
         m_EngineRPM = m_TransmissionRPM * GearingRatioEff();
         m_EngineRPM = Mathf.Abs(m_EngineRPM);
         m_EngineRPM = Mathf.Clamp(m_EngineRPM, m_MinRpm, m_MaxRpm);
