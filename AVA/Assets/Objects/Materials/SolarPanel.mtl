@@ -1,0 +1,24 @@
+# Blender MTL File: 'None'
+# Material Count: 2
+
+newmtl _10781_Solar_Panels_V101___Default
+Ns 10.000002
+Ka 1.000000 1.000000 1.000000
+Kd 0.588200 0.588200 0.588200
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd C:\\Users\\au539783\\Dropbox\\3D Models #MadsRweak\\Solar_Panels_V1_L3.123cc8f890de-f0dc-4416-91ba-2d06cafb9a74\\solar-rest.jpg
+
+newmtl _10781_Solar_Panels_V102___Default
+Ns 52.000004
+Ka 1.000000 1.000000 1.000000
+Kd 0.588200 0.588200 0.588200
+Ks 0.180000 0.180000 0.180000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:\\Users\\au539783\\Dropbox\\3D Models #MadsRweak\\Solar_Panels_V1_L3.123cc8f890de-f0dc-4416-91ba-2d06cafb9a74\\solar-panel.jpg

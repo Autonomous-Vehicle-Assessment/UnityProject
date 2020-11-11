@@ -188,7 +188,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bfa4d5e0e1b7c24d9f0530121bd93ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InterfaceObject: {fileID: 0}
   m_SpeedType: 0
 --- !u!114 &900966193508289104
 MonoBehaviour:
@@ -501,6 +500,8 @@ MonoBehaviour:
   m_TransferCaseRatio:
   - 2.72
   - 1
+  swayBarActive: 0
+  AntiRoll: 5000
   terrainTracker: {fileID: 0}
 --- !u!1 &900966194502703902
 GameObject:
