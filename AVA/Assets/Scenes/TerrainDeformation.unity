@@ -765,7 +765,7 @@ Terrain:
   m_TreeMaximumFullLODCount: 50
   m_DetailObjectDistance: 80
   m_DetailObjectDensity: 1
-  m_HeightmapPixelError: 5
+  m_HeightmapPixelError: 1
   m_SplatMapDistance: 1000
   m_HeightmapMaximumLOD: 0
   m_ShadowCastingMode: 2
@@ -773,7 +773,7 @@ Terrain:
   m_DrawInstanced: 0
   m_DrawTreesAndFoliage: 1
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 10652, guid: 0000000000000000f000000000000000, type: 0}
+  m_MaterialTemplate: {fileID: 2100000, guid: 5f51af34f20738649ac4dbeddda12b21, type: 2}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 0
@@ -1400,6 +1400,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   terrainMain: {fileID: 1354130107}
   wheelCollider: {fileID: 1755843564}
+  groundStiffness: 2000000
+  groundDamping: 3
+  deformationStrength: 0
 --- !u!114 &1700092555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1414,6 +1417,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   terrainMain: {fileID: 1354130107}
   wheelCollider: {fileID: 331405469}
+  groundStiffness: 2000000
+  groundDamping: 3
+  deformationStrength: 0
 --- !u!114 &1700092556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1428,6 +1434,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   terrainMain: {fileID: 1354130107}
   wheelCollider: {fileID: 1222973718}
+  groundStiffness: 2000000
+  groundDamping: 3
+  deformationStrength: 0
 --- !u!114 &1700092557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1442,6 +1451,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   terrainMain: {fileID: 1354130107}
   wheelCollider: {fileID: 474771685}
+  groundStiffness: 2000000
+  groundDamping: 3
+  deformationStrength: 0
 --- !u!146 &1755843564 stripped
 WheelCollider:
   m_CorrespondingSourceObject: {fileID: 900966194502703888, guid: e741e23d882cb8a4488ef50ec8c7bf18,
@@ -1679,6 +1691,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -9.300105
+      objectReference: {fileID: 0}
+    - target: {fileID: 3307111769965250158, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4105457999957302434, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
