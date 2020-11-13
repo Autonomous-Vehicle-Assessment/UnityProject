@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 public enum TransferCase
@@ -21,7 +17,7 @@ public enum WheelSide
 [System.Serializable]
 public class StandardWheel
 {
-    public WheelCollider m_collider;
+    public WheelCollider collider;
     public GameObject mesh;
     public bool steering;
     public bool drive;
@@ -33,58 +29,58 @@ public class StandardWheel
 public class EngineModel : MonoBehaviour
 {
     // ----- Engine ----- // 
-    public int m_MaxTorque = 450;           // [Nm]
-    public int m_MaxPower = 340;            // [HP]
+    public int maxTorque = 450;           // [Nm]
+    public int maxPower = 340;            // [HP]
 
-    public int m_MaxTorqueRpm = 3500;       // [rpm]
-    public int m_MaxPowerRpm = 6500;        // [rpm]
+    public int maxTorqueRpm = 3500;       // [rpm]
+    public int maxPowerRpm = 6500;        // [rpm]
 
-    public float m_EngineRPM = 1000;          // [rpm]
-    public float m_EngineTorque = 306;      // [rpm]
+    public float engineRPM = 1000;          // [rpm]
+    public float engineTorque = 306;      // [rpm]
 
     // ----- Vehicle ----- //
-    public float m_TransmissionRPM = 0;       // [rpm]
-    public float m_MaximumInnerSteerAngle = 34f;
-    public float m_MaximumOuterSteerAngle = 30f;
-    public float m_HandbrakeTorque = 50000f;
-    public float m_BrakeTorque = 3000f;
-    public TransferCase m_TransferCase;
-    public Rigidbody m_Rigidbody;
-    public int NumberofWheels = 4;
-    public int NumberofDrivingWheels;
-    public float m_Speed;
-    public GameObject m_CenterofMass;
-    public List<StandardWheel> m_Wheel;
+    public float transmissionRPM = 0;       // [rpm]
+    public float maximumInnerSteerAngle = 34f;
+    public float maximumOuterSteerAngle = 30f;
+    public float handbrakeTorque = 50000f;
+    public float brakeTorque = 3000f;
+    public TransferCase transferCase;
+    public Rigidbody rigidbody;
+    public int numberofWheels = 4;
+    public int numberofDrivingWheels;
+    public float speed;
+    public GameObject centerofMass;
+    public List<StandardWheel> wheels;
 
     // Motor torque vs Speed
-    public AnimationCurve m_MotorCurve = new AnimationCurve();
-    public List<int> e_SpeedCurveValues = new List<int> { 1000, 2020, 2990, 3500, 5000, 6500 };
-    public List<int> e_TorqueCurveValues = new List<int> { 306, 385, 439, 450, 450, 367 };
-    public int e_CurvePoints = 6;
+    public AnimationCurve motorCurve = new AnimationCurve();
+    public List<int> speedCurveValues = new List<int> { 1000, 2020, 2990, 3500, 5000, 6500 };
+    public List<int> torqueCurveValues = new List<int> { 306, 385, 439, 450, 450, 367 };
+    public int curvePoints = 6;
 
-    public int m_MinRpm = 1000;
-    public int m_MaxRpm = 6500;
+    public int minRpm = 1000;
+    public int maxRpm = 6500;
 
-    public int m_MinRpmTorque;
-    public int m_PeakRpmTorque;
+    public int minRpmTorque;
+    public int peakRpmTorque;
 
     // Gearbox
-    public int m_CurrentGear;
-    public int m_NumberOfGears;
-    public int m_CurrentTransferCaseIndex;
-    public TransferCase m_CurrentTransferCase;
-    public float[] m_TransferCaseEff = new float[2];
-    public float[] m_GearRatio = new float[10];
-    public float[] m_GearEff = new float[10];
-    public float m_ReverseGearRatio = -1f;
-    public float m_ReverseGearEff = 1f;
-    public float m_FinalDriveRatio = 1f;
-    public float m_FinalDriveEff = 1f;
-    public float[] m_TransferCaseRatio = { 2.72f, 1.0f };
+    public int currentGear;
+    public int numberOfGears;
+    public int currentTransferCaseIndex;
+    public TransferCase currentTransferCase;
+    public float[] transferCaseEff = new float[2];
+    public float[] gearRatio = new float[10];
+    public float[] gearEff = new float[10];
+    public float reverseGearRatio = -1f;
+    public float reverseGearEff = 1f;
+    public float finalDriveRatio = 1f;
+    public float finalDriveEff = 1f;
+    public float[] transferCaseRatio = { 2.72f, 1.0f };
 
     // Anti-Sway bar
     public bool swayBarActive = false;
-    public float AntiRoll = 5000.0f;
+    public float antiRoll = 5000.0f;
 
     //TerrainTracker
     public TerrainTracker terrainTracker;
@@ -93,23 +89,23 @@ public class EngineModel : MonoBehaviour
     public void Awake()
     {
         // Update Center of Mass
-        if (m_CenterofMass != null)
+        if (centerofMass != null)
         {
-            m_Wheel[0].m_collider.attachedRigidbody.centerOfMass = m_CenterofMass.transform.localPosition;
+            wheels[0].collider.attachedRigidbody.centerOfMass = centerofMass.transform.localPosition;
         }
 
-        m_Rigidbody = GetComponent<Rigidbody>();
+        rigidbody = GetComponent<Rigidbody>();
         terrainTracker = GetComponent<TerrainTracker>();
 
-        NumberofDrivingWheels = 0;
-        for (int i = 0; i < NumberofWheels; i++)
+        numberofDrivingWheels = 0;
+        for (int i = 0; i < numberofWheels; i++)
         {
-            if (m_Wheel[i].drive)
+            if (wheels[i].drive)
             {
-                NumberofDrivingWheels += 1;
+                numberofDrivingWheels += 1;
             }
         }
-        m_Wheel[0].m_collider.suspensionExpansionLimited = true;
+        wheels[0].collider.suspensionExpansionLimited = true;
     }
 
     public void FixedUpdate()
@@ -120,11 +116,11 @@ public class EngineModel : MonoBehaviour
         {
             float travelL = 1.0f;
             float travelR = 1.0f;
-            for (int i = 0; i < NumberofWheels / 2;)
+            for (int i = 0; i < numberofWheels / 2;)
             {
-                WheelCollider WheelL = m_Wheel[i].m_collider;
+                WheelCollider WheelL = wheels[i].collider;
                 i++;
-                WheelCollider WheelR = m_Wheel[i].m_collider;
+                WheelCollider WheelR = wheels[i].collider;
                 i++;
 
                 bool groundedL = WheelL.GetGroundHit(out WheelHit hitL);
@@ -135,14 +131,14 @@ public class EngineModel : MonoBehaviour
                 if (groundedR)
                     travelR = (-WheelR.transform.InverseTransformPoint(hitR.point).y - WheelR.radius) / WheelR.suspensionDistance;
 
-                float antiRollForce = (travelL - travelR) * AntiRoll;
+                float antiRollForce = (travelL - travelR) * antiRoll;
             
 
                 if (groundedL)
-                    m_Rigidbody.AddForceAtPosition(WheelL.transform.up * -antiRollForce,
+                    rigidbody.AddForceAtPosition(WheelL.transform.up * -antiRollForce,
                            WheelL.transform.position);
                 if (groundedR)
-                    m_Rigidbody.AddForceAtPosition(WheelR.transform.up * antiRollForce,
+                    rigidbody.AddForceAtPosition(WheelR.transform.up * antiRollForce,
                            WheelR.transform.position);
             }
 
@@ -151,28 +147,29 @@ public class EngineModel : MonoBehaviour
     public void UpdateState()
     {
         //UpdateTerrainWheelParameters();
-        m_TransmissionRPM = (m_Wheel[2].m_collider.rpm + m_Wheel[3].m_collider.rpm) / 2f;
-        m_EngineRPM = m_TransmissionRPM * GearingRatioEff();
-        m_EngineRPM = Mathf.Abs(m_EngineRPM);
-        m_EngineRPM = Mathf.Clamp(m_EngineRPM, m_MinRpm, m_MaxRpm);
+        transmissionRPM = Mathf.Max(wheels[0].collider.rpm, wheels[1].collider.rpm, wheels[2].collider.rpm, wheels[3].collider.rpm);
+        engineRPM = transmissionRPM * GearingRatioEff();
+        engineRPM = Mathf.Abs(engineRPM);
+        engineRPM = Mathf.Clamp(engineRPM, minRpm, maxRpm);
 
         ShiftScheduler();
-        m_EngineRPM = m_TransmissionRPM * GearingRatioEff();
-        m_EngineRPM = Mathf.Abs(m_EngineRPM);
-        m_EngineRPM = Mathf.Clamp(m_EngineRPM, m_MinRpm, m_MaxRpm);
+        engineRPM = transmissionRPM * GearingRatioEff();
+        engineRPM = Mathf.Abs(engineRPM);
+        engineRPM = Mathf.Clamp(engineRPM, minRpm, maxRpm);
 
-        m_EngineTorque = m_MotorCurve.Evaluate(m_EngineRPM);
+        engineTorque = motorCurve.Evaluate(engineRPM);
     }
     public void Move(float steering, float accel, float footbrake, float handbrake)
     {
         // Update mesh position and rotation
-        for (int i = 0; i < NumberofWheels; i++)
+        for (int i = 0; i < numberofWheels; i++)
         {
             Quaternion quat;
             Vector3 pos;
-            m_Wheel[i].m_collider.GetWorldPose(out pos, out quat);
-            m_Wheel[i].mesh.transform.position = pos;
-            m_Wheel[i].mesh.transform.rotation = quat; // * new Quaternion(1, 1, 1, 1);
+            wheels[i].collider.GetWorldPose(out pos, out quat);
+            wheels[i].mesh.transform.position = pos;
+            wheels[i].mesh.transform.rotation = quat; // * new Quaternion(1, 1, 1, 1);
+            wheels[i].mesh.transform.Rotate(0, 0, 180f, Space.Self);
         }
 
         // Clamp input values
@@ -182,59 +179,59 @@ public class EngineModel : MonoBehaviour
         handbrake = Mathf.Clamp(handbrake, 0, 1);
 
         // Input to colliders
-        float m_SteerAngleInner = steering * m_MaximumInnerSteerAngle;
-        float m_SteerAngleOuter = steering * m_MaximumOuterSteerAngle;
-        float m_TransmissionTorque = TransmissionTorque() / (float)NumberofDrivingWheels;
+        float m_SteerAngleInner = steering * maximumInnerSteerAngle;
+        float m_SteerAngleOuter = steering * maximumOuterSteerAngle;
+        float m_TransmissionTorque = TransmissionTorque() / (float)numberofDrivingWheels;
 
-        for (int i = 0; i < NumberofWheels; i++)
+        for (int i = 0; i < numberofWheels; i++)
         {
-            if (m_Wheel[i].steering)        // Apply steering
+            if (wheels[i].steering)        // Apply steering
             {
                 if (steering > 0) // Turning right, apply outer and inner steering angle
                 {
-                    switch (m_Wheel[i].wheelSide)
+                    switch (wheels[i].wheelSide)
                     {
                         case WheelSide.Left:
-                            m_Wheel[i].m_collider.steerAngle = m_SteerAngleOuter;
+                            wheels[i].collider.steerAngle = m_SteerAngleOuter;
                             break;
                         case WheelSide.Right:
-                            m_Wheel[i].m_collider.steerAngle = m_SteerAngleInner;
+                            wheels[i].collider.steerAngle = m_SteerAngleInner;
                             break;
                     }
                 }
                 else
                 {
-                    switch (m_Wheel[i].wheelSide)
+                    switch (wheels[i].wheelSide)
                     {
                         case WheelSide.Left:
-                            m_Wheel[i].m_collider.steerAngle = m_SteerAngleInner;
+                            wheels[i].collider.steerAngle = m_SteerAngleInner;
                             break;
                         case WheelSide.Right:
-                            m_Wheel[i].m_collider.steerAngle = m_SteerAngleOuter;
+                            wheels[i].collider.steerAngle = m_SteerAngleOuter;
                             break;
                     }
                 }
                 
             }
 
-            if (m_Wheel[i].drive)           // Apply torque
+            if (wheels[i].drive)           // Apply torque
             {
-                m_Wheel[i].m_collider.motorTorque = m_TransmissionTorque * accel;             
+                wheels[i].collider.motorTorque = m_TransmissionTorque * accel;             
             }
 
-            if (m_Wheel[i].handBrake)       // Apply handbrake
+            if (wheels[i].handBrake)       // Apply handbrake
             {
-                m_Wheel[i].m_collider.brakeTorque = m_HandbrakeTorque * -handbrake;
+                wheels[i].collider.brakeTorque = handbrakeTorque * -handbrake;
             }
 
-            if (m_Wheel[i].serviceBrake)    // Apply servicebrake (footbrake)
+            if (wheels[i].serviceBrake)    // Apply servicebrake (footbrake)
             {
-                m_Wheel[i].m_collider.brakeTorque = m_BrakeTorque * -footbrake;
+                wheels[i].collider.brakeTorque = brakeTorque * -footbrake;
             }
 
             if (footbrake == 0 && accel == 0 && handbrake == 0)     // Motor braking
             {
-                m_Wheel[i].m_collider.brakeTorque = m_TransmissionTorque * 0.5f;
+                wheels[i].collider.brakeTorque = m_TransmissionTorque * 0.5f;
             }
         }
 
@@ -242,14 +239,14 @@ public class EngineModel : MonoBehaviour
       
     public float TransmissionTorque()
     {
-        float TransmissionTorque = m_EngineTorque * GearingRatioEff();
+        float TransmissionTorque = engineTorque * GearingRatioEff();
 
         return TransmissionTorque;
     }
 
     public float GearingRatioEff()
     {
-        float Gearing = m_GearRatio[m_CurrentGear] * m_GearEff[m_CurrentGear] * m_TransferCaseRatio[(int)m_CurrentTransferCase] * m_TransferCaseEff[(int)m_CurrentTransferCase] * m_FinalDriveRatio * m_FinalDriveEff;
+        float Gearing = 1.7f * gearRatio[currentGear] * gearEff[currentGear] * transferCaseRatio[(int)currentTransferCase] * transferCaseEff[(int)currentTransferCase] * finalDriveRatio * finalDriveEff;
         return Gearing;
     }
 
@@ -268,32 +265,32 @@ public class EngineModel : MonoBehaviour
             ForwardStiffness = 0.6f;
             SidewaysStiffness = 0.6f;
         }
-        for (int i = 0; i < NumberofWheels; i++)
+        for (int i = 0; i < numberofWheels; i++)
         {
-            WheelFrictionCurve fFriction = m_Wheel[i].m_collider.forwardFriction;
-            WheelFrictionCurve sFriction = m_Wheel[i].m_collider.sidewaysFriction;
+            WheelFrictionCurve fFriction = wheels[i].collider.forwardFriction;
+            WheelFrictionCurve sFriction = wheels[i].collider.sidewaysFriction;
             fFriction.stiffness = ForwardStiffness;
             sFriction.stiffness = SidewaysStiffness;
-            m_Wheel[i].m_collider.forwardFriction = fFriction;
-            m_Wheel[i].m_collider.sidewaysFriction = sFriction;
+            wheels[i].collider.forwardFriction = fFriction;
+            wheels[i].collider.sidewaysFriction = sFriction;
         }
     }
 
     // ----- Gear shift scheduler - automatic gear ----- // 
     public void ShiftScheduler()
     {
-        if (m_CurrentGear != m_NumberOfGears - 1)   // Highest gear
+        if (currentGear != numberOfGears - 1)   // Highest gear
         {
-            if (m_EngineRPM >= m_MaxPowerRpm)
+            if (engineRPM >= maxPowerRpm)
             {
-                m_CurrentGear += 1;
+                currentGear += 1;
             }
         }
-        if (m_CurrentGear != 0)                     // Lowest gear
+        if (currentGear != 0)                     // Lowest gear
         {
-            if (m_EngineRPM <= m_MaxTorqueRpm)
+            if (engineRPM <= maxTorqueRpm)
             {
-                m_CurrentGear -= 1;
+                currentGear -= 1;
             }
         }
     }
