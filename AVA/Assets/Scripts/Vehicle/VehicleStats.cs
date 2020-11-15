@@ -55,12 +55,12 @@ namespace UnityStandardAssets.Vehicles.Car
                     break;
             }
 
-            Engine.m_Speed = VehicleRigidBody.velocity.magnitude * m_SpeedCoefficient;
+            Engine.speed = VehicleRigidBody.velocity.magnitude * m_SpeedCoefficient;
 
-            graph.UpdateGraph(Engine.m_Speed,Engine.m_EngineRPM,Engine.m_CurrentGear + 1);
-            Speedometer.UpdateDisplay(Engine.m_Speed, Engine.m_EngineRPM, s_SpeedType);
+            graph.UpdateGraph(Engine.speed,Engine.engineRPM,Engine.currentGear + 1);
+            Speedometer.UpdateDisplay(Engine.speed, Engine.engineRPM, s_SpeedType);
 
-            GearField.text = string.Format("{0}{1}", Engine.m_CurrentGear+1,GenericFunctions.ToOrdinal(Engine.m_CurrentGear + 1));            
+            GearField.text = string.Format("{0}{1}", Engine.currentGear+1,GenericFunctions.ToOrdinal(Engine.currentGear + 1));            
         }
     }
 
