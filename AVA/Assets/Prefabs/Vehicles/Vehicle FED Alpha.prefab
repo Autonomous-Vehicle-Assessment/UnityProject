@@ -514,7 +514,7 @@ MonoBehaviour:
   numberofWheels: 4
   numberofDrivingWheels: 0
   speed: 0
-  centerofMass: {fileID: 0}
+  centerofMass: {fileID: 6541586017840734402}
   wheels:
   - collider: {fileID: 900966193465278873}
     mesh: {fileID: 3642062902440318843}
@@ -2532,7 +2532,7 @@ MeshCollider:
   m_GameObject: {fileID: 4964615144030749111}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
@@ -2629,6 +2629,7 @@ GameObject:
   - component: {fileID: 1646690900257856013}
   - component: {fileID: 4351260747101054770}
   - component: {fileID: 2671545343743011760}
+  - component: {fileID: 3108249335100775459}
   m_Layer: 0
   m_Name: Shell
   m_TagString: Untagged
@@ -2699,6 +2700,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3108249335100775459
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5590578201206577590}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4974468161004867859, guid: b8d56ca716fabd94c8ca12984a11410b, type: 3}
 --- !u!1 &5619978131206007089
 GameObject:
   m_ObjectHideFlags: 0
