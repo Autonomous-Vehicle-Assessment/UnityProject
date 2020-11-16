@@ -93,8 +93,11 @@ public class TerrainDeform : MonoBehaviour
 
     [Space(10)]
     public float groundStiffness;
-    [Range(0,5)]
+    [Range(1,10)]
     public float groundDamping;
+    public float minDeformation;
+
+    public bool deformTerrain;
     public float deformationStrength;
 
     private static float[,] tireMark = {    { .75f, .80f, .85f, .90f, .85f, .80f, .75f },
@@ -157,7 +160,7 @@ public class TerrainDeform : MonoBehaviour
             }
 
             // Deformation of terrain vertices
-            if (activeTerrain != null)
+            if (activeTerrain != null && deformTerrain)
             {
                 if (wheelCollider.GetGroundHit(out WheelHit hit))
                 {
@@ -175,7 +178,7 @@ public class TerrainDeform : MonoBehaviour
                     // ------------------------------------------------ //
                     //          Deformation on Active terrains          //
                     // ------------------------------------------------ //
-                    if (deformationStrength > 0.0001f)
+                    if (deformationStrength > minDeformation)
                     {
                         for (int i = 0; i < brushSize; i++)
                         {
@@ -255,7 +258,7 @@ public class TerrainDeform : MonoBehaviour
                     // ------------------------------------------------ //
                     //         Deformation on neighbour terrains        //
                     // ------------------------------------------------ //
-                    if (deformationStrength > 0.0001f)
+                    if (deformationStrength > minDeformation)
                     {
                         // Edge neighbour terrain
                         if (edgeCase && !cornerCase)
@@ -581,28 +584,6 @@ public class TerrainDeform : MonoBehaviour
 
     }
 
-
-    //public static T[,] SubArray<T>(this T[,] values, int row_min, int row_max, int col_min, int col_max)
-    //{
-    //    // Allocate the result array.
-    //    int num_rows = row_max - row_min + 1;
-    //    int num_cols = col_max - col_min + 1;
-    //    T[,] result = new T[num_rows, num_cols];
-
-    //    // Get the number of columns in the values array.
-    //    int total_cols = values.GetUpperBound(1) + 1;
-    //    int from_index = row_min * total_cols + col_min;
-    //    int to_index = 0;
-    //    for (int row = 0; row <= num_rows - 1; row++)
-    //    {
-    //        Array.Copy(values, from_index, result, to_index, num_cols);
-    //        from_index += total_cols;
-    //        to_index += num_cols;
-    //    }
-
-    //    return result;
-    //}
-
     private float DeformationStrength(WheelCollider wheelCollider, WheelHit hit, TerrainStruct activeTerrain)
     {
         Vector3 wheelPos = wheelCollider.transform.position;
@@ -729,6 +710,6 @@ public class TerrainDeform : MonoBehaviour
 
         float deformationForce = impactForce - groundForce;
 
-        return deformationStrength = Mathf.Max(0, (deformationForce / groundStiffness) * Time.deltaTime * groundDamping);
+        return deformationStrength = Mathf.Max(0, (deformationForce / groundStiffness) * Time.deltaTime / (Time.deltaTime * groundDamping));
     }
 }

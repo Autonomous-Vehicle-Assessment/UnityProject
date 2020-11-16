@@ -7582,12 +7582,434 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   terrainMaster: {fileID: 1700092552}
-  terrains: []
+  terrains:
+  - terrain: {fileID: 1057607073}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 0, y: 0, z: 0}
+    id: {x: 0, y: 0}
+    active: 0
+  - terrain: {fileID: 618866375}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 4, y: 0, z: 0}
+    id: {x: 1, y: 0}
+    active: 0
+  - terrain: {fileID: 1547394393}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 8, y: 0, z: 0}
+    id: {x: 2, y: 0}
+    active: 0
+  - terrain: {fileID: 364118206}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 12, y: 0, z: 0}
+    id: {x: 3, y: 0}
+    active: 0
+  - terrain: {fileID: 495813164}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 16, y: 0, z: 0}
+    id: {x: 4, y: 0}
+    active: 0
+  - terrain: {fileID: 202183491}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 20, y: 0, z: 0}
+    id: {x: 5, y: 0}
+    active: 0
+  - terrain: {fileID: 1338096735}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 24, y: 0, z: 0}
+    id: {x: 6, y: 0}
+    active: 0
+  - terrain: {fileID: 1809346205}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 28, y: 0, z: 0}
+    id: {x: 7, y: 0}
+    active: 0
+  - terrain: {fileID: 939575139}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 32, y: 0, z: 0}
+    id: {x: 8, y: 0}
+    active: 0
+  - terrain: {fileID: 474615038}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 36, y: 0, z: 0}
+    id: {x: 9, y: 0}
+    active: 0
+  - terrain: {fileID: 100308655}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 0, y: 0, z: 4}
+    id: {x: 0, y: 1}
+    active: 0
+  - terrain: {fileID: 974088591}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 4, y: 0, z: 4}
+    id: {x: 1, y: 1}
+    active: 0
+  - terrain: {fileID: 377757758}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 8, y: 0, z: 4}
+    id: {x: 2, y: 1}
+    active: 0
+  - terrain: {fileID: 2060616282}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 12, y: 0, z: 4}
+    id: {x: 3, y: 1}
+    active: 0
+  - terrain: {fileID: 1493569708}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 16, y: 0, z: 4}
+    id: {x: 4, y: 1}
+    active: 0
+  - terrain: {fileID: 313825850}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 20, y: 0, z: 4}
+    id: {x: 5, y: 1}
+    active: 0
+  - terrain: {fileID: 1002864221}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 24, y: 0, z: 4}
+    id: {x: 6, y: 1}
+    active: 0
+  - terrain: {fileID: 1153614792}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 28, y: 0, z: 4}
+    id: {x: 7, y: 1}
+    active: 0
+  - terrain: {fileID: 1583575275}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 32, y: 0, z: 4}
+    id: {x: 8, y: 1}
+    active: 0
+  - terrain: {fileID: 615190963}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 36, y: 0, z: 4}
+    id: {x: 9, y: 1}
+    active: 0
+  - terrain: {fileID: 1285940929}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 0, y: 0, z: 8}
+    id: {x: 0, y: 2}
+    active: 0
+  - terrain: {fileID: 1595935999}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 4, y: 0, z: 8}
+    id: {x: 1, y: 2}
+    active: 0
+  - terrain: {fileID: 962316783}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 8, y: 0, z: 8}
+    id: {x: 2, y: 2}
+    active: 0
+  - terrain: {fileID: 815944490}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 12, y: 0, z: 8}
+    id: {x: 3, y: 2}
+    active: 0
+  - terrain: {fileID: 1552872540}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 16, y: 0, z: 8}
+    id: {x: 4, y: 2}
+    active: 0
+  - terrain: {fileID: 1429066173}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 20, y: 0, z: 8}
+    id: {x: 5, y: 2}
+    active: 1
+  - terrain: {fileID: 466745550}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 24, y: 0, z: 8}
+    id: {x: 6, y: 2}
+    active: 1
+  - terrain: {fileID: 1883002928}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 28, y: 0, z: 8}
+    id: {x: 7, y: 2}
+    active: 0
+  - terrain: {fileID: 6907216}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 32, y: 0, z: 8}
+    id: {x: 8, y: 2}
+    active: 0
+  - terrain: {fileID: 513508634}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 36, y: 0, z: 8}
+    id: {x: 9, y: 2}
+    active: 0
+  - terrain: {fileID: 1508287319}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 0, y: 0, z: 12}
+    id: {x: 0, y: 3}
+    active: 0
+  - terrain: {fileID: 288125397}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 4, y: 0, z: 12}
+    id: {x: 1, y: 3}
+    active: 0
+  - terrain: {fileID: 371827017}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 8, y: 0, z: 12}
+    id: {x: 2, y: 3}
+    active: 0
+  - terrain: {fileID: 310631643}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 12, y: 0, z: 12}
+    id: {x: 3, y: 3}
+    active: 0
+  - terrain: {fileID: 295201601}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 16, y: 0, z: 12}
+    id: {x: 4, y: 3}
+    active: 0
+  - terrain: {fileID: 1767260886}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 20, y: 0, z: 12}
+    id: {x: 5, y: 3}
+    active: 1
+  - terrain: {fileID: 1335863673}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 24, y: 0, z: 12}
+    id: {x: 6, y: 3}
+    active: 1
+  - terrain: {fileID: 1209262067}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 28, y: 0, z: 12}
+    id: {x: 7, y: 3}
+    active: 0
+  - terrain: {fileID: 217965489}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 32, y: 0, z: 12}
+    id: {x: 8, y: 3}
+    active: 0
+  - terrain: {fileID: 1803788776}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 36, y: 0, z: 12}
+    id: {x: 9, y: 3}
+    active: 0
+  - terrain: {fileID: 1099732415}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 0, y: 0, z: 16}
+    id: {x: 0, y: 4}
+    active: 0
+  - terrain: {fileID: 1667899122}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 4, y: 0, z: 16}
+    id: {x: 1, y: 4}
+    active: 0
+  - terrain: {fileID: 1097023372}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 8, y: 0, z: 16}
+    id: {x: 2, y: 4}
+    active: 0
+  - terrain: {fileID: 1681600149}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 12, y: 0, z: 16}
+    id: {x: 3, y: 4}
+    active: 0
+  - terrain: {fileID: 1679700397}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 16, y: 0, z: 16}
+    id: {x: 4, y: 4}
+    active: 0
+  - terrain: {fileID: 813779731}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 20, y: 0, z: 16}
+    id: {x: 5, y: 4}
+    active: 0
+  - terrain: {fileID: 684689069}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 24, y: 0, z: 16}
+    id: {x: 6, y: 4}
+    active: 0
+  - terrain: {fileID: 995665188}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 28, y: 0, z: 16}
+    id: {x: 7, y: 4}
+    active: 0
+  - terrain: {fileID: 883940555}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 32, y: 0, z: 16}
+    id: {x: 8, y: 4}
+    active: 0
+  - terrain: {fileID: 669668952}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 36, y: 0, z: 16}
+    id: {x: 9, y: 4}
+    active: 0
+  - terrain: {fileID: 1600752474}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 0, y: 0, z: 20}
+    id: {x: 0, y: 5}
+    active: 0
+  - terrain: {fileID: 2136176482}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 4, y: 0, z: 20}
+    id: {x: 1, y: 5}
+    active: 0
+  - terrain: {fileID: 1837065016}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 8, y: 0, z: 20}
+    id: {x: 2, y: 5}
+    active: 0
+  - terrain: {fileID: 1857344862}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 12, y: 0, z: 20}
+    id: {x: 3, y: 5}
+    active: 0
+  - terrain: {fileID: 1588606494}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 16, y: 0, z: 20}
+    id: {x: 4, y: 5}
+    active: 0
+  - terrain: {fileID: 760609963}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 20, y: 0, z: 20}
+    id: {x: 5, y: 5}
+    active: 0
+  - terrain: {fileID: 356711442}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 24, y: 0, z: 20}
+    id: {x: 6, y: 5}
+    active: 0
+  - terrain: {fileID: 2048370130}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 28, y: 0, z: 20}
+    id: {x: 7, y: 5}
+    active: 0
+  - terrain: {fileID: 27149759}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 32, y: 0, z: 20}
+    id: {x: 8, y: 5}
+    active: 0
+  - terrain: {fileID: 350872529}
+    resolution: 16.25
+    mapSize: 4
+    mapRes: 65
+    position: {x: 36, y: 0, z: 20}
+    id: {x: 9, y: 5}
+    active: 0
   defaultMaterial: {fileID: 2100000, guid: ff2dd624426c8b840b6ca4c8583f3a7d, type: 2}
   debug: 1
   wheelColliderMaster: {fileID: 28160363}
-  groundStiffness: 1100000
+  groundStiffness: 2500000
   groundDamping: 4
+  minDeformation: 0
+  deformTerrain: 0
   deformationStrength: 0
 --- !u!1 &1724108282
 GameObject:
@@ -8180,12 +8602,12 @@ PrefabInstance:
     - target: {fileID: 900966193508289108, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.543694
+      value: 8.74
       objectReference: {fileID: 0}
     - target: {fileID: 900966193508289108, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.477083
+      value: 3.67
       objectReference: {fileID: 0}
     - target: {fileID: 900966193508289108, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
