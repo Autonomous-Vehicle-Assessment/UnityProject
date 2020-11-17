@@ -16,11 +16,14 @@ public class AIController : MonoBehaviour
     
     public float vehicleSpeed;
     private float speedError;
-    private bool reverse;
     public float proportionalGain;
 
     public float turningRadius;
     public bool showTurningRadius;
+
+    public bool targetBehind;
+    public bool withinTurning;
+    public bool reverse;
 
     private List<PathNode> pathNodes = new List<PathNode>();
 
@@ -88,7 +91,10 @@ public class AIController : MonoBehaviour
         float turningRadiusMax = vehicleSpeed * 1/20 + 9;
         turningRadius = turningRadiusMax * 1 / Mathf.Abs(steer);
 
-        if ((relativeVector.z <= -5f && nodeDistance < turningRadius) || (Mathf.Abs(relativeVector.x / relativeVector.magnitude) > .4f && nodeDistance < turningRadius) || reverse)
+        targetBehind = (relativeVector.z <= -5f && nodeDistance < turningRadius && nodeDistance > 1);
+        withinTurning = Mathf.Abs(relativeVector.x / relativeVector.magnitude) > .5f && nodeDistance < turningRadius && nodeDistance > 1;
+
+        if (targetBehind || withinTurning || reverse)
         {
             reverse = true;
             if (vehicleSpeed < 5)
@@ -97,7 +103,7 @@ public class AIController : MonoBehaviour
             }
 
         }
-        if(reverse && relativeVector.z >= 8f)
+        if(reverse && (relativeVector.z >= 8f || (relativeVector.x / relativeVector.magnitude < .2f && relativeVector.z >= 0)))
         {
             if (vehicleSpeed < 5)
             {
@@ -226,11 +232,39 @@ public class AIController : MonoBehaviour
 
         if (showTurningRadius)
         {
-            if(turningRadius < 100)
+            if(turningRadius < 50)
             {
                 Handles.color = Color.cyan;
                 Vector3 offset = new Vector3(turningRadius * Mathf.Sign(steer), 0);
-                Handles.DrawWireDisc(transform.position + transform.TransformVector(offset), transform.up, turningRadius);
+
+                Vector3 startPoint;
+
+                if (steer >= 0)
+                {
+                    startPoint = new Vector3(-1, 0, 0);
+                    
+                    if (vehicleSpeed < 0)
+                    {
+                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), -(120 - Mathf.Min(110, 110 / 50 * turningRadius)), turningRadius - 1);
+                    }
+                    else
+                    {
+                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), 120 - Mathf.Min(110, 110 / 50 * turningRadius), turningRadius - 1);
+                    }
+                }
+                else
+                {
+                    startPoint = new Vector3(1, 0, 0);
+                    
+                    if (vehicleSpeed < 0)
+                    {
+                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), -(-120 + Mathf.Min(110, 110 / 50 * turningRadius)), turningRadius - 1);
+                    }
+                    else
+                    {
+                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), -120 + Mathf.Min(110, 110 / 50 * turningRadius), turningRadius - 1);
+                    }
+                }
             }
         }
     }

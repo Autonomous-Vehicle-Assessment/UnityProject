@@ -40,9 +40,8 @@ public class SpeedometerScript : MonoBehaviour
 
     private void OnGUI()
     {
-        EditorWindow window = EditorWindow.focusedWindow;
-        canvas.gameObject.SetActive(window.maximized);
-
+        //EditorWindow window = EditorWindow.focusedWindow;
+        //canvas.gameObject.SetActive(window.maximized);
     }
 
     public void UpdateDisplay(float Speed, float RPM, string s_SpeedType)
