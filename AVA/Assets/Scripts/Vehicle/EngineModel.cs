@@ -187,15 +187,20 @@ public class EngineModel : MonoBehaviour
         {
             if (wheels[i].steering)        // Apply steering
             {
+                float currentAngle = wheels[i].collider.steerAngle;
+                
+                float appliedAngleOuter = currentAngle - (currentAngle - m_SteerAngleOuter) * Time.deltaTime * 5f;
+                float appliedAngleInner = currentAngle - (currentAngle - m_SteerAngleInner) * Time.deltaTime * 5f;
+
                 if (steering > 0) // Turning right, apply outer and inner steering angle
                 {
                     switch (wheels[i].wheelSide)
                     {
                         case WheelSide.Left:
-                            wheels[i].collider.steerAngle = m_SteerAngleOuter;
+                            wheels[i].collider.steerAngle = appliedAngleOuter;
                             break;
                         case WheelSide.Right:
-                            wheels[i].collider.steerAngle = m_SteerAngleInner;
+                            wheels[i].collider.steerAngle = appliedAngleInner;
                             break;
                     }
                 }
@@ -204,10 +209,10 @@ public class EngineModel : MonoBehaviour
                     switch (wheels[i].wheelSide)
                     {
                         case WheelSide.Left:
-                            wheels[i].collider.steerAngle = m_SteerAngleInner;
+                            wheels[i].collider.steerAngle = appliedAngleInner;
                             break;
                         case WheelSide.Right:
-                            wheels[i].collider.steerAngle = m_SteerAngleOuter;
+                            wheels[i].collider.steerAngle = appliedAngleOuter;
                             break;
                     }
                 }

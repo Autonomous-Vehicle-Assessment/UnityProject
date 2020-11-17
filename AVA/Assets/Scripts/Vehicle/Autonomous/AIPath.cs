@@ -37,6 +37,15 @@ public class AIPath : MonoBehaviour
                 previousNode = pathNodes[pathNodes.Count - 1].transform.position;
             }
 
+            if (pathNodes[i].activeNode)
+            {
+                Gizmos.color = Color.red;
+            }
+            else
+            {
+                Gizmos.color = Color.green;
+            }
+            
             Gizmos.DrawLine(previousNode, currentNode);
             Gizmos.DrawWireSphere(currentNode, .2f);
         }

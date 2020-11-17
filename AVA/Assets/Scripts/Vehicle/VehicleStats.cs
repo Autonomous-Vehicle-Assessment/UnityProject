@@ -55,7 +55,7 @@ namespace UnityStandardAssets.Vehicles.Car
                     break;
             }
 
-            Engine.speed = VehicleRigidBody.velocity.magnitude * m_SpeedCoefficient;
+            Engine.speed = VehicleRigidBody.velocity.magnitude * m_SpeedCoefficient * Mathf.Sign(transform.InverseTransformDirection(VehicleRigidBody.velocity).z);
 
             graph.UpdateGraph(Engine.speed,Engine.engineRPM,Engine.currentGear + 1);
             Speedometer.UpdateDisplay(Engine.speed, Engine.engineRPM, s_SpeedType);
