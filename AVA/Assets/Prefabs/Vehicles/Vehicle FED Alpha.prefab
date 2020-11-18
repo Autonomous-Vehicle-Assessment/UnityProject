@@ -514,7 +514,7 @@ MonoBehaviour:
   numberofWheels: 4
   numberofDrivingWheels: 0
   speed: 0
-  centerofMass: {fileID: 0}
+  centerofMass: {fileID: 6541586017840734402}
   wheels:
   - collider: {fileID: 900966193465278873}
     mesh: {fileID: 3642062902440318843}
