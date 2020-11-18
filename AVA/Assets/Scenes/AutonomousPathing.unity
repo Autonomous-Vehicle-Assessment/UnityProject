@@ -148,12 +148,9 @@ MonoBehaviour:
   targetVelocity: 3
   throttleCap: 0.5
   vehicleSpeed: 0
-  proportionalGain: 1
   turningRadius: 0
   showTurningRadius: 0
-  targetBehind: 0
-  withinTurning: 0
-  reverse: 0
+  distance: 0
   currentNode: 0
   nodeDistance: 0
   throttle: 0
@@ -193,7 +190,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 534405392}
-  m_RootOrder: 18
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &33986172
 MonoBehaviour:
@@ -469,7 +466,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 534405392}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &206658179
 MonoBehaviour:
@@ -565,7 +562,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 534405392}
-  m_RootOrder: 19
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &215933299
 MonoBehaviour:
@@ -604,12 +601,9 @@ MonoBehaviour:
   targetVelocity: 3
   throttleCap: 0.5
   vehicleSpeed: 0
-  proportionalGain: 1
   turningRadius: 8
   showTurningRadius: 0
-  targetBehind: 0
-  withinTurning: 0
-  reverse: 0
+  distance: 0
   currentNode: 2
   nodeDistance: 0
   throttle: 0
@@ -645,7 +639,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 233734556}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.4, y: 2.468, z: 75.7}
+  m_LocalPosition: {x: -3.5, y: 2.468, z: 67.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 534405392}
@@ -795,7 +789,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 281861646}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20.78, y: 2.468, z: 79.13}
+  m_LocalPosition: {x: -2.6, y: 2.468, z: 71.71}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 534405392}
@@ -1025,7 +1019,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 534405392}
-  m_RootOrder: 13
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &309831542
 MonoBehaviour:
@@ -1082,7 +1076,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 534405392}
-  m_RootOrder: 15
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &343781758
 MonoBehaviour:
@@ -1121,12 +1115,9 @@ MonoBehaviour:
   targetVelocity: 3
   throttleCap: 0.5
   vehicleSpeed: 0
-  proportionalGain: 1
   turningRadius: 0
   showTurningRadius: 0
-  targetBehind: 0
-  withinTurning: 0
-  reverse: 0
+  distance: 0
   currentNode: 0
   nodeDistance: 0
   throttle: 0
@@ -1160,12 +1151,9 @@ MonoBehaviour:
   targetVelocity: 3
   throttleCap: 0.5
   vehicleSpeed: 0
-  proportionalGain: 1
   turningRadius: 8
   showTurningRadius: 0
-  targetBehind: 0
-  withinTurning: 0
-  reverse: 0
+  distance: 0
   currentNode: 2
   nodeDistance: 0
   throttle: 0
@@ -1353,7 +1341,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 534405392}
-  m_RootOrder: 11
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &439814895
 MonoBehaviour:
@@ -1415,6 +1403,8 @@ Transform:
   - {fileID: 233734557}
   - {fileID: 212888663}
   - {fileID: 281861647}
+  - {fileID: 1108840572}
+  - {fileID: 1551159176}
   - {fileID: 1094567316}
   - {fileID: 206658178}
   - {fileID: 858179427}
@@ -1470,7 +1460,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 534405392}
-  m_RootOrder: 14
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &675746970
 MonoBehaviour:
@@ -1627,12 +1617,9 @@ MonoBehaviour:
   targetVelocity: 3
   throttleCap: 0.5
   vehicleSpeed: 0
-  proportionalGain: 1
   turningRadius: 8
   showTurningRadius: 0
-  targetBehind: 0
-  withinTurning: 0
-  reverse: 0
+  distance: 0
   currentNode: 2
   nodeDistance: 0
   throttle: 0
@@ -1748,7 +1735,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 534405392}
-  m_RootOrder: 9
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &820442389
 MonoBehaviour:
@@ -1793,7 +1780,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 534405392}
-  m_RootOrder: 20
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &822130128
 MonoBehaviour:
@@ -1844,7 +1831,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 534405392}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &858179428
 MonoBehaviour:
@@ -1965,7 +1952,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 534405392}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &960703259
 MonoBehaviour:
@@ -2109,12 +2096,9 @@ MonoBehaviour:
   targetVelocity: 3
   throttleCap: 0.5
   vehicleSpeed: 0
-  proportionalGain: 1
   turningRadius: 0
   showTurningRadius: 0
-  targetBehind: 0
-  withinTurning: 0
-  reverse: 0
+  distance: 0
   currentNode: 0
   nodeDistance: 0
   throttle: 0
@@ -2473,7 +2457,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 534405392}
-  m_RootOrder: 17
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1083967502
 MonoBehaviour:
@@ -2518,7 +2502,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 534405392}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1094567317
 MonoBehaviour:
@@ -2533,6 +2517,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetVelocity: 35
+  activeNode: 0
+--- !u!1 &1108840571
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1108840572}
+  - component: {fileID: 1108840573}
+  m_Layer: 0
+  m_Name: Node (23)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1108840572
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108840571}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -19.14, y: 2.468, z: 74.51}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 534405392}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1108840573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108840571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6feb405fc61822341b87547297f839c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetVelocity: 20
   activeNode: 0
 --- !u!1 &1132039001
 GameObject:
@@ -2888,7 +2917,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 534405392}
-  m_RootOrder: 12
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1277958017
 MonoBehaviour:
@@ -2927,12 +2956,9 @@ MonoBehaviour:
   targetVelocity: 3
   throttleCap: 0.5
   vehicleSpeed: 0
-  proportionalGain: 1
   turningRadius: 0
   showTurningRadius: 0
-  targetBehind: 0
-  withinTurning: 0
-  reverse: 0
+  distance: 0
   currentNode: 0
   nodeDistance: 0
   throttle: 0
@@ -3363,12 +3389,9 @@ MonoBehaviour:
   targetVelocity: 3
   throttleCap: 0.5
   vehicleSpeed: 0
-  proportionalGain: 1
   turningRadius: 0
   showTurningRadius: 0
-  targetBehind: 0
-  withinTurning: 0
-  reverse: 0
+  distance: 0
   currentNode: 0
   nodeDistance: 0
   throttle: 0
@@ -3455,6 +3478,51 @@ Terrain:
   m_GroupingID: 0
   m_RenderingLayerMask: 1
   m_AllowAutoConnect: 1
+--- !u!1 &1551159175
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1551159176}
+  - component: {fileID: 1551159177}
+  m_Layer: 0
+  m_Name: Node (22)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1551159176
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551159175}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 36.6, y: 2.468, z: 79.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 534405392}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1551159177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551159175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6feb405fc61822341b87547297f839c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetVelocity: 20
+  activeNode: 0
 --- !u!1 &1555975636 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 900966193508289119, guid: e741e23d882cb8a4488ef50ec8c7bf18,
@@ -3478,12 +3546,9 @@ MonoBehaviour:
   targetVelocity: 3
   throttleCap: 0.5
   vehicleSpeed: 0
-  proportionalGain: 1
   turningRadius: 0
   showTurningRadius: 0
-  targetBehind: 0
-  withinTurning: 0
-  reverse: 0
+  distance: 0
   currentNode: 0
   nodeDistance: 0
   throttle: 0
@@ -3778,12 +3843,9 @@ MonoBehaviour:
   targetVelocity: 3
   throttleCap: 0.5
   vehicleSpeed: 0
-  proportionalGain: 1
   turningRadius: 0
   showTurningRadius: 0
-  targetBehind: 0
-  withinTurning: 0
-  reverse: 0
+  distance: 0
   currentNode: 0
   nodeDistance: 0
   throttle: 0
@@ -4065,17 +4127,17 @@ PrefabInstance:
     - target: {fileID: 900966193508289108, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.54
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 900966193508289108, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.82
+      value: 2.29
       objectReference: {fileID: 0}
     - target: {fileID: 900966193508289108, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 48.85
+      value: 78.1
       objectReference: {fileID: 0}
     - target: {fileID: 900966193508289108, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
@@ -4137,6 +4199,16 @@ PrefabInstance:
       propertyPath: centerofMass
       value: 
       objectReference: {fileID: 366656083}
+    - target: {fileID: 7569547810720874579, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: path
+      value: 
+      objectReference: {fileID: 534405392}
+    - target: {fileID: 7569547810720874579, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: throttleCap
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7902782839003514558, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: m_IsActive
@@ -4173,7 +4245,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 534405392}
-  m_RootOrder: 21
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1897043176
 MonoBehaviour:
@@ -4218,7 +4290,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 534405392}
-  m_RootOrder: 16
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1898302436
 MonoBehaviour:
@@ -4382,7 +4454,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 534405392}
-  m_RootOrder: 10
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1968082935
 MonoBehaviour:
@@ -4398,45 +4470,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetVelocity: 20
   activeNode: 0
---- !u!1 &2009332689 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 900966193508289119, guid: e741e23d882cb8a4488ef50ec8c7bf18,
-    type: 3}
-  m_PrefabInstance: {fileID: 1861839649}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2009332690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2009332689}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbe5d6c7b29ed2345a0f90d22ebe406b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  path: {fileID: 534405392}
-  autonomousDriving: 1
-  targetVelocity: 3
-  throttleCap: 0.5
-  vehicleSpeed: 0
-  proportionalGain: 1
-  turningRadius: 28.9
-  showTurningRadius: 1
-  targetBehind: 0
-  withinTurning: 0
-  reverse: 0
-  currentNode: 2
-  nodeDistance: 0
-  throttle: 0
-  brake: 0
-  steer: 0
-  sensorLength: 10
-  frontSensorPosition: {x: 0, y: 1.62, z: 0}
-  sensorAngle: 30
-  numberOfRays: 35
-  showSensor: 0
 --- !u!1 &2077158832
 GameObject:
   m_ObjectHideFlags: 0

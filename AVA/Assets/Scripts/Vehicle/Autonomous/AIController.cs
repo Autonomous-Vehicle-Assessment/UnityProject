@@ -16,14 +16,20 @@ public class AIController : MonoBehaviour
     
     public float vehicleSpeed;
     private float speedError;
-    public float proportionalGain;
+    private float proportionalGain = 1;
+    private float wheelDistanceLength;
+    private float wheelDistanceWidth;
 
     public float turningRadius;
     public bool showTurningRadius;
 
-    public bool targetBehind;
-    public bool withinTurning;
-    public bool reverse;
+    private bool targetBehind;
+    private bool withinTurning;
+    private bool reverse;
+    private float turningRadiusMin;
+    public float distance;
+    private Vector3 turningRadiusCenter;
+    private Vector3 offsetMin;
 
     private List<PathNode> pathNodes = new List<PathNode>();
 
@@ -62,6 +68,9 @@ public class AIController : MonoBehaviour
                 pathNodes.Add(nodes[i]);
             }
         }
+
+        wheelDistanceLength = Vector2.Distance(engine.wheels[0].collider.transform.position, engine.wheels[3].collider.transform.position);
+        wheelDistanceWidth = Vector2.Distance(engine.wheels[0].collider.transform.position, engine.wheels[1].collider.transform.position);
     }
 
     // Update is called once per frame
@@ -88,26 +97,32 @@ public class AIController : MonoBehaviour
         Vector2 targetPosition = new Vector2(pathNodes[currentNode].transform.position.x, pathNodes[currentNode].transform.position.z);
 
         nodeDistance = Vector2.Distance(currentPosition, targetPosition);
-        float turningRadiusMax = vehicleSpeed * 1/20 + 9;
-        turningRadius = turningRadiusMax * 1 / Mathf.Abs(steer);
 
-        targetBehind = (relativeVector.z <= -5f && nodeDistance < turningRadius && nodeDistance > 1);
-        withinTurning = Mathf.Abs(relativeVector.x / relativeVector.magnitude) > .5f && nodeDistance < turningRadius && nodeDistance > 1;
+        turningRadiusMin = wheelDistanceLength / Mathf.Atan(engine.maximumInnerSteerAngle * Mathf.Deg2Rad) + wheelDistanceWidth / 2;
+        turningRadius = wheelDistanceLength / Mathf.Atan(Mathf.Abs(steer) * engine.maximumInnerSteerAngle * Mathf.Deg2Rad) + wheelDistanceWidth / 2; ;
 
-        if (targetBehind || withinTurning || reverse)
+        offsetMin = new Vector3(turningRadiusMin * Mathf.Sign(steer), 0, wheelDistanceLength / 2);
+        turningRadiusCenter = transform.position + transform.TransformVector(offsetMin);       
+        
+        distance = Vector2.Distance(new Vector2(turningRadiusCenter.x,turningRadiusCenter.z), targetPosition);
+
+        withinTurning = distance < turningRadiusMin && Mathf.Abs(relativeVector.x / relativeVector.magnitude) > Mathf.Sin(30 * Mathf.Deg2Rad) && relativeVector.magnitude > 1;
+        targetBehind = relativeVector.z < -5;
+
+        if (withinTurning || reverse || targetBehind)
         {
             reverse = true;
             if (vehicleSpeed < 5)
             {
-                steer *= -1;
+                steer = Mathf.Sign(steer) * -1;
             }
 
         }
-        if(reverse && (relativeVector.z >= 8f || (relativeVector.x / relativeVector.magnitude < .2f && relativeVector.z >= 0)))
+        if (reverse && !withinTurning && Mathf.Abs(relativeVector.x / relativeVector.magnitude) < Mathf.Sin(30 * Mathf.Deg2Rad) && relativeVector.z >= 0)
         {
             if (vehicleSpeed < 5)
             {
-                steer *= -1;
+                steer = Mathf.Sign(steer) * -1;
             }
             reverse = false;
         }
@@ -116,7 +131,8 @@ public class AIController : MonoBehaviour
             steer *= -1;
         }
 
-
+        //offsetMin = new Vector3(turningRadiusMin * Mathf.Sign(-steer), 0, wheelDistanceLength / 2);
+        //turningRadiusCenter = transform.position + transform.TransformVector(offsetMin);       
     }
 
     private void Drive()
@@ -157,7 +173,7 @@ public class AIController : MonoBehaviour
         Vector2 targetPosition = new Vector2(pathNodes[currentNode].transform.position.x, pathNodes[currentNode].transform.position.z);
         
         nodeDistance = Vector2.Distance(currentPosition, targetPosition);
-        if ( nodeDistance < 1f)
+        if ( nodeDistance < 1.5f)
         {
             if(currentNode == pathNodes.Count - 1)
             {
@@ -232,11 +248,12 @@ public class AIController : MonoBehaviour
 
         if (showTurningRadius)
         {
-            if(turningRadius < 50)
+            if (turningRadius < 50)
             {
                 Handles.color = Color.cyan;
-                Vector3 offset = new Vector3(turningRadius * Mathf.Sign(steer), 0);
-
+                
+                Vector3 offset = new Vector3(turningRadius * Mathf.Sign(steer), 0, -wheelDistanceLength/2 * 1.1f);
+                //Vector3 offsetMin = new Vector3(turningRadiusMin * Mathf.Sign(-steer), 0, wheelDistanceLength / 2);
                 Vector3 startPoint;
 
                 if (steer >= 0)
@@ -245,24 +262,56 @@ public class AIController : MonoBehaviour
                     
                     if (vehicleSpeed < 0)
                     {
-                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), -(120 - Mathf.Min(110, 110 / 50 * turningRadius)), turningRadius - 1);
+                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), -(140 - Mathf.Min(110, 110 / 50 * turningRadius)), turningRadius - wheelDistanceWidth/2);
+                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), -(140 - Mathf.Min(110, 110 / 50 * turningRadius)), turningRadius + wheelDistanceWidth / 2);
                     }
                     else
                     {
-                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), 120 - Mathf.Min(110, 110 / 50 * turningRadius), turningRadius - 1);
+                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), 140 - Mathf.Min(110, 110 / 50 * turningRadius), turningRadius - wheelDistanceWidth / 2);
+                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), 140 - Mathf.Min(110, 110 / 50 * turningRadius), turningRadius + wheelDistanceWidth / 2);
+                    }
+                    if (withinTurning)
+                    {
+                        Handles.color = Color.red;
+                    }
+                    else
+                    {
+                        Handles.color = Color.green;
+                    }
+
+                    if (withinTurning)
+                    {
+                        Handles.DrawWireDisc(transform.position + transform.TransformVector(offsetMin), transform.up, turningRadiusMin - wheelDistanceWidth / 2);
+                        Gizmos.DrawWireSphere(turningRadiusCenter, .5f);
                     }
                 }
                 else
                 {
                     startPoint = new Vector3(1, 0, 0);
-                    
+                    Handles.color = Color.cyan;
                     if (vehicleSpeed < 0)
                     {
-                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), -(-120 + Mathf.Min(110, 110 / 50 * turningRadius)), turningRadius - 1);
+                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), -(-140 + Mathf.Min(110, 110 / 50 * turningRadius)), turningRadius - wheelDistanceWidth / 2);
+                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), -(-140 + Mathf.Min(110, 110 / 50 * turningRadius)), turningRadius + wheelDistanceWidth / 2);
                     }
                     else
                     {
-                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), -120 + Mathf.Min(110, 110 / 50 * turningRadius), turningRadius - 1);
+                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), -140 + Mathf.Min(110, 110 / 50 * turningRadius), turningRadius - wheelDistanceWidth / 2);
+                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), -140 + Mathf.Min(110, 110 / 50 * turningRadius), turningRadius + wheelDistanceWidth / 2);
+                    }
+
+                    if (withinTurning)
+                    {
+                        Handles.color = Color.red;
+                    }
+                    else
+                    {
+                        Handles.color = Color.green;
+                    }
+                    if (withinTurning)
+                    {
+                        Handles.DrawWireDisc(transform.position + transform.TransformVector(offsetMin), transform.up, turningRadiusMin - wheelDistanceWidth / 2);
+                        Gizmos.DrawWireSphere(turningRadiusCenter, .5f);
                     }
                 }
             }
