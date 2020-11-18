@@ -146,7 +146,11 @@ public class EngineModel : MonoBehaviour
     }
     public void UpdateState()
     {
-        //UpdateTerrainWheelParameters();
+        if(terrainTracker != null)
+        {
+            UpdateTerrainWheelParameters();
+        }
+        
         transmissionRPM = Mathf.Max(wheels[0].collider.rpm, wheels[1].collider.rpm, wheels[2].collider.rpm, wheels[3].collider.rpm);
         engineRPM = transmissionRPM * GearingRatioEff();
         engineRPM = Mathf.Abs(engineRPM);
