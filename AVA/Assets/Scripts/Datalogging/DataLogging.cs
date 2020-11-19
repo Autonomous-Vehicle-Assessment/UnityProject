@@ -18,7 +18,7 @@ public class DataLogging : MonoBehaviour
             try
             {
                 File.Delete(filePath);
-                Debug.Log("file deleted");
+                // Debug.Log("file deleted");
             }
             catch
             {
