@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9085909529189837427}
   - component: {fileID: 6251152205262377785}
   - component: {fileID: 7486451453351131053}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 8531953639093132075}
   - component: {fileID: 38348150259195692}
   - component: {fileID: 3082611217966631550}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ConcreteBarricade
   m_TagString: Untagged
   m_Icon: {fileID: 0}

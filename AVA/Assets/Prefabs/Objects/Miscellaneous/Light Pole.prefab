@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 2894028575973637128}
   - component: {fileID: 844820412564591142}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Spot Light (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2894028575973637128
 Transform:
@@ -24,13 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 838521247651662451}
-  m_LocalRotation: {x: 0.73780966, y: -0, z: -0, w: 0.67500883}
-  m_LocalPosition: {x: -0.002, y: 1.084, z: -0.655}
+  m_LocalRotation: {x: 0.75216436, y: -0, z: -0, w: 0.65897554}
+  m_LocalPosition: {x: -0.002, y: 1.09, z: -0.723}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 7262531338644284292}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 95.09, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 97.556, y: 0, z: 0}
 --- !u!108 &844820412564591142
 Light:
   m_ObjectHideFlags: 0
@@ -103,12 +103,13 @@ GameObject:
   - component: {fileID: 7834440312298001116}
   - component: {fileID: 4931066284032387990}
   - component: {fileID: 8451867309928402690}
-  m_Layer: 0
+  - component: {fileID: 4077705415037330748}
+  m_Layer: 9
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7834440312298001116
 Transform:
@@ -173,6 +174,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &4077705415037330748
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301446331064893927}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.05
+  m_Height: 2.4
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6244696556768050456
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,12 +198,12 @@ GameObject:
   m_Component:
   - component: {fileID: 2011103157405471517}
   - component: {fileID: 941662885226717856}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2011103157405471517
 Transform:
@@ -197,13 +212,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6244696556768050456}
-  m_LocalRotation: {x: 0.73780966, y: -0, z: -0, w: 0.67500883}
-  m_LocalPosition: {x: -0.002, y: 1.072, z: -0.524}
+  m_LocalRotation: {x: 0.7420122, y: -0, z: -0, w: 0.6703865}
+  m_LocalPosition: {x: -0.002, y: 1.067, z: -0.477}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 7262531338644284292}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 95.09, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 95.806, y: 0, z: 0}
 --- !u!108 &941662885226717856
 Light:
   m_ObjectHideFlags: 0
@@ -274,12 +289,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7262531338644284292}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Light Pole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7262531338644284292
 Transform:
@@ -288,7 +303,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8035091796175927614}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1.2, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:

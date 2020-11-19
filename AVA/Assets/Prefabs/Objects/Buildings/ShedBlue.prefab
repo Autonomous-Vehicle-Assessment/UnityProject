@@ -9,12 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6326440439490957117}
-  m_Layer: 0
+  - component: {fileID: 2594736862417908839}
+  m_Layer: 9
   m_Name: ShedBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6326440439490957117
 Transform:
@@ -39,6 +40,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2594736862417908839
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213529394969278438}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10.371056, y: 5.1167593, z: 15.471628}
+  m_Center: {x: 0.027079582, y: 2.4917216, z: -0.0019598007}
 --- !u!1 &1004856114390545925
 GameObject:
   m_ObjectHideFlags: 0
@@ -50,12 +64,12 @@ GameObject:
   - component: {fileID: 5469899947290813872}
   - component: {fileID: 8213350854733479858}
   - component: {fileID: 2055585793928921510}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Door Bit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5469899947290813872
 Transform:
@@ -131,12 +145,12 @@ GameObject:
   - component: {fileID: 1859441748310219868}
   - component: {fileID: 1510216152167841500}
   - component: {fileID: 3251989806458742715}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_F
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1859441748310219868
 Transform:
@@ -212,12 +226,12 @@ GameObject:
   - component: {fileID: 1306066993232564188}
   - component: {fileID: 6302764250221287436}
   - component: {fileID: 4603260067393551147}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1306066993232564188
 Transform:
@@ -295,12 +309,12 @@ GameObject:
   - component: {fileID: 618499882834037889}
   - component: {fileID: 5140517063484335911}
   - component: {fileID: 4086033229847234433}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &618499882834037889
 Transform:
@@ -376,12 +390,12 @@ GameObject:
   - component: {fileID: 5890169449981369734}
   - component: {fileID: 5222768262205502548}
   - component: {fileID: 378641530386930228}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Top Bit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5890169449981369734
 Transform:
@@ -457,12 +471,12 @@ GameObject:
   - component: {fileID: 8863292473152872703}
   - component: {fileID: 6298783334192352324}
   - component: {fileID: 1278345953428270671}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Roof
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &8863292473152872703
 Transform:
@@ -538,12 +552,12 @@ GameObject:
   - component: {fileID: 4183553336329282894}
   - component: {fileID: 7668910148456019383}
   - component: {fileID: 3487034861715937324}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4183553336329282894
 Transform:
@@ -621,12 +635,12 @@ GameObject:
   - component: {fileID: 4363174263516095541}
   - component: {fileID: 4450500578036883397}
   - component: {fileID: 9081881863517708759}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4363174263516095541
 Transform:
@@ -702,12 +716,12 @@ GameObject:
   - component: {fileID: 2214948290048073253}
   - component: {fileID: 3970349648753230919}
   - component: {fileID: 3917673219643880017}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2214948290048073253
 Transform:

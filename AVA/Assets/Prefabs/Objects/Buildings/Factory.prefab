@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 3439726565455064707}
   - component: {fileID: 5990596699107368285}
   - component: {fileID: 440713707432395321}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LeftDoor2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &3439726565455064707
 Transform:
@@ -92,12 +92,13 @@ GameObject:
   - component: {fileID: 2578784186585909682}
   - component: {fileID: 8852962783762134906}
   - component: {fileID: 3206163637681521103}
-  m_Layer: 0
+  - component: {fileID: 2968732553585301690}
+  m_Layer: 9
   m_Name: Building
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2578784186585909682
 Transform:
@@ -173,6 +174,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2968732553585301690
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337339458007493849}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.9334798, y: 2.23881, z: 3.9570599}
+  m_Center: {x: -0.17455, y: 1.1285651, z: -0.049999952}
 --- !u!1 &2114079569430097499
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,12 +198,12 @@ GameObject:
   - component: {fileID: 7368557180639311004}
   - component: {fileID: 3126583537418832583}
   - component: {fileID: 8596729788296783027}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LeftDoor3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7368557180639311004
 Transform:
@@ -265,12 +279,12 @@ GameObject:
   - component: {fileID: 8257521264813682167}
   - component: {fileID: 130994919271372757}
   - component: {fileID: 7210851795032032017}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Path
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &8257521264813682167
 Transform:
@@ -346,12 +360,12 @@ GameObject:
   - component: {fileID: 1747240866237648370}
   - component: {fileID: 4939572191865066727}
   - component: {fileID: 4968720000130267212}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LeftDoor1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1747240866237648370
 Transform:
@@ -427,12 +441,12 @@ GameObject:
   - component: {fileID: 7776528357371452169}
   - component: {fileID: 1008399023190437874}
   - component: {fileID: 5217822045740189511}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RightDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7776528357371452169
 Transform:
@@ -508,12 +522,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8448962797042255365}
-  m_Layer: 0
+  - component: {fileID: 7189836365492259248}
+  m_Layer: 9
   m_Name: Factory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &8448962797042255365
 Transform:
@@ -535,3 +550,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7189836365492259248
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9082474340389330111}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

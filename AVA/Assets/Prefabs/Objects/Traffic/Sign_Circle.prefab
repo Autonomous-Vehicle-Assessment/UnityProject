@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 908567189722367405}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: transform8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &908567189722367405
 Transform:
@@ -41,12 +41,13 @@ GameObject:
   - component: {fileID: 4069164756212576636}
   - component: {fileID: 8727381158580073727}
   - component: {fileID: 8066725935572043529}
-  m_Layer: 0
+  - component: {fileID: 3054140965859351652}
+  m_Layer: 9
   m_Name: Sign_Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4069164756212576636
 Transform:
@@ -115,6 +116,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3054140965859351652
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2179143556660162501}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.0041786544, y: 0.106299706, z: 0.0040661423}
+  m_Center: {x: 0.000000015149515, y: 0, z: -0.0010724508}
 --- !u!1 &2960727735421326739
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,12 +138,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6144812778233607910}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: transform9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6144812778233607910
 Transform:

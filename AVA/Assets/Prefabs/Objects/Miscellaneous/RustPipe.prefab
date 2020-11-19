@@ -11,12 +11,13 @@ GameObject:
   - component: {fileID: 6598169066904016611}
   - component: {fileID: 8306406357115531177}
   - component: {fileID: 4783934082046872381}
-  m_Layer: 0
+  - component: {fileID: 1411484059677931271}
+  m_Layer: 9
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6598169066904016611
 Transform:
@@ -82,6 +83,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &1411484059677931271
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2677188427150443992}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.165
+  m_Height: 3.95
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6389063404840402177
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,12 +106,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6044204518823290811}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RustPipe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6044204518823290811
 Transform:

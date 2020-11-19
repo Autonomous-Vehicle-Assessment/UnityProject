@@ -11,12 +11,13 @@ GameObject:
   - component: {fileID: 7425333655935163774}
   - component: {fileID: 5810714491730236123}
   - component: {fileID: 8594901373128762897}
-  m_Layer: 0
+  - component: {fileID: 8198623037065132583}
+  m_Layer: 9
   m_Name: Warehouse_small
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7425333655935163774
 Transform:
@@ -81,3 +82,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8198623037065132583
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7802421701982341060}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.070392296, y: 0.03176806, z: 0.032501183}
+  m_Center: {x: 0, y: 0.016173188, z: 0}

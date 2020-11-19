@@ -11,12 +11,13 @@ GameObject:
   - component: {fileID: 6682360989548356374}
   - component: {fileID: 7715607889451822259}
   - component: {fileID: 5546094116869953657}
-  m_Layer: 0
+  - component: {fileID: 1441583161797945121}
+  m_Layer: 9
   m_Name: ElectricBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6682360989548356374
 Transform:
@@ -81,3 +82,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1441583161797945121
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6338626564020074924}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.1829789, y: 0.3339833, z: 2.0680614}
+  m_Center: {x: -0.003400445, y: -0.005101219, z: 1.0340514}

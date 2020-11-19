@@ -11,12 +11,13 @@ GameObject:
   - component: {fileID: 3061117796597018161}
   - component: {fileID: 192644567855044475}
   - component: {fileID: 3713731466372035567}
-  m_Layer: 0
+  - component: {fileID: 347456783792011171}
+  m_Layer: 9
   m_Name: TyrePile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &3061117796597018161
 Transform:
@@ -81,3 +82,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &347456783792011171
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6110655806247845130}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.323056, y: 0.29761183, z: 1.3270527}
+  m_Center: {x: -0.069256306, y: 0.14367294, z: -0.07451981}
