@@ -11,12 +11,13 @@ GameObject:
   - component: {fileID: 5993524282299690680}
   - component: {fileID: 831539538870750460}
   - component: {fileID: 899696508412606814}
-  m_Layer: 0
+  - component: {fileID: 2850020856577651816}
+  m_Layer: 9
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5993524282299690680
 Transform:
@@ -81,6 +82,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2850020856577651816
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3275863890107270687}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 8.063, y: 2.7295802, z: 2.9756}
+  m_Center: {x: 0, y: 1.12771, z: 0}
 --- !u!1 &3323354105058689385
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,12 +104,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2690122734438734803}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Container brown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2690122734438734803
 Transform:

@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 3846358853357358110}
   - component: {fileID: 6397865952257472394}
   - component: {fileID: 4187265674826619849}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Plane.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &3846358853357358110
 Transform:
@@ -92,12 +92,12 @@ GameObject:
   - component: {fileID: 163621216763053116}
   - component: {fileID: 7404207635068618492}
   - component: {fileID: 4460646744807423575}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cylinder.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &163621216763053116
 Transform:
@@ -173,12 +173,12 @@ GameObject:
   - component: {fileID: 2886170734817886219}
   - component: {fileID: 3772573703924852616}
   - component: {fileID: 606307383711560599}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2886170734817886219
 Transform:
@@ -252,12 +252,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6362527067609772294}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Turbine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6362527067609772294
 Transform:
@@ -288,12 +288,13 @@ GameObject:
   - component: {fileID: 287157661345664220}
   - component: {fileID: 1566945109599530664}
   - component: {fileID: 4338407280382631986}
-  m_Layer: 0
+  - component: {fileID: 3616555784603449492}
+  m_Layer: 9
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &287157661345664220
 Transform:
@@ -358,3 +359,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &3616555784603449492
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7890216715328837869}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.96
+  m_Height: 2.06
+  m_Direction: 2
+  m_Center: {x: 0.025933681, y: 0.0051676026, z: 1.0001119}

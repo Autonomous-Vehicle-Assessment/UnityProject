@@ -11,12 +11,13 @@ GameObject:
   - component: {fileID: 1885894677034790877}
   - component: {fileID: 3673569966777915031}
   - component: {fileID: 278834270996558339}
-  m_Layer: 0
+  - component: {fileID: 1365163039469389294}
+  m_Layer: 9
   m_Name: Ladder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1885894677034790877
 Transform:
@@ -81,3 +82,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1365163039469389294
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7249146449943559398}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.385061, y: 0.160393, z: 3.65644}
+  m_Center: {x: -0.19302149, y: 0.08114751, z: -1.8289341}

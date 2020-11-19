@@ -11,12 +11,13 @@ GameObject:
   - component: {fileID: 7044510878397536220}
   - component: {fileID: 6227628118648920185}
   - component: {fileID: 8180803629462940851}
-  m_Layer: 0
+  - component: {fileID: 8143809064824778924}
+  m_Layer: 9
   m_Name: pallet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7044510878397536220
 Transform:
@@ -82,3 +83,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8143809064824778924
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7676651640525606246}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 7.95, y: 1.4400004, z: 11.999999}
+  m_Center: {x: -0.0027229784, y: 0.72581714, z: 0.023850678}

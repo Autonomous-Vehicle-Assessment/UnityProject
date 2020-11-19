@@ -11,12 +11,13 @@ GameObject:
   - component: {fileID: 2315188522016771099}
   - component: {fileID: 7610602811618508747}
   - component: {fileID: 2409201511682161566}
-  m_Layer: 0
+  - component: {fileID: 4411461992043220833}
+  m_Layer: 9
   m_Name: Sign_Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2315188522016771099
 Transform:
@@ -85,6 +86,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4411461992043220833
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307581664250679346}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.0044314754, y: 0.1096641, z: 0.0041613877}
+  m_Center: {x: 0.00015843884, y: -0.0000001013279, z: -0.0006338269}
 --- !u!1 &5236826800005859776
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,12 +108,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6237889670868101835}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: transform7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6237889670868101835
 Transform:
@@ -124,12 +138,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7729083252933511326}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: transform6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7729083252933511326
 Transform:

@@ -11,12 +11,13 @@ GameObject:
   - component: {fileID: 7000756037199747296}
   - component: {fileID: 6235362410479834949}
   - component: {fileID: 8173050749386335119}
-  m_Layer: 0
+  - component: {fileID: 6638958264053246433}
+  m_Layer: 9
   m_Name: IndustrialBuilding
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7000756037199747296
 Transform:
@@ -93,3 +94,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6638958264053246433
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7668642987291050586}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 38.75158, y: 23.71312, z: 8.228139}
+  m_Center: {x: 0.0000009536743, y: 0.81086636, z: 4.1140685}
