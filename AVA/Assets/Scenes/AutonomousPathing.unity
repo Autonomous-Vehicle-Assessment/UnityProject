@@ -125,42 +125,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &897598 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 900966193508289119, guid: e741e23d882cb8a4488ef50ec8c7bf18,
-    type: 3}
-  m_PrefabInstance: {fileID: 304349387}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &897599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 897598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbe5d6c7b29ed2345a0f90d22ebe406b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  path: {fileID: 534405392}
-  autonomousDriving: 0
-  targetVelocity: 3
-  throttleCap: 0.5
-  vehicleSpeed: 0
-  turningRadius: 0
-  showTurningRadius: 0
-  distance: 0
-  currentNode: 0
-  nodeDistance: 0
-  throttle: 0
-  brake: 0
-  steer: 0
-  sensorLength: 10
-  frontSensorPosition: {x: 0, y: 1.62, z: 0}
-  sensorAngle: 30
-  numberOfRays: 35
-  showSensor: 0
 --- !u!1 &33986170
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,42 +497,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetVelocity: 35
   activeNode: 0
---- !u!1 &218987015 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 900966193508289119, guid: e741e23d882cb8a4488ef50ec8c7bf18,
-    type: 3}
-  m_PrefabInstance: {fileID: 968162374}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &218987016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 218987015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbe5d6c7b29ed2345a0f90d22ebe406b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  path: {fileID: 534405392}
-  autonomousDriving: 1
-  targetVelocity: 3
-  throttleCap: 0.5
-  vehicleSpeed: 0
-  turningRadius: 8
-  showTurningRadius: 0
-  distance: 0
-  currentNode: 2
-  nodeDistance: 0
-  throttle: 0
-  brake: 0
-  steer: 0
-  sensorLength: 10
-  frontSensorPosition: {x: 0, y: 1.62, z: 0}
-  sensorAngle: 30
-  numberOfRays: 35
-  showSensor: 0
 --- !u!1 &233734556
 GameObject:
   m_ObjectHideFlags: 0
@@ -1018,78 +946,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetVelocity: 25
   activeNode: 0
---- !u!1 &351983320 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 900966193508289119, guid: e741e23d882cb8a4488ef50ec8c7bf18,
-    type: 3}
-  m_PrefabInstance: {fileID: 1081245068}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &351983321
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 351983320}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbe5d6c7b29ed2345a0f90d22ebe406b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  path: {fileID: 534405392}
-  autonomousDriving: 0
-  targetVelocity: 3
-  throttleCap: 0.5
-  vehicleSpeed: 0
-  turningRadius: 0
-  showTurningRadius: 0
-  distance: 0
-  currentNode: 0
-  nodeDistance: 0
-  throttle: 0
-  brake: 0
-  steer: 0
-  sensorLength: 10
-  frontSensorPosition: {x: 0, y: 1.62, z: 0}
-  sensorAngle: 30
-  numberOfRays: 35
-  showSensor: 0
---- !u!1 &355981631 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 900966193508289119, guid: e741e23d882cb8a4488ef50ec8c7bf18,
-    type: 3}
-  m_PrefabInstance: {fileID: 1262528098}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &355981632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 355981631}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbe5d6c7b29ed2345a0f90d22ebe406b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  path: {fileID: 534405392}
-  autonomousDriving: 1
-  targetVelocity: 3
-  throttleCap: 0.5
-  vehicleSpeed: 0
-  turningRadius: 8
-  showTurningRadius: 0
-  distance: 0
-  currentNode: 2
-  nodeDistance: 0
-  throttle: 0
-  brake: 0
-  steer: 0
-  sensorLength: 10
-  frontSensorPosition: {x: 0, y: 1.62, z: 0}
-  sensorAngle: 30
-  numberOfRays: 35
-  showSensor: 0
 --- !u!1 &366656083 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6541586017840734402, guid: e741e23d882cb8a4488ef50ec8c7bf18,
@@ -1518,42 +1374,6 @@ Terrain:
   m_GroupingID: 0
   m_RenderingLayerMask: 1
   m_AllowAutoConnect: 1
---- !u!1 &759166835 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 900966193508289119, guid: e741e23d882cb8a4488ef50ec8c7bf18,
-    type: 3}
-  m_PrefabInstance: {fileID: 1016048272}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &759166836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 759166835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbe5d6c7b29ed2345a0f90d22ebe406b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  path: {fileID: 534405392}
-  autonomousDriving: 1
-  targetVelocity: 3
-  throttleCap: 0.5
-  vehicleSpeed: 0
-  turningRadius: 8
-  showTurningRadius: 0
-  distance: 0
-  currentNode: 2
-  nodeDistance: 0
-  throttle: 0
-  brake: 0
-  steer: 0
-  sensorLength: 10
-  frontSensorPosition: {x: 0, y: 1.62, z: 0}
-  sensorAngle: 30
-  numberOfRays: 35
-  showSensor: 0
 --- !u!1 &807210953
 GameObject:
   m_ObjectHideFlags: 0
@@ -1997,42 +1817,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e741e23d882cb8a4488ef50ec8c7bf18, type: 3}
---- !u!1 &969281435 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 900966193508289119, guid: e741e23d882cb8a4488ef50ec8c7bf18,
-    type: 3}
-  m_PrefabInstance: {fileID: 1829765304}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &969281436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 969281435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbe5d6c7b29ed2345a0f90d22ebe406b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  path: {fileID: 534405392}
-  autonomousDriving: 0
-  targetVelocity: 3
-  throttleCap: 0.5
-  vehicleSpeed: 0
-  turningRadius: 0
-  showTurningRadius: 0
-  distance: 0
-  currentNode: 0
-  nodeDistance: 0
-  throttle: 0
-  brake: 0
-  steer: 0
-  sensorLength: 10
-  frontSensorPosition: {x: 0, y: 1.62, z: 0}
-  sensorAngle: 30
-  numberOfRays: 35
-  showSensor: 0
 --- !u!1 &994584383
 GameObject:
   m_ObjectHideFlags: 0
@@ -2253,6 +2037,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetVelocity: 40
   activeNode: 0
+--- !u!1 &1051550838 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6136976262089446929, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+    type: 3}
+  m_PrefabInstance: {fileID: 1754172228}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1051550842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051550838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18c0a8b411f52454595afa0b4e1862d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensorRange: 100
+  width: 100
+  height: 50
+  showFieldOfView: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 5943
 --- !u!1001 &1081245068
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2873,42 +2682,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetVelocity: 35
   activeNode: 0
---- !u!1 &1347373951 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 900966193508289119, guid: e741e23d882cb8a4488ef50ec8c7bf18,
-    type: 3}
-  m_PrefabInstance: {fileID: 1150768617}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1347373952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1347373951}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbe5d6c7b29ed2345a0f90d22ebe406b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  path: {fileID: 534405392}
-  autonomousDriving: 0
-  targetVelocity: 3
-  throttleCap: 0.5
-  vehicleSpeed: 0
-  turningRadius: 0
-  showTurningRadius: 0
-  distance: 0
-  currentNode: 0
-  nodeDistance: 0
-  throttle: 0
-  brake: 0
-  steer: 0
-  sensorLength: 10
-  frontSensorPosition: {x: 0, y: 1.62, z: 0}
-  sensorAngle: 30
-  numberOfRays: 35
-  showSensor: 0
 --- !u!1 &1356476203
 GameObject:
   m_ObjectHideFlags: 0
@@ -3306,42 +3079,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 026a74f302707a447bcd2a6fdd3c93d6, type: 3}
---- !u!1 &1498973890 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 900966193508289119, guid: e741e23d882cb8a4488ef50ec8c7bf18,
-    type: 3}
-  m_PrefabInstance: {fileID: 1754172228}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1498973891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1498973890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbe5d6c7b29ed2345a0f90d22ebe406b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  path: {fileID: 534405392}
-  autonomousDriving: 0
-  targetVelocity: 3
-  throttleCap: 0.5
-  vehicleSpeed: 0
-  turningRadius: 0
-  showTurningRadius: 0
-  distance: 0
-  currentNode: 0
-  nodeDistance: 0
-  throttle: 0
-  brake: 0
-  steer: 0
-  sensorLength: 10
-  frontSensorPosition: {x: 0, y: 1.62, z: 0}
-  sensorAngle: 30
-  numberOfRays: 35
-  showSensor: 0
 --- !u!1 &1511268078
 GameObject:
   m_ObjectHideFlags: 0
@@ -3463,42 +3200,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetVelocity: 30
   activeNode: 0
---- !u!1 &1555975636 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 900966193508289119, guid: e741e23d882cb8a4488ef50ec8c7bf18,
-    type: 3}
-  m_PrefabInstance: {fileID: 255369143}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1555975637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1555975636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbe5d6c7b29ed2345a0f90d22ebe406b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  path: {fileID: 534405392}
-  autonomousDriving: 0
-  targetVelocity: 3
-  throttleCap: 0.5
-  vehicleSpeed: 0
-  turningRadius: 0
-  showTurningRadius: 0
-  distance: 0
-  currentNode: 0
-  nodeDistance: 0
-  throttle: 0
-  brake: 0
-  steer: 0
-  sensorLength: 10
-  frontSensorPosition: {x: 0, y: 1.62, z: 0}
-  sensorAngle: 30
-  numberOfRays: 35
-  showSensor: 0
 --- !u!1 &1596772119
 GameObject:
   m_ObjectHideFlags: 0
@@ -3608,7 +3309,7 @@ Transform:
   - {fileID: 676654622}
   - {fileID: 734217665}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1754172228
 PrefabInstance:
@@ -3718,6 +3419,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2621526040368134373, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136976262089446929, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraFeed
+      objectReference: {fileID: 0}
     - target: {fileID: 6703349790072230218, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: saveFeedActive
@@ -3726,7 +3437,7 @@ PrefabInstance:
     - target: {fileID: 6703349790072230218, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: saveFrequency
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7569547810720874579, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
@@ -3794,44 +3505,8 @@ Transform:
   - {fileID: 339485935}
   - {fileID: 1466839867}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1802017255 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 900966193508289119, guid: e741e23d882cb8a4488ef50ec8c7bf18,
-    type: 3}
-  m_PrefabInstance: {fileID: 97881941}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1802017256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1802017255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbe5d6c7b29ed2345a0f90d22ebe406b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  path: {fileID: 534405392}
-  autonomousDriving: 0
-  targetVelocity: 3
-  throttleCap: 0.5
-  vehicleSpeed: 0
-  turningRadius: 0
-  showTurningRadius: 0
-  distance: 0
-  currentNode: 0
-  nodeDistance: 0
-  throttle: 0
-  brake: 0
-  steer: 0
-  sensorLength: 10
-  frontSensorPosition: {x: 0, y: 1.62, z: 0}
-  sensorAngle: 30
-  numberOfRays: 35
-  showSensor: 0
 --- !u!1 &1804963366
 GameObject:
   m_ObjectHideFlags: 0
@@ -4303,7 +3978,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetVelocity: 35
   activeNode: 0
---- !u!1001 &1908249475
+--- !u!1001 &1915734350
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -4353,7 +4028,7 @@ PrefabInstance:
     - target: {fileID: 195079846828990397, guid: b6d4eb1bc65c83b459ba6991220c17a0,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 195079846828990397, guid: b6d4eb1bc65c83b459ba6991220c17a0,
         type: 3}
@@ -4420,32 +4095,53 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7553823338286120067, guid: b6d4eb1bc65c83b459ba6991220c17a0,
+    - target: {fileID: 1565922036437706998, guid: b6d4eb1bc65c83b459ba6991220c17a0,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385489349345902240, guid: b6d4eb1bc65c83b459ba6991220c17a0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385489349345902240, guid: b6d4eb1bc65c83b459ba6991220c17a0,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5295570930842988660, guid: b6d4eb1bc65c83b459ba6991220c17a0,
         type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5530915596608749694, guid: b6d4eb1bc65c83b459ba6991220c17a0,
+        type: 3}
+      propertyPath: vehicleSelect
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293899087694695525, guid: b6d4eb1bc65c83b459ba6991220c17a0,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293899087694695525, guid: b6d4eb1bc65c83b459ba6991220c17a0,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293899087694695525, guid: b6d4eb1bc65c83b459ba6991220c17a0,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293899087694695525, guid: b6d4eb1bc65c83b459ba6991220c17a0,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6d4eb1bc65c83b459ba6991220c17a0, type: 3}
---- !u!1 &1908249476 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 195079846828990393, guid: b6d4eb1bc65c83b459ba6991220c17a0,
-    type: 3}
-  m_PrefabInstance: {fileID: 1908249475}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1908249477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1908249476}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 589dbb400c156f64bb7f573a57970dd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  vehicleSelect: 2
 --- !u!1 &1968082933
 GameObject:
   m_ObjectHideFlags: 0

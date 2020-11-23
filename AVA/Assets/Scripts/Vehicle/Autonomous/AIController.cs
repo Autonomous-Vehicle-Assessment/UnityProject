@@ -85,7 +85,7 @@ public class AIController : MonoBehaviour
             CheckWaypointDistance();
         }
 
-        Sensors();
+        // Sensors();
     }
 
     private void Steer()
