@@ -1078,6 +1078,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7078071094896647721}
+  - component: {fileID: 1773832750873456913}
   m_Layer: 0
   m_Name: Pick-Up old
   m_TagString: Untagged
@@ -1114,6 +1115,39 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &1773832750873456913
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7598008546004173971}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 1.1372588, z: -0.021417737}
+  m_Size: 6.6544933
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.15409608
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 6534906409786175245}
+    - renderer: {fileID: 1711175684270928838}
+    - renderer: {fileID: 8238446820928183658}
+    - renderer: {fileID: 8107160003165595575}
+    - renderer: {fileID: 4744742674093794238}
+    - renderer: {fileID: 4164960480177393755}
+    - renderer: {fileID: 4443700400711873156}
+    - renderer: {fileID: 4102582681730460882}
+    - renderer: {fileID: 7379332087621323782}
+    - renderer: {fileID: 8569922700231481818}
+    - renderer: {fileID: 8338202740912278301}
+    - renderer: {fileID: 7724871485588098659}
+    - renderer: {fileID: 3489995268812362591}
+    - renderer: {fileID: 8623418093465164568}
+    - renderer: {fileID: 1156840455910398231}
+  m_Enabled: 1
 --- !u!1 &7943372112049802150
 GameObject:
   m_ObjectHideFlags: 0

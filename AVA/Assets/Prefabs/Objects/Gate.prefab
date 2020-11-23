@@ -105,6 +105,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4267011458888988598}
+  - component: {fileID: 2137303778651852357}
   m_Layer: 9
   m_Name: Gate
   m_TagString: Untagged
@@ -128,6 +129,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &2137303778651852357
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3493853215129677068}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0.5090939, y: 2.4347682, z: -0.06430709}
+  m_Size: 4.878688
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.04929466
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 6270602724931940940}
+    - renderer: {fileID: 6867526089041094274}
+  m_Enabled: 1
 --- !u!1 &4930230668802347085
 GameObject:
   m_ObjectHideFlags: 0

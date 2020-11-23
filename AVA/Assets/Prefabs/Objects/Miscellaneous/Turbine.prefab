@@ -252,6 +252,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6362527067609772294}
+  - component: {fileID: 4210784435333748427}
   m_Layer: 9
   m_Name: Turbine
   m_TagString: Untagged
@@ -277,6 +278,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &4210784435333748427
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5983010135935577020}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0.14609289, y: 11.116909, z: 1.0759759}
+  m_Size: 22.232101
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.10367128
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 4338407280382631986}
+    - renderer: {fileID: 4460646744807423575}
+    - renderer: {fileID: 4187265674826619849}
+    - renderer: {fileID: 606307383711560599}
+  m_Enabled: 1
 --- !u!1 &7890216715328837869
 GameObject:
   m_ObjectHideFlags: 0

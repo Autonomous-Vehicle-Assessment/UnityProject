@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 8531953639093132075}
   - component: {fileID: 38348150259195692}
   - component: {fileID: 3082611217966631550}
+  - component: {fileID: 830738761668879396}
   m_Layer: 9
   m_Name: ConcreteBarricade
   m_TagString: Untagged
@@ -140,3 +141,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.7490559, y: 0.17363966, z: 0.46322513}
   m_Center: {x: 0.0017683506, y: 0.08730441, z: -0.24782854}
+--- !u!205 &830738761668879396
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9019661179400683921}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: -0.000030517578, y: 0.35909787, z: -0.26084897}
+  m_Size: 2.7777145
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.03988722
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 7486451453351131053}
+  m_Enabled: 1

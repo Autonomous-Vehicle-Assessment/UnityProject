@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 192644567855044475}
   - component: {fileID: 3713731466372035567}
   - component: {fileID: 347456783792011171}
+  - component: {fileID: 9028568722892019233}
   m_Layer: 9
   m_Name: TyrePile
   m_TagString: Untagged
@@ -95,3 +96,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.323056, y: 0.29761183, z: 1.3270527}
   m_Center: {x: -0.069256306, y: 0.14367294, z: -0.07451981}
+--- !u!205 &9028568722892019233
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6110655806247845130}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: -0.061725497, y: 0.2686845, z: -0.062470496}
+  m_Size: 1.555005
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.054363325
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 3713731466372035567}
+  m_Enabled: 1

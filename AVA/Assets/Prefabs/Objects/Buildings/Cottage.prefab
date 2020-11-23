@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2614918470525323175}
   - component: {fileID: 6383691260182836670}
   - component: {fileID: 8579197214057273117}
+  - component: {fileID: 5831469843190546305}
   m_Layer: 9
   m_Name: Cottage
   m_TagString: Untagged
@@ -109,3 +110,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5.2088537, y: 3.1386285, z: 2.293788}
   m_Center: {x: 2.9817576, y: 1.553303, z: 5.6333623}
+--- !u!205 &5831469843190546305
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2614918470527588711}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: -0.18438435, y: 3.3605282, z: 0.295743}
+  m_Size: 14.650164
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.08063266
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2614918470525323175}
+  m_Enabled: 1

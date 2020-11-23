@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5174001531549151275}
   - component: {fileID: 3074570160627560203}
   - component: {fileID: 13667636492735342}
+  - component: {fileID: 7271266352335108851}
   m_Layer: 0
   m_Name: Warehouse
   m_TagString: Untagged
@@ -95,3 +96,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 244.66864, y: 60.67526, z: 164.39859}
   m_Center: {x: -0.000015894573, y: -11.518901, z: 9.245483}
+--- !u!205 &7271266352335108851
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134862937790771636}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: -0.00048828125, y: 0, z: 0}
+  m_Size: 254.36826
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.10130591
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 3074570160627560203}
+  m_Enabled: 1

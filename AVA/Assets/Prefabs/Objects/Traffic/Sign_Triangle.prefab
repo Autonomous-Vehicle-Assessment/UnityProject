@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4388448959783073825}
   - component: {fileID: 6008981522530130194}
   - component: {fileID: 6012662007315439789}
+  - component: {fileID: 5556360748521769056}
   m_Layer: 9
   m_Name: Sign_Triangle
   m_TagString: Untagged
@@ -101,6 +102,25 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0048910817, y: 0.11299646, z: 0.004049954}
   m_Center: {x: 0.00008217693, y: 0.056312054, z: -0.0006576423}
+--- !u!205 &5556360748521769056
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2364584402968186450}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0.056312054, z: 0}
+  m_Size: 0.112996444
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.013249047
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 6008981522530130194}
+  m_Enabled: 1
 --- !u!1 &3786448876553698137
 GameObject:
   m_ObjectHideFlags: 0

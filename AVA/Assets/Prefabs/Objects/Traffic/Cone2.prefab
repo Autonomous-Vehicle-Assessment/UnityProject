@@ -105,6 +105,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8047367967793379348}
+  - component: {fileID: 2507954640801948156}
   m_Layer: 9
   m_Name: Cone2
   m_TagString: Untagged
@@ -127,3 +128,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &2507954640801948156
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7270549411520717486}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0.18500042, z: 0}
+  m_Size: 0.35061204
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.012840831
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 9092591486660400274}
+  m_Enabled: 1

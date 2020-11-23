@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 840294669767733073}
+  - component: {fileID: 2286738862916794068}
   m_Layer: 9
   m_Name: KamazTruck
   m_TagString: Untagged
@@ -33,6 +34,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &2286738862916794068
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 63757519416767979}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: -0.00026381016, y: 1.9192421, z: 0.10634804}
+  m_Size: 8.615713
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.120985836
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2343896500130587228}
+    - renderer: {fileID: 1391500405092683799}
+    - renderer: {fileID: 725034443290283949}
+  m_Enabled: 1
 --- !u!1 &4054208977595175892
 GameObject:
   m_ObjectHideFlags: 0

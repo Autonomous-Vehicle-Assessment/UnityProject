@@ -104,6 +104,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6369844291363540872}
+  - component: {fileID: 1624497470577208709}
   m_Layer: 9
   m_Name: Container blue
   m_TagString: Untagged
@@ -126,3 +127,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &1624497470577208709
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5993705127951095090}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: -0.000015258789, y: 1.12771, z: 0}
+  m_Size: 8.063
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.030415041
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2014493530455672353}
+  m_Enabled: 1

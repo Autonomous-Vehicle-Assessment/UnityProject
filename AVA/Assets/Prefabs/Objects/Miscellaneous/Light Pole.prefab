@@ -289,6 +289,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7262531338644284292}
+  - component: {fileID: 7176505065518277504}
   m_Layer: 9
   m_Name: Light Pole
   m_TagString: Untagged
@@ -313,3 +314,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &7176505065518277504
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8035091796175927614}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: -0.0047314167, z: -0.353065}
+  m_Size: 2.6077409
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.054363325
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 8451867309928402690}
+  m_Enabled: 1

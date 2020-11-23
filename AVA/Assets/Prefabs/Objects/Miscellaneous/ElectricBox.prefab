@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7715607889451822259}
   - component: {fileID: 5546094116869953657}
   - component: {fileID: 1441583161797945121}
+  - component: {fileID: 4241554435575339808}
   m_Layer: 9
   m_Name: ElectricBox
   m_TagString: Untagged
@@ -95,3 +96,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.1829789, y: 0.3339833, z: 2.0680614}
   m_Center: {x: -0.003400445, y: -0.005101219, z: 1.0340514}
+--- !u!205 &4241554435575339808
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6338626564020074924}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0.00000011920929, z: 1.034055}
+  m_Size: 2.0680609
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.042914905
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 5546094116869953657}
+  m_Enabled: 1

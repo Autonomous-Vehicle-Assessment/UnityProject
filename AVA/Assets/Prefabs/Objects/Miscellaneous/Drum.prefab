@@ -105,6 +105,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7851842189721566762}
+  - component: {fileID: 4373554100871544045}
   m_Layer: 9
   m_Name: Drum
   m_TagString: Untagged
@@ -127,3 +128,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &4373554100871544045
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7474999506824012944}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0.00679332, y: 0.56548476, z: 0}
+  m_Size: 1.1162415
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.05095718
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 9040406228681577132}
+  m_Enabled: 1

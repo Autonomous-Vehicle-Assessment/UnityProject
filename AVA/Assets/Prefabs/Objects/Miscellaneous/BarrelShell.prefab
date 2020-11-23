@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 348395206310092413}
   - component: {fileID: 4346723894476930390}
   - component: {fileID: 4551656844363276990}
+  - component: {fileID: 3780872581182883001}
   m_Layer: 9
   m_Name: BarrelShell
   m_TagString: Untagged
@@ -96,3 +97,22 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0.0009894967, y: 0.377863, z: -0.002422005}
+--- !u!205 &3780872581182883001
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7716617787406030433}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0.0009894967, y: 0.377863, z: -0.002422005}
+  m_Size: 0.74511003
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.00249056
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 4346723894476930390}
+  m_Enabled: 1

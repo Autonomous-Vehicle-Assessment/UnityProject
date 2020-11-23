@@ -662,6 +662,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5281289867465724582}
   - component: {fileID: 5797855406418202786}
+  - component: {fileID: 8849612725892977622}
   m_Layer: 9
   m_Name: ShedGreen
   m_TagString: Untagged
@@ -705,6 +706,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10.371056, y: 5.1167593, z: 15.471628}
   m_Center: {x: 0.027079582, y: 2.4917216, z: -0.0019598007}
+--- !u!205 &8849612725892977622
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4756145953606092828}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0.0000052452087, y: 3.2550006, z: 0}
+  m_Size: 15.4330435
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.10130591
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 4947836210743423773}
+    - renderer: {fileID: 2777307506738020550}
+    - renderer: {fileID: 4525611934651111772}
+    - renderer: {fileID: 8244100534689323540}
+    - renderer: {fileID: 1977580005733115153}
+    - renderer: {fileID: 7866453003949239620}
+    - renderer: {fileID: 2566309248230118884}
+    - renderer: {fileID: 2817032266898057050}
+    - renderer: {fileID: 4087952964315924787}
+  m_Enabled: 1
 --- !u!1 &7132246817134426181
 GameObject:
   m_ObjectHideFlags: 0

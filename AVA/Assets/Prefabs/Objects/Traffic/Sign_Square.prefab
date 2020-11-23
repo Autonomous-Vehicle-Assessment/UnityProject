@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7610602811618508747}
   - component: {fileID: 2409201511682161566}
   - component: {fileID: 4411461992043220833}
+  - component: {fileID: 4015680735182723735}
   m_Layer: 9
   m_Name: Sign_Square
   m_TagString: Untagged
@@ -99,6 +100,25 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0044314754, y: 0.1096641, z: 0.0041613877}
   m_Center: {x: 0.00015843884, y: -0.0000001013279, z: -0.0006338269}
+--- !u!205 &4015680735182723735
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307581664250679346}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: -0.0000038146973, y: 0, z: 0.0000009536743}
+  m_Size: 0.109663874
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.012716418
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2409201511682161566}
+  m_Enabled: 1
 --- !u!1 &5236826800005859776
 GameObject:
   m_ObjectHideFlags: 0
