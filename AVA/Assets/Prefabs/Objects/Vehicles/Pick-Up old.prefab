@@ -1134,7 +1134,6 @@ LODGroup:
     renderers:
     - renderer: {fileID: 6534906409786175245}
     - renderer: {fileID: 1711175684270928838}
-    - renderer: {fileID: 8238446820928183658}
     - renderer: {fileID: 8107160003165595575}
     - renderer: {fileID: 4744742674093794238}
     - renderer: {fileID: 4164960480177393755}
