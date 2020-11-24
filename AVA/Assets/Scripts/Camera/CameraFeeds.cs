@@ -12,19 +12,20 @@ public class CameraFeeds : MonoBehaviour
     private Text cameraFeedText;
     [Range(1,4)]
     public int vehicleSelect;
+    private int vehicleCount;
 
     void Awake()
     {
         vehicles = GameObject.FindGameObjectsWithTag("Vehicle");
 
         cameraFeedsGenerators = new List<CameraFeedGenerator>();
-        int index = 0;
+        vehicleCount = 0;
         
         foreach (GameObject vehicle in vehicles)
         {
             cameraFeedsGenerators.Add(vehicle.GetComponentInChildren<CameraFeedGenerator>());
-            vehicle.GetComponentInChildren<CameraFeedGenerator>().id = index;
-            index++;
+            vehicle.GetComponentInChildren<CameraFeedGenerator>().id = vehicleCount;
+            vehicleCount++;
         }
 
         uiElement = GameObject.FindGameObjectWithTag("UICameraFeed");
@@ -34,6 +35,8 @@ public class CameraFeeds : MonoBehaviour
 
     void OnGUI()
     {
+        vehicleSelect = Mathf.Max(0, Mathf.Min(vehicleCount, vehicleSelect));
+
         cameraFeed.texture = cameraFeedsGenerators[vehicleSelect - 1].cameraTexture;
         
         if(cameraFeedsGenerators[vehicleSelect - 1].recordFeed)
@@ -43,7 +46,6 @@ public class CameraFeeds : MonoBehaviour
         else
         {
             cameraFeedText.text = vehicles[vehicleSelect - 1].name;
-        }
-        
+        }   
     }
 }

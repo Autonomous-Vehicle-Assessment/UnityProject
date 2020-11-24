@@ -2915,7 +2915,7 @@ GameObject:
   - component: {fileID: 622409259413363447}
   - component: {fileID: 6703349790072230218}
   m_Layer: 11
-  m_Name: Front View
+  m_Name: Depth Camera
   m_TagString: CameraFeed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2992,7 +2992,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTexture: {fileID: 0}
   recordFeed: 0
-  path: C:\Users\au540322\Documents\Projects\CameraFeeds
+  logDepth: 0
   id: 0
   saveFrequency: 10
 --- !u!1 &6303542194653335972
