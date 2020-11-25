@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CameraFeeds : MonoBehaviour
+public class UICameraFeed : MonoBehaviour
 {
     private List<CameraFeedGenerator> cameraFeedsGenerators;
     private GameObject uiElement;
@@ -11,7 +10,7 @@ public class CameraFeeds : MonoBehaviour
     private RawImage cameraFeed;
     private Text cameraFeedText;
     [Range(1,4)]
-    public int vehicleSelect;
+    public int vehicleSelect = 1;
     private int vehicleCount;
 
     void Awake()
@@ -23,8 +22,8 @@ public class CameraFeeds : MonoBehaviour
         
         foreach (GameObject vehicle in vehicles)
         {
-            cameraFeedsGenerators.Add(vehicle.GetComponentInChildren<CameraFeedGenerator>());
-            vehicle.GetComponentInChildren<CameraFeedGenerator>().id = vehicleCount;
+            cameraFeedsGenerators.Add(vehicle.GetComponent<CameraFeedGenerator>());
+            vehicle.GetComponent<CameraFeedGenerator>().id = vehicleCount;
             vehicleCount++;
         }
 

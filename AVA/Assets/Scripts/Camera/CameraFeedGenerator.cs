@@ -32,16 +32,23 @@ public class CameraFeedGenerator : MonoBehaviour
 
     void Awake()
     {
-        _camera = GetComponent<Camera>();
+        // Acquire depth camera object.
+        Transform camerasObject = transform.Find("Cameras");
+        Transform depthCameraObject = camerasObject.Find("Depth Camera");
+        _camera = depthCameraObject.GetComponent<Camera>();
         cameraDepth = GetComponent<CameraDepth>();
+
+        // Initialize depth camera target textures to camera specifications.
         cameraTexture = new RenderTexture(672, 376, 8, RenderTextureFormat.ARGB32);
         _camera.targetTexture = cameraTexture;
 
+        // Initialize multithreading routines.
         snapShotRoutine = SnapShotRoutine();
         saveFeedProcess = new Thread(new ThreadStart(SaveFeedProcess));
 
         recordFeed = false;
     }
+
 
     private void OnGUI()
     {
@@ -55,6 +62,9 @@ public class CameraFeedGenerator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Halts any active live feed.
+    /// </summary>
     private void OnApplicationQuit()
     {
         if (activeRoutine)
@@ -63,6 +73,10 @@ public class CameraFeedGenerator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Starts live feed coroutine and thread, initialize feed queues.
+    /// <para>Sets up data folder and log file.</para>
+    /// </summary>
     private void StartRecording()
     {
         snapShotList = new List<byte[]>();
@@ -82,6 +96,10 @@ public class CameraFeedGenerator : MonoBehaviour
         SetupDataLog();
     }
 
+    /// <summary>
+    /// Stops active live feed.
+    /// <para>Halting coroutine and save thread.</para>
+    /// </summary>
     private void StopRecording()
     {
         // Snapshot
@@ -98,6 +116,9 @@ public class CameraFeedGenerator : MonoBehaviour
         activeRoutine = false;
     }
 
+    /// <summary>
+    /// File handling thread (saves images and writes to log file).
+    /// </summary>
     private void SaveFeedProcess()
     {
         while (recordFeed)
@@ -108,6 +129,10 @@ public class CameraFeedGenerator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Snapshot routine, grabs feed from front (depth) camera.
+    /// </summary>
+    /// <returns></returns>
     IEnumerator SnapShotRoutine()
     {
         while (recordFeed)
@@ -119,7 +144,7 @@ public class CameraFeedGenerator : MonoBehaviour
     }
 
     /// <summary>
-    /// Takes a snapshot from the camera feed and current position and depth measurements. 
+    /// Takes a snapshot from the camera feed, current position and depth measurements. 
     /// Adds snapshot and measurements to save feed queue.
     /// </summary>
     public void Snapshot()
@@ -132,6 +157,7 @@ public class CameraFeedGenerator : MonoBehaviour
         snapshot.ReadPixels(new Rect(0, 0, cameraTexture.width, cameraTexture.height), 0, 0);
 
         string pointCloudString = "";
+        string depthOffset = "";
 
         if (logDepth)
         {
@@ -141,6 +167,8 @@ public class CameraFeedGenerator : MonoBehaviour
             {
                 pointCloudString += point.ToString() + ";";
             }
+
+            depthOffset = cameraDepth.hStepStart.ToString() + ";" + cameraDepth.vStepStart.ToString() + ";";
         }
 
         string logString = $"{Time.time};{transform.position.x};{transform.position.y};{transform.position.z};";
@@ -148,7 +176,7 @@ public class CameraFeedGenerator : MonoBehaviour
 
         snapShotList.Add(snapshot.EncodeToJPG());
         fileNameList.Add(fileName);
-        depthLogList.Add(logString + pointCloudString + "\n");
+        depthLogList.Add(logString + depthOffset + pointCloudString + "\n");
     }
 
     /// <summary>
@@ -177,24 +205,13 @@ public class CameraFeedGenerator : MonoBehaviour
         string LogTime = DateTime.UtcNow.ToLocalTime().ToString("dd-MM HH:mm:ss");
         dataFilePath = (dataFolder + "/DataStream.csv");
 
-        if (File.Exists(dataFilePath))
-        {
-            try
-            {
-                File.Delete(dataFilePath);
-            }
-            catch
-            {
-                Debug.LogError("Cannot delete file!");
-            }
-        }
-
+        // Initialize filewriter and data file with header
         fileWriter = new StreamWriter(dataFilePath, true);
         WriteToFile($"Example Data Structure; Date: {LogTime} \n");
         if (logDepth)
         {
             WriteToFile($"Depth data width: {cameraDepth.width}; Depth data height: {cameraDepth.height} \n \n");
-            WriteToFile("Time; Position X; Position Y; Position Z; DepthData... \n");
+            WriteToFile("Time; Position X; Position Y; Position Z; xOffset; yOffset; DepthData... \n");
         }
         else
         {

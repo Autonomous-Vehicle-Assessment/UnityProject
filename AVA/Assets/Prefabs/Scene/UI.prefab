@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 195079846828990392}
   - component: {fileID: 911771509448380988}
   - component: {fileID: 8649567656411437840}
-  - component: {fileID: 5530915596608749694}
+  - component: {fileID: 6324540213283927201}
   m_Layer: 5
   m_Name: UI
   m_TagString: UIMaster
@@ -290,7 +290,7 @@ MonoBehaviour:
   labelX: 0
   labelY: 0
   FontSize: 0
---- !u!114 &5530915596608749694
+--- !u!114 &6324540213283927201
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -299,10 +299,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 195079846828990393}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 589dbb400c156f64bb7f573a57970dd8, type: 3}
+  m_Script: {fileID: 11500000, guid: 5eb2127b349de0b4bac88e428c015fff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vehicleSelect: 0
+  vehicleSelect: 1
 --- !u!1 &195079847288611426
 GameObject:
   m_ObjectHideFlags: 0
