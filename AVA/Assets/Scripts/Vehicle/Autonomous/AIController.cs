@@ -191,27 +191,34 @@ public class AIController : MonoBehaviour
     {
         Vector3 relativeVector = transform.InverseTransformPoint(pathNodes[currentNode].transform.position);
         wirePoint = transform.position + transform.TransformVector(relativeVector).normalized * Mathf.Min(relativeVector.magnitude, driverRange);
-        Vector3 initialPath = GetClosestPointOnInfiniteLine(wirePoint, pathNodes[currentNode - 1].transform.position, pathNodes[currentNode].transform.position);
+        Vector3 initialPath;
+        if (currentNode == 0) initialPath = GetClosestPointOnFiniteLine(wirePoint, pathNodes[pathNodes.Count-1].transform.position, pathNodes[currentNode].transform.position);
+        else initialPath = GetClosestPointOnFiniteLine(wirePoint, pathNodes[currentNode - 1].transform.position, pathNodes[currentNode].transform.position);
+        
+        relativeVector = transform.TransformVector(transform.InverseTransformPoint(initialPath));
+        initialPath = transform.position + relativeVector.normalized * Mathf.Min(relativeVector.magnitude, driverRange);
+
         linePoint = initialPath;
 
         float forwardRange = driverRange;
+        float carWidth = 3f;
 
         Vector3 raycastDir = transform.TransformVector(transform.InverseTransformPoint(initialPath));
         RaycastHit hit;
         if (Physics.Raycast(transform.position, raycastDir, out hit, driverRange * 2, layerMask))
         {
-            forwardRange = transform.InverseTransformPoint(hit.point).magnitude - 5;
-            Debug.DrawLine(transform.position, hit.point);
+            forwardRange = transform.InverseTransformPoint(hit.point).magnitude - 10;
+            //Debug.DrawLine(transform.position, hit.point);
         }
-        if (Physics.Raycast(transform.TransformPoint(new Vector3(-1,0)), raycastDir, out hit, driverRange * 2, layerMask))
+        if (Physics.Raycast(transform.TransformPoint(new Vector3(-carWidth, 0)), raycastDir, out hit, driverRange * 3, layerMask))
         {
-            forwardRange = Mathf.Min(forwardRange,transform.InverseTransformPoint(hit.point).magnitude - 5);
-            Debug.DrawLine(transform.TransformPoint(new Vector3(-1, 0)), hit.point);
+            forwardRange = Mathf.Min(forwardRange,transform.InverseTransformPoint(hit.point).magnitude - 10);
+            //Debug.DrawLine(transform.TransformPoint(new Vector3(-carWidth, 0)), hit.point);
         }
-        if (Physics.Raycast(transform.TransformPoint(new Vector3(1, 0)), raycastDir, out hit, driverRange * 2, layerMask))
+        if (Physics.Raycast(transform.TransformPoint(new Vector3(carWidth, 0)), raycastDir, out hit, driverRange * 3, layerMask))
         {
-            forwardRange = Mathf.Min(forwardRange, transform.InverseTransformPoint(hit.point).magnitude - 5);
-            Debug.DrawLine(transform.TransformPoint(new Vector3(1, 0)), hit.point);
+            forwardRange = Mathf.Min(forwardRange, transform.InverseTransformPoint(hit.point).magnitude - 10);
+            //Debug.DrawLine(transform.TransformPoint(new Vector3(carWidth, 0)), hit.point);
         }
 
 
@@ -220,39 +227,43 @@ public class AIController : MonoBehaviour
 
         if (forwardRange < driverRange)
         {
-            float distanceToGoal;
-            forwardRange = driverRange;
+            float distanceToGoal = Mathf.Infinity;
             // Check other angles.
-            int anglechecks = 10;
+            int anglechecks = 50;
+
             for (int i = 0; i < anglechecks; i++)
             {
+                forwardRange = driverRange*2;
                 float angle = -90 + 180 / (anglechecks-1) * i;
                 Matrix4x4 rotMatrix = Matrix4x4.Rotate(transform.rotation * Quaternion.Euler(0, angle, 0));
 
-                raycastDir = rotMatrix.MultiplyVector(transform.TransformVector(transform.InverseTransformPoint(initialPath)));
+                raycastDir = rotMatrix.MultiplyVector(transform.InverseTransformPoint(initialPath)).normalized;
 
-                if (Physics.Raycast(transform.position, raycastDir, out hit, driverRange * 2, layerMask))
+                if (Physics.Raycast(transform.position, raycastDir, out hit, driverRange * 3, layerMask))
                 {
-                    forwardRange = transform.InverseTransformPoint(hit.point).magnitude - 5;
-                    Debug.DrawLine(transform.position, hit.point);
+                    forwardRange = transform.InverseTransformPoint(hit.point).magnitude - 10;
                 }
-                if (Physics.Raycast(transform.TransformPoint(new Vector3(-1, 0)), raycastDir, out hit, driverRange * 2, layerMask))
+                if (Physics.Raycast(transform.TransformPoint(new Vector3(-carWidth, 0)), raycastDir, out hit, driverRange * 3, layerMask))
                 {
-                    forwardRange = Mathf.Min(forwardRange, transform.InverseTransformPoint(hit.point).magnitude - 5);
-                    Debug.DrawLine(transform.TransformPoint(new Vector3(-1, 0)), hit.point);
+                    forwardRange = Mathf.Min(forwardRange, transform.InverseTransformPoint(hit.point).magnitude - 10);
                 }
-                if (Physics.Raycast(transform.TransformPoint(new Vector3(1, 0)), raycastDir, out hit, driverRange * 2, layerMask))
+                if (Physics.Raycast(transform.TransformPoint(new Vector3(carWidth, 0)), raycastDir, out hit, driverRange * 3, layerMask))
                 {
-                    forwardRange = Mathf.Min(forwardRange, transform.InverseTransformPoint(hit.point).magnitude - 5);
-                    Debug.DrawLine(transform.TransformPoint(new Vector3(1, 0)), hit.point);
+                    forwardRange = Mathf.Min(forwardRange, transform.InverseTransformPoint(hit.point).magnitude - 10);
                 }
-                relativeVector = transform.TransformVector(transform.InverseTransformPoint(linePoint));
-                finalPath = transform.position + relativeVector.normalized * Mathf.Min(forwardRange, Mathf.Min(relativeVector.magnitude, driverRange));
+                // + transform.InverseTransformDirection(raycastDir) * 1
+                Vector3 currentPath = transform.position + raycastDir * Mathf.Min(forwardRange, Mathf.Min(relativeVector.magnitude, driverRange * 2));
+                //Debug.DrawLine(currentPath, linePoint);
 
                 // Find distance from finalPath to goal (linePoint)
-                distanceToGoal = (finalPath - linePoint).magnitude;
+                float currentDistance = (currentPath - linePoint).magnitude;
+                if (currentDistance < distanceToGoal)
+                {
+                    distanceToGoal = currentDistance;
+                    finalPath = currentPath;
+                }
+                
             }
-
         }
 
         wayPoint.transform.position = finalPath;
@@ -351,5 +362,15 @@ public class AIController : MonoBehaviour
     private Vector3 GetClosestPointOnInfiniteLine(Vector3 point, Vector3 line_start, Vector3 line_end)
     {
         return line_start + Vector3.Project(point - line_start, line_end - line_start);
+    }
+
+
+    private Vector3 GetClosestPointOnFiniteLine(Vector3 point, Vector3 line_start, Vector3 line_end)
+    {
+        Vector3 line_direction = line_end - line_start;
+        float line_length = line_direction.magnitude;
+        line_direction.Normalize();
+        float project_length = Mathf.Clamp(Vector3.Dot(point - line_start, line_direction), 0f, line_length);
+        return line_start + line_direction * project_length;
     }
 }

@@ -851,15 +851,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbe5d6c7b29ed2345a0f90d22ebe406b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  path: {fileID: 0}
-  autonomousDriving: 1
+  globalPath: {fileID: 0}
+  autonomousDriving: 0
   targetVelocity: 3
   throttleCap: 0.8
+  reverseVel: 20
+  reverseAngle: 40
   vehicleSpeed: 0
   showTurningRadius: 1
-  currentNode: 0
-  driverRange: 10
+  currentNode: 1
+  driverRange: 20
   showDriver: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 823
   throttle: 0
   brake: 0
   steer: 0
