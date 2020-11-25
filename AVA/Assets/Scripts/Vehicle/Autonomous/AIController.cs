@@ -7,35 +7,43 @@ public class AIController : MonoBehaviour
 {
     private EngineModel engine;               // Engine model
     
-    public Transform path;
+    public Transform globalPath;
+    private GameObject wayPoint;
 
     [Header("Driver")]
     public bool autonomousDriving;
     public float targetVelocity;
     public float throttleCap;
-    
+    public float reverseVel;
+    public float reverseAngle;
+
     public float vehicleSpeed;
     private float speedError;
     private float proportionalGain = 1;
     private float wheelDistanceLength;
     private float wheelDistanceWidth;
 
-    public float turningRadius;
+    private float turningRadius;
     public bool showTurningRadius;
 
     private bool targetBehind;
     private bool withinTurning;
     private bool reverse;
     private float turningRadiusMin;
-    public float distance;
+    private float distance;
     private Vector3 turningRadiusCenter;
     private Vector3 offsetMin;
 
     private List<PathNode> pathNodes = new List<PathNode>();
 
-    [Header("Nodes")]
+    [Header("Pathfinder")]
     public int currentNode = 0;
-    public float nodeDistance;
+    public float driverRange;
+    public bool showDriver;
+    private float nodeDistance;
+    private Vector3 wirePoint;
+    private Vector3 linePoint;
+    public LayerMask layerMask;
 
     [Header("Output")]
     [Range(0,1)]
@@ -51,7 +59,7 @@ public class AIController : MonoBehaviour
         // get the controller
         engine = GetComponent<EngineModel>();
 
-        PathNode[] nodes = path.GetComponentsInChildren<PathNode>();
+        PathNode[] nodes = globalPath.GetComponentsInChildren<PathNode>();
         pathNodes = new List<PathNode>();
 
         for (int i = 0; i < nodes.Length; i++)
@@ -61,6 +69,7 @@ public class AIController : MonoBehaviour
                 pathNodes.Add(nodes[i]);
             }
         }
+        wayPoint = new GameObject("Waypoint");
 
         wheelDistanceLength = Vector2.Distance(engine.wheels[0].collider.transform.position, engine.wheels[3].collider.transform.position);
         wheelDistanceWidth = Vector2.Distance(engine.wheels[0].collider.transform.position, engine.wheels[1].collider.transform.position);
@@ -69,23 +78,20 @@ public class AIController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (autonomousDriving)
-        {
-            Steer();
-            Drive();
+        CheckWaypointDistance();
+        Steer();
+        Drive();
 
-            engine.Move(steer, throttle, brake, 0);
-            CheckWaypointDistance();
-        }
+        if (autonomousDriving) engine.Move(steer, throttle, brake, 0);
     }
 
     private void Steer()
     {
-        Vector3 relativeVector = transform.InverseTransformPoint(pathNodes[currentNode].transform.position);
+        Vector3 relativeVector = transform.InverseTransformPoint(wayPoint.transform.position);
         steer = relativeVector.x / relativeVector.magnitude;
 
         Vector2 currentPosition = new Vector2(transform.position.x, transform.position.z);
-        Vector2 targetPosition = new Vector2(pathNodes[currentNode].transform.position.x, pathNodes[currentNode].transform.position.z);
+        Vector2 targetPosition = new Vector2(wayPoint.transform.position.x, wayPoint.transform.position.z);
 
         nodeDistance = Vector2.Distance(currentPosition, targetPosition);
 
@@ -97,33 +103,31 @@ public class AIController : MonoBehaviour
         
         distance = Vector2.Distance(new Vector2(turningRadiusCenter.x,turningRadiusCenter.z), targetPosition);
 
-        withinTurning = distance < turningRadiusMin && Mathf.Abs(relativeVector.x / relativeVector.magnitude) > Mathf.Sin(30 * Mathf.Deg2Rad) && relativeVector.magnitude > 1;
+        withinTurning = distance < turningRadiusMin && Mathf.Abs(relativeVector.x / relativeVector.magnitude) > Mathf.Sin(reverseAngle * Mathf.Deg2Rad) && relativeVector.magnitude > 1;
         targetBehind = relativeVector.z < -5;
 
         if (withinTurning || reverse || targetBehind)
         {
             reverse = true;
-            if (vehicleSpeed < 5)
+            if (vehicleSpeed < reverseVel)
             {
                 steer = Mathf.Sign(steer) * -1;
             }
 
         }
-        if (reverse && !withinTurning && Mathf.Abs(relativeVector.x / relativeVector.magnitude) < Mathf.Sin(30 * Mathf.Deg2Rad) && relativeVector.z >= 0)
+        if (reverse && !withinTurning && Mathf.Abs(relativeVector.x / relativeVector.magnitude) < Mathf.Sin(reverseAngle * Mathf.Deg2Rad) && relativeVector.z >= 0)
         {
-            if (vehicleSpeed < 5)
+            if (vehicleSpeed < reverseVel)
             {
                 steer = Mathf.Sign(steer) * -1;
             }
             reverse = false;
         }
-        if (!reverse && vehicleSpeed < -2)
+        if (!reverse && vehicleSpeed < -reverseVel/2)
         {
             steer *= -1;
         }
-        steer *= 3f;
-        //offsetMin = new Vector3(turningRadiusMin * Mathf.Sign(-steer), 0, wheelDistanceLength / 2);
-        //turningRadiusCenter = transform.position + transform.TransformVector(offsetMin);       
+        steer *= 2f;
     }
 
     private void Drive()
@@ -140,7 +144,7 @@ public class AIController : MonoBehaviour
 
         if (reverse)
         {
-            if (vehicleSpeed > 5)
+            if (vehicleSpeed > reverseVel)
             {
                 brake = Mathf.Abs(Mathf.Max(-1, Mathf.Min(0, throttle)));
             }
@@ -160,11 +164,13 @@ public class AIController : MonoBehaviour
 
     private void CheckWaypointDistance()
     {
-        Vector2 currentPosition = new Vector2(transform.position.x,transform.position.z);
+        UpdatePath();
+
+        Vector2 currentPosition = new Vector2(wayPoint.transform.position.x, wayPoint.transform.position.z);
         Vector2 targetPosition = new Vector2(pathNodes[currentNode].transform.position.x, pathNodes[currentNode].transform.position.z);
         
         nodeDistance = Vector2.Distance(currentPosition, targetPosition);
-        if ( nodeDistance < 1.5f)
+        if ( nodeDistance < .5f)
         {
             if(currentNode == pathNodes.Count - 1)
             {
@@ -181,13 +187,98 @@ public class AIController : MonoBehaviour
         pathNodes[currentNode].activeNode = true;
     }
 
+    private void UpdatePath()
+    {
+        Vector3 relativeVector = transform.InverseTransformPoint(pathNodes[currentNode].transform.position);
+        wirePoint = transform.position + transform.TransformVector(relativeVector).normalized * Mathf.Min(relativeVector.magnitude, driverRange);
+        Vector3 initialPath = GetClosestPointOnInfiniteLine(wirePoint, pathNodes[currentNode - 1].transform.position, pathNodes[currentNode].transform.position);
+        linePoint = initialPath;
+
+        float forwardRange = driverRange;
+
+        Vector3 raycastDir = transform.TransformVector(transform.InverseTransformPoint(initialPath));
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, raycastDir, out hit, driverRange * 2, layerMask))
+        {
+            forwardRange = transform.InverseTransformPoint(hit.point).magnitude - 5;
+            Debug.DrawLine(transform.position, hit.point);
+        }
+        if (Physics.Raycast(transform.TransformPoint(new Vector3(-1,0)), raycastDir, out hit, driverRange * 2, layerMask))
+        {
+            forwardRange = Mathf.Min(forwardRange,transform.InverseTransformPoint(hit.point).magnitude - 5);
+            Debug.DrawLine(transform.TransformPoint(new Vector3(-1, 0)), hit.point);
+        }
+        if (Physics.Raycast(transform.TransformPoint(new Vector3(1, 0)), raycastDir, out hit, driverRange * 2, layerMask))
+        {
+            forwardRange = Mathf.Min(forwardRange, transform.InverseTransformPoint(hit.point).magnitude - 5);
+            Debug.DrawLine(transform.TransformPoint(new Vector3(1, 0)), hit.point);
+        }
+
+
+        relativeVector = transform.TransformVector(transform.InverseTransformPoint(linePoint));
+        Vector3 finalPath = transform.position + relativeVector.normalized * Mathf.Min(forwardRange, Mathf.Min(relativeVector.magnitude, driverRange));
+
+        if (forwardRange < driverRange)
+        {
+            float distanceToGoal;
+            forwardRange = driverRange;
+            // Check other angles.
+            int anglechecks = 10;
+            for (int i = 0; i < anglechecks; i++)
+            {
+                float angle = -90 + 180 / (anglechecks-1) * i;
+                Matrix4x4 rotMatrix = Matrix4x4.Rotate(transform.rotation * Quaternion.Euler(0, angle, 0));
+
+                raycastDir = rotMatrix.MultiplyVector(transform.TransformVector(transform.InverseTransformPoint(initialPath)));
+
+                if (Physics.Raycast(transform.position, raycastDir, out hit, driverRange * 2, layerMask))
+                {
+                    forwardRange = transform.InverseTransformPoint(hit.point).magnitude - 5;
+                    Debug.DrawLine(transform.position, hit.point);
+                }
+                if (Physics.Raycast(transform.TransformPoint(new Vector3(-1, 0)), raycastDir, out hit, driverRange * 2, layerMask))
+                {
+                    forwardRange = Mathf.Min(forwardRange, transform.InverseTransformPoint(hit.point).magnitude - 5);
+                    Debug.DrawLine(transform.TransformPoint(new Vector3(-1, 0)), hit.point);
+                }
+                if (Physics.Raycast(transform.TransformPoint(new Vector3(1, 0)), raycastDir, out hit, driverRange * 2, layerMask))
+                {
+                    forwardRange = Mathf.Min(forwardRange, transform.InverseTransformPoint(hit.point).magnitude - 5);
+                    Debug.DrawLine(transform.TransformPoint(new Vector3(1, 0)), hit.point);
+                }
+                relativeVector = transform.TransformVector(transform.InverseTransformPoint(linePoint));
+                finalPath = transform.position + relativeVector.normalized * Mathf.Min(forwardRange, Mathf.Min(relativeVector.magnitude, driverRange));
+
+                // Find distance from finalPath to goal (linePoint)
+                distanceToGoal = (finalPath - linePoint).magnitude;
+            }
+
+        }
+
+        wayPoint.transform.position = finalPath;
+    }
     private void OnDrawGizmos()
     {
-        if (showTurningRadius)
+        if (showDriver)
         {
-            if (turningRadius < 50)
+            if(wayPoint != null)
             {
                 Handles.color = Color.cyan;
+                Handles.DrawWireDisc(transform.position, transform.up, driverRange);
+                Handles.DrawLine(transform.position, wayPoint.transform.position);
+                Gizmos.color = Color.red;
+                Gizmos.DrawWireSphere(wayPoint.transform.position, .25f);
+                Gizmos.color = Color.blue;
+                Gizmos.DrawWireSphere(wirePoint, .25f);
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawWireSphere(linePoint, .25f);
+            }
+        }
+        if (showTurningRadius)
+        {
+            if (turningRadius < 100)
+            {
+                Handles.color = Color.yellow;
                 
                 Vector3 offset = new Vector3(turningRadius * Mathf.Sign(steer), 0, -wheelDistanceLength/2 * 1.1f);
                 //Vector3 offsetMin = new Vector3(turningRadiusMin * Mathf.Sign(-steer), 0, wheelDistanceLength / 2);
@@ -199,13 +290,14 @@ public class AIController : MonoBehaviour
                     
                     if (vehicleSpeed < 0)
                     {
-                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), -(140 - Mathf.Min(110, 110 / 50 * turningRadius)), turningRadius - wheelDistanceWidth/2);
-                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), -(140 - Mathf.Min(110, 110 / 50 * turningRadius)), turningRadius + wheelDistanceWidth / 2);
+                        Handles.color = Color.red;
+                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), -800 / turningRadius, turningRadius - wheelDistanceWidth/2);
+                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), -800 / turningRadius, turningRadius + wheelDistanceWidth / 2);
                     }
                     else
                     {
-                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), 140 - Mathf.Min(110, 110 / 50 * turningRadius), turningRadius - wheelDistanceWidth / 2);
-                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), 140 - Mathf.Min(110, 110 / 50 * turningRadius), turningRadius + wheelDistanceWidth / 2);
+                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), 800 / turningRadius, turningRadius - wheelDistanceWidth / 2);
+                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), 800 / turningRadius, turningRadius + wheelDistanceWidth / 2);
                     }
                     if (withinTurning)
                     {
@@ -225,16 +317,17 @@ public class AIController : MonoBehaviour
                 else
                 {
                     startPoint = new Vector3(1, 0, 0);
-                    Handles.color = Color.cyan;
+                    Handles.color = Color.yellow;
                     if (vehicleSpeed < 0)
                     {
-                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), -(-140 + Mathf.Min(110, 110 / 50 * turningRadius)), turningRadius - wheelDistanceWidth / 2);
-                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), -(-140 + Mathf.Min(110, 110 / 50 * turningRadius)), turningRadius + wheelDistanceWidth / 2);
+                        Handles.color = Color.red;
+                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), 800 / turningRadius, turningRadius - wheelDistanceWidth / 2);
+                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), 800 / turningRadius, turningRadius + wheelDistanceWidth / 2);
                     }
                     else
                     {
-                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), -140 + Mathf.Min(110, 110 / 50 * turningRadius), turningRadius - wheelDistanceWidth / 2);
-                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), -140 + Mathf.Min(110, 110 / 50 * turningRadius), turningRadius + wheelDistanceWidth / 2);
+                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), -800 / turningRadius, turningRadius - wheelDistanceWidth / 2);
+                        Handles.DrawWireArc(transform.position + transform.TransformVector(offset), transform.up, transform.TransformVector(startPoint), -800 / turningRadius, turningRadius + wheelDistanceWidth / 2);
                     }
 
                     if (withinTurning)
@@ -253,5 +346,10 @@ public class AIController : MonoBehaviour
                 }
             }
         }
+    }
+
+    private Vector3 GetClosestPointOnInfiniteLine(Vector3 point, Vector3 line_start, Vector3 line_end)
+    {
+        return line_start + Vector3.Project(point - line_start, line_end - line_start);
     }
 }

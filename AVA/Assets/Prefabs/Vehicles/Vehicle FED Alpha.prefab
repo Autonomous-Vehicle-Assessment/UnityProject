@@ -856,11 +856,10 @@ MonoBehaviour:
   targetVelocity: 3
   throttleCap: 0.8
   vehicleSpeed: 0
-  turningRadius: 50
   showTurningRadius: 1
-  distance: 0
   currentNode: 0
-  nodeDistance: 0
+  driverRange: 10
+  showDriver: 1
   throttle: 0
   brake: 0
   steer: 0
@@ -917,11 +916,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sensorLength: 125
-  frontSensorPosition: {x: 0, y: 2.2, z: 1.56}
+  frontSensorPosition: {x: 0, y: 1.5, z: 0}
   sensorAngle: 45
-  angleChange: 1
+  angleChange: 2
   numberOfRays: 32
-  showSensor: 1
+  showLidarCollision: 0
+  showLidarRays: 0
+  colorRays: 0
+  active: 0
+  frequency: 1
+  minDistance: 0.25
 --- !u!1 &900966194502703902
 GameObject:
   m_ObjectHideFlags: 0
@@ -2054,7 +2058,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3881343964041268769}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.000000029802322, y: 0.444, z: 1.51}
+  m_LocalPosition: {x: -0.000000029802322, y: -0.04, z: 0.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 900966193465278872}
@@ -3230,7 +3234,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6479198222321612961}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.48400003, z: -1.3699999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3202262208013700608}
@@ -3343,7 +3347,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6541586017840734402}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.149, z: 1.751}
+  m_LocalPosition: {x: 0, y: -0.33500004, z: 0.38100004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 900966193508289108}
@@ -3669,7 +3673,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7902782839003514558}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.656, z: 1.672}
+  m_LocalPosition: {x: 0, y: -1.14, z: 0.30200005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6910629151397629099}
