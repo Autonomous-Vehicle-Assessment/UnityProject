@@ -1146,6 +1146,7 @@ LODGroup:
     - renderer: {fileID: 3489995268812362591}
     - renderer: {fileID: 8623418093465164568}
     - renderer: {fileID: 1156840455910398231}
+    - renderer: {fileID: 8238446820928183658}
   m_Enabled: 1
 --- !u!1 &7943372112049802150
 GameObject:
