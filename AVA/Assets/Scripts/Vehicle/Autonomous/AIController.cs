@@ -224,6 +224,7 @@ public class AIController : MonoBehaviour
 
         relativeVector = transform.TransformVector(transform.InverseTransformPoint(linePoint));
         Vector3 finalPath = transform.position + relativeVector.normalized * Mathf.Min(forwardRange, Mathf.Min(relativeVector.magnitude, driverRange));
+        Vector3 wayPointPath = transform.position + relativeVector.normalized * Mathf.Min(forwardRange, Mathf.Min(relativeVector.magnitude, driverRange * 1 / 3f));
 
         if (forwardRange < driverRange)
         {
@@ -251,22 +252,46 @@ public class AIController : MonoBehaviour
                 {
                     forwardRange = Mathf.Min(forwardRange, transform.InverseTransformPoint(hit.point).magnitude - 10);
                 }
-                // + transform.InverseTransformDirection(raycastDir) * 1
                 Vector3 currentPath = transform.position + raycastDir * Mathf.Min(forwardRange, Mathf.Min(relativeVector.magnitude, driverRange * 2));
+                
                 //Debug.DrawLine(currentPath, linePoint);
 
                 // Find distance from finalPath to goal (linePoint)
-                float currentDistance = (currentPath - linePoint).magnitude;
+                Vector3 closestPoint = GetClosestPointOnFiniteLine(linePoint, transform.position, currentPath);
+                float currentDistance = (closestPoint - linePoint).magnitude;
                 if (currentDistance < distanceToGoal)
                 {
                     distanceToGoal = currentDistance;
                     finalPath = currentPath;
+                    wayPointPath = transform.position + raycastDir * Mathf.Min(relativeVector.magnitude, driverRange * 1 / 3f);
+                    //wayPointPath = transform.position + raycastDir * Mathf.Min(forwardRange, Mathf.Min(relativeVector.magnitude, driverRange * 1 / 3f));
                 }
-                
+
             }
+
+            Vector2 currentPosition = new Vector2(wirePoint.x, wirePoint.z);
+            Vector2 targetPosition = new Vector2(pathNodes[currentNode].transform.position.x, pathNodes[currentNode].transform.position.z);
+
+            nodeDistance = Vector2.Distance(currentPosition, targetPosition);
+            if (nodeDistance < .5f)
+            {
+                if (currentNode == pathNodes.Count - 1)
+                {
+                    currentNode = 0;
+                }
+                else
+                {
+                    currentNode++;
+                    pathNodes[currentNode].activeNode = true;
+                    pathNodes[currentNode - 1].activeNode = false;
+                }
+            }
+
+            pathNodes[currentNode].activeNode = true;
         }
 
-        wayPoint.transform.position = finalPath;
+
+        wayPoint.transform.position = wayPointPath;
     }
     private void OnDrawGizmos()
     {

@@ -808,7 +808,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 900966193508289119}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 52185049761874147af2389bbfd7b5d1, type: 3}
   m_Name: 
@@ -822,7 +822,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 900966193508289119}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98c648f1ddb4166489327e5bd27dee56, type: 3}
   m_Name: 
@@ -852,7 +852,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalPath: {fileID: 0}
-  autonomousDriving: 0
+  autonomousDriving: 1
   targetVelocity: 3
   throttleCap: 0.8
   reverseVel: 20
@@ -920,7 +920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00cf911ea1abb6a4ca5909877ff6b5d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensorLength: 125
+  sensorLength: 100
   frontSensorPosition: {x: 0, y: 1.5, z: 0}
   sensorAngle: 45
   angleChange: 2
