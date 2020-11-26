@@ -6,9 +6,9 @@ TerrainLayer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Asphalt1
-  m_DiffuseTexture: {fileID: 2800000, guid: 5c3221ba2a5204f61a050f40d01dfa3a, type: 3}
-  m_NormalMapTexture: {fileID: 2800000, guid: eec8eac57a9174f838123d67afba1f51, type: 3}
+  m_Name: SandyGrass
+  m_DiffuseTexture: {fileID: 2800000, guid: 3d6ea8373013b3546a620f84802e06f6, type: 3}
+  m_NormalMapTexture: {fileID: 2800000, guid: 772b522eb070d9c4fa30ce003900a485, type: 3}
   m_MaskMapTexture: {fileID: 0}
   m_TileSize: {x: 4, y: 4}
   m_TileOffset: {x: 0, y: 0}
