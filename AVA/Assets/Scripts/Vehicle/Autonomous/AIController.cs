@@ -178,7 +178,14 @@ public class AIController : MonoBehaviour
             if(currentNode == pathNodes.Count - 1)
             {
                 currentNode = 0;
-                currentPath++;
+                if (currentPath == paths.Count - 1)
+                {
+                    currentPath = 0;
+                }
+                else
+                {
+                    currentPath++;
+                }
             }
             else
             {
