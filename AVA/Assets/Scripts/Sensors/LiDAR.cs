@@ -21,6 +21,7 @@ public class LiDAR : MonoBehaviour
     [Range(1,10)]
     public int frequency;
     public float minDistance;
+    public LayerMask layerMask;
 
     private IEnumerator lidarRoutine;
     private bool routineActive;
@@ -129,7 +130,7 @@ public class LiDAR : MonoBehaviour
                     Vector3 pos = transform.TransformPoint(frontSensorPosition);
                     Vector3 dir = Gizmos.matrix.MultiplyVector(target);
 
-                    if (Physics.Raycast(pos, dir, out RaycastHit hit, sensorLength))
+                    if (Physics.Raycast(pos, dir, out RaycastHit hit, sensorLength, layerMask))
                     {
                         Gizmos.matrix = Matrix4x4.identity;
                         if ((hit.point - pos).magnitude > minDistance)
@@ -187,7 +188,7 @@ public class LiDAR : MonoBehaviour
                 Vector3 pos = transform.TransformPoint(frontSensorPosition);
                 Vector3 dir = Handles.matrix.MultiplyVector(target);
 
-                if (Physics.Raycast(pos, dir, out RaycastHit hit, sensorLength))
+                if (Physics.Raycast(pos, dir, out RaycastHit hit, sensorLength, layerMask))
                 {
                     if ((hit.point - pos).magnitude > minDistance)
                     {

@@ -6,16 +6,12 @@ public class PathNode : MonoBehaviour
     public bool activeNode;
     static LayerMask layerMask = ~13;
     public float targetHeight = 1;
-    public float deltaHeight;
-
-    public PathNode(float _targetVelocity)
-    {
-        targetVelocity = _targetVelocity;
-    }
+    private float deltaHeight;
+    public SpeedType speedType;
 
     public void SetHeight()
     {
-        if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, 150, layerMask))
+        if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, 250, layerMask))
         {
             deltaHeight = targetHeight + transform.InverseTransformPoint(hit.point).y;
 
@@ -24,5 +20,15 @@ public class PathNode : MonoBehaviour
 
             //Gizmos.DrawLine(transform.position, hit.point);
         }
+    }
+
+    public void RecalculateSpeed()
+    {
+        targetVelocity = targetVelocity * GenericFunctions.SpeedCoefficient(speedType);
+    }
+
+    public void WaypointEvent()
+    {
+
     }
 }

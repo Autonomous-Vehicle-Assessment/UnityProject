@@ -6,8 +6,9 @@ using UnityEditor;
 public class AIController : MonoBehaviour
 {
     private EngineModel engine;               // Engine model
-    
-    public Transform globalPath;
+    private VehicleStats vehicleStats;               // Engine model
+
+    public Transform pathMaster;
     private GameObject wayPoint;
 
     [Header("Driver")]
@@ -34,16 +35,18 @@ public class AIController : MonoBehaviour
     private Vector3 turningRadiusCenter;
     private Vector3 offsetMin;
 
-    private List<PathNode> pathNodes = new List<PathNode>();
-
     [Header("Pathfinder")]
     public int currentNode = 0;
+    public int currentPath = 0;
     public float driverRange;
     public bool showDriver;
     private float nodeDistance;
     private Vector3 wirePoint;
     private Vector3 linePoint;
     public LayerMask layerMask;
+    private List<AIPath> paths;
+    private Vector3 targetWaypoint;
+    private List<PathNode> pathNodes;
 
     [Header("Output")]
     [Range(0,1)]
@@ -58,19 +61,19 @@ public class AIController : MonoBehaviour
     {
         // get the controller
         engine = GetComponent<EngineModel>();
-
-        PathNode[] nodes = globalPath.GetComponentsInChildren<PathNode>();
-        pathNodes = new List<PathNode>();
-
-        for (int i = 0; i < nodes.Length; i++)
+        vehicleStats = GetComponent<VehicleStats>();
+        
+        paths = new List<AIPath>();
+        foreach (AIPath path in pathMaster.GetComponentsInChildren<AIPath>())
         {
-            if (nodes[i].transform != transform)
-            {
-                pathNodes.Add(nodes[i]);
-            }
+            paths.Add(path);
         }
-        wayPoint = new GameObject("Waypoint");
 
+        pathNodes = new List<PathNode>();
+        pathNodes = paths[currentPath].pathNodes;
+
+        wayPoint = new GameObject("Waypoint");
+        
         wheelDistanceLength = Vector2.Distance(engine.wheels[0].collider.transform.position, engine.wheels[3].collider.transform.position);
         wheelDistanceWidth = Vector2.Distance(engine.wheels[0].collider.transform.position, engine.wheels[1].collider.transform.position);
     }
@@ -132,8 +135,9 @@ public class AIController : MonoBehaviour
 
     private void Drive()
     {
-        vehicleSpeed = engine.speed;
-        targetVelocity = pathNodes[currentNode].targetVelocity;
+        vehicleSpeed = engine.speed * 1 / GenericFunctions.SpeedCoefficient(vehicleStats.m_SpeedType);                                      // Vehicle velocity in m/s
+        targetVelocity = pathNodes[currentNode].targetVelocity * 1 / GenericFunctions.SpeedCoefficient(pathNodes[currentNode].speedType);   // Target velocity in m/s
+
         if (reverse)
         {
             targetVelocity = -targetVelocity / 2f;
@@ -165,7 +169,6 @@ public class AIController : MonoBehaviour
     private void CheckWaypointDistance()
     {
         UpdatePath();
-
         Vector2 currentPosition = new Vector2(wayPoint.transform.position.x, wayPoint.transform.position.z);
         Vector2 targetPosition = new Vector2(pathNodes[currentNode].transform.position.x, pathNodes[currentNode].transform.position.z);
         
@@ -175,6 +178,7 @@ public class AIController : MonoBehaviour
             if(currentNode == pathNodes.Count - 1)
             {
                 currentNode = 0;
+                currentPath++;
             }
             else
             {
@@ -189,6 +193,8 @@ public class AIController : MonoBehaviour
 
     private void UpdatePath()
     {
+        pathNodes = paths[currentPath].pathNodes;
+
         Vector3 relativeVector = transform.InverseTransformPoint(pathNodes[currentNode].transform.position);
         wirePoint = transform.position + transform.TransformVector(relativeVector).normalized * Mathf.Min(relativeVector.magnitude, driverRange);
         Vector3 initialPath;
@@ -293,6 +299,7 @@ public class AIController : MonoBehaviour
 
         wayPoint.transform.position = wayPointPath;
     }
+
     private void OnDrawGizmos()
     {
         if (showDriver)

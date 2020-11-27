@@ -6,7 +6,7 @@ public class AIPath : MonoBehaviour
     public Color lineColor;
 
     //private List<Transform> nodes = new List<Transform>();
-    private List<PathNode> pathNodes = new List<PathNode>();
+    public List<PathNode> pathNodes = new List<PathNode>();
 
     private void OnDrawGizmos()
     {
@@ -23,22 +23,22 @@ public class AIPath : MonoBehaviour
             }
         }
 
+        Vector3 previousNode;
+
         for (int i = 0; i < pathNodes.Count; i++)
         {
             Vector3 currentNode = pathNodes[i].transform.position;
-            Vector3 previousNode = Vector3.zero;
-
             if (i > 0)
             {
                 previousNode = pathNodes[i - 1].transform.position;
+                Gizmos.color = lineColor;
+                Gizmos.DrawLine(previousNode, currentNode);
             }
-            else if(i == 0 && pathNodes.Count> 1)
-            {
-                previousNode = pathNodes[pathNodes.Count - 1].transform.position;
-            }
+            //else if(i == 0 && pathNodes.Count> 1)
+            //{
+            //    previousNode = pathNodes[pathNodes.Count - 1].transform.position;
+            //}
 
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(previousNode, currentNode);
 
             if (pathNodes[i].activeNode)
             {
@@ -46,7 +46,7 @@ public class AIPath : MonoBehaviour
             }
             else
             {
-                Gizmos.color = Color.green;
+                Gizmos.color = lineColor;
             }
             
             Gizmos.DrawWireSphere(currentNode, .2f);

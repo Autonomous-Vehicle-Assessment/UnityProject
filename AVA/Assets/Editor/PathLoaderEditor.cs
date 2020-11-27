@@ -27,6 +27,11 @@ public class PathLoaderEditor : Editor
             pathLoader.ClearPath();
         }
 
+        //if(GUILayout.Button("Update Speeds"))
+        //{
+        //    pathLoader.UpdateSpeeds();
+        //}
+
         EditorGUILayout.EndHorizontal();
 
     }
