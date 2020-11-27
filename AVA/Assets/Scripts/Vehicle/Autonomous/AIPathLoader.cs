@@ -100,7 +100,7 @@ public class AIPathLoader : MonoBehaviour
             }
 
             // Characters from start and end of line
-            temp[0] = ""; temp[temp.Length] = "";
+            temp[0] = ""; temp[temp.Length - 1] = "";
 
             parsedList.Add(temp);
         }
@@ -191,7 +191,6 @@ public class AIPathLoader : MonoBehaviour
                 string velStr = velStrs[point];
 
                 velStr = velStr.Replace('.', ',');
-
                 float vel = float.Parse(velStr, numberStyle);
 
                 pathPoints.Add(position);
