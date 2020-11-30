@@ -83,7 +83,7 @@ public class EngineModel : MonoBehaviour
     public float antiRoll = 5000.0f;
 
     //TerrainTracker
-    public TerrainTracker terrainTracker;
+    //public TerrainTracker terrainTracker;
 
     // Initialize
     public void Awake()
@@ -95,7 +95,7 @@ public class EngineModel : MonoBehaviour
         }
 
         rigidbody = GetComponent<Rigidbody>();
-        terrainTracker = GetComponent<TerrainTracker>();
+        //terrainTracker = GetComponent<TerrainTracker>();
 
         numberofDrivingWheels = 0;
         for (int i = 0; i < numberofWheels; i++)
@@ -255,31 +255,31 @@ public class EngineModel : MonoBehaviour
         return Gearing;
     }
 
-    public void UpdateTerrainWheelParameters()
-    {
-        float ForwardStiffness = 1f;
-        float SidewaysStiffness = 1f;
+    //public void UpdateTerrainWheelParameters()
+    //{
+    //    float ForwardStiffness = 1f;
+    //    float SidewaysStiffness = 1f;
 
-        if (terrainTracker.surfaceIndex == 1)
-        {
-            ForwardStiffness = 0.3f;
-            SidewaysStiffness = 0.3f;
-        }
-        if (terrainTracker.surfaceIndex == 2)
-        {
-            ForwardStiffness = 0.6f;
-            SidewaysStiffness = 0.6f;
-        }
-        for (int i = 0; i < numberofWheels; i++)
-        {
-            WheelFrictionCurve fFriction = wheels[i].collider.forwardFriction;
-            WheelFrictionCurve sFriction = wheels[i].collider.sidewaysFriction;
-            fFriction.stiffness = ForwardStiffness;
-            sFriction.stiffness = SidewaysStiffness;
-            wheels[i].collider.forwardFriction = fFriction;
-            wheels[i].collider.sidewaysFriction = sFriction;
-        }
-    }
+    //    if (terrainTracker.surfaceIndex == 1)
+    //    {
+    //        ForwardStiffness = 0.3f;
+    //        SidewaysStiffness = 0.3f;
+    //    }
+    //    if (terrainTracker.surfaceIndex == 2)
+    //    {
+    //        ForwardStiffness = 0.6f;
+    //        SidewaysStiffness = 0.6f;
+    //    }
+    //    for (int i = 0; i < numberofWheels; i++)
+    //    {
+    //        WheelFrictionCurve fFriction = wheels[i].collider.forwardFriction;
+    //        WheelFrictionCurve sFriction = wheels[i].collider.sidewaysFriction;
+    //        fFriction.stiffness = ForwardStiffness;
+    //        sFriction.stiffness = SidewaysStiffness;
+    //        wheels[i].collider.forwardFriction = fFriction;
+    //        wheels[i].collider.sidewaysFriction = sFriction;
+    //    }
+    //}
 
     // ----- Gear shift scheduler - automatic gear ----- // 
     public void ShiftScheduler()
