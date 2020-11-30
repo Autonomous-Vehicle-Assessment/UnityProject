@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace UnityStandardAssets.Vehicles.Car
-{
+
     public class VehicleStats : MonoBehaviour
     {
         private GameObject InterfaceObject;
@@ -69,5 +68,3 @@ namespace UnityStandardAssets.Vehicles.Car
             }
         }
     }
-
-}

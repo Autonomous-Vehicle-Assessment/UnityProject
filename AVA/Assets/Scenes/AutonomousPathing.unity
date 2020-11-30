@@ -409,7 +409,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84ae1bb693d1da84d941acfec6fa20cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TerrainMain: {fileID: 0}
+  terrainMain: {fileID: 0}
+  wheelCollider: {fileID: 0}
+  groundStiffness: 0
+  groundDamping: 0
+  deformationStrength: 0
 --- !u!1 &206658177
 GameObject:
   m_ObjectHideFlags: 0
@@ -4744,7 +4748,7 @@ PrefabInstance:
     - target: {fileID: 900966193508289104, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 900966193508289108, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
@@ -5473,7 +5477,7 @@ PrefabInstance:
     - target: {fileID: 900966193508289119, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 900966193508289119, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
