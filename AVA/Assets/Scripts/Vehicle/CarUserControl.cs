@@ -75,7 +75,7 @@ namespace UnityStandardAssets.Vehicles.Car
             string s_CurrentGear = (Engine.currentGear + 1).ToString();
 
             // Log data
-            dataLogger.WriteToFile(s_Time + ";" + s_Velocity + ";" + s_WheelForce + ";" + s_TransmissionTorque + ";" + s_CurrentGear + ";" + s_EngineRPM + ";" + s_EngineTorque + "\n");
+            if(dataLogger.isActiveAndEnabled) dataLogger.WriteToFile(s_Time + ";" + s_Velocity + ";" + s_WheelForce + ";" + s_TransmissionTorque + ";" + s_CurrentGear + ";" + s_EngineRPM + ";" + s_EngineTorque + "\n");
 
 
             // Draw line at wheels

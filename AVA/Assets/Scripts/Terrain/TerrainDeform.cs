@@ -15,8 +15,9 @@ public class TerrainStruct
     public Vector3 position;
     public Vector2Int id;
     public static int tiles;
-    public const int tilesWidth = 10;
+    public const int tilesWidth = 22;
     public bool active;
+    public bool enabled;
 
     public TerrainStruct(Terrain _terrain, Material defaultMaterial)
     {
@@ -38,7 +39,15 @@ public class TerrainStruct
         tiles++;
 
         active = false;
+        enabled = true;
         terrain.materialTemplate = new Material(defaultMaterial);
+    }
+
+    public TerrainStruct()
+    {
+        enabled = false;
+        id = new Vector2Int(tiles - (tiles / tilesWidth) * tilesWidth, (tiles / tilesWidth));
+        tiles++;
     }
 
     public void SetColor(bool debug)
@@ -119,9 +128,38 @@ public class TerrainDeform : MonoBehaviour
         Terrain[] tempTerrains = terrainMaster.GetComponentsInChildren<Terrain>();
         terrains = new List<TerrainStruct>();
         // get the heightmap points of the terrain, store values in a float array.
+        int index = 0;
+        float[,] height = new float[65, 65];
+        float heightConstant = 0.8f;
+        for (int row = 0; row < 65; row++)
+        {
+            for (int coloumn = 0; coloumn < 65; coloumn++)
+            {
+                height[row, coloumn] = heightConstant;
+            }
+        }
+
+        TerrainStruct.tiles = 0;
+
         foreach (Terrain terrain in tempTerrains)
         {
-            terrains.Add(new TerrainStruct(terrain, defaultMaterial));
+            if (terrain.GetComponent<Terrain>().isActiveAndEnabled)
+            {
+                TerrainData terrainData = new TerrainData();
+                terrainData.name = "terrain" + index.ToString();
+                terrainData.heightmapResolution = 65;
+                terrainData.size = new Vector3(4, 10, 4);
+                terrainData.SetHeights(0, 0, height);
+
+                terrain.terrainData = terrainData;
+                terrain.GetComponent<TerrainCollider>().terrainData = terrainData;
+                terrains.Add(new TerrainStruct(terrain, defaultMaterial));
+                index++;
+            }
+            else
+            {
+                terrains.Add(new TerrainStruct());
+            }
         }
 
         // Load all wheelcolliders from master
@@ -141,7 +179,7 @@ public class TerrainDeform : MonoBehaviour
     {
         foreach (TerrainStruct terrainStruct in terrains)
         {
-            terrainStruct.active = false;
+            if(terrainStruct.enabled) terrainStruct.active = false;
         }
 
         foreach (WheelCollider wheelCollider in wheelColliders)
@@ -152,10 +190,12 @@ public class TerrainDeform : MonoBehaviour
             TerrainStruct activeTerrain = null;
             foreach (TerrainStruct terrainStruct in terrains)
             {
-                if (terrainStruct.LocationCheck(wheelCollider))
-                {
-                    activeTerrain = terrainStruct;
-                    terrainStruct.active = true;
+                if (terrainStruct.enabled) {
+                    if (terrainStruct.LocationCheck(wheelCollider))
+                    {
+                        activeTerrain = terrainStruct;
+                        terrainStruct.active = true;
+                    }
                 }
             }
 
@@ -318,15 +358,19 @@ public class TerrainDeform : MonoBehaviour
 
                                     if (neighbourFlag)
                                     {
-                                        neighbourTerrain.modifiedHeights[yPosNeighbor, xPosNeighbor] -= deformationAmount;
+                                        if(neighbourTerrain.enabled) neighbourTerrain.modifiedHeights[yPosNeighbor, xPosNeighbor] -= deformationAmount;
                                     }
                                 }
                             }
 
+
                             // Apply deformation
-                            neighbourTerrain.terrain.terrainData.SetHeightsDelayLOD(0, 0, neighbourTerrain.modifiedHeights);
-                            neighbourTerrain.modifiedHeights = neighbourTerrain.terrain.terrainData.GetHeights(0, 0, activeTerrain.mapRes, activeTerrain.mapRes);
-                            neighbourTerrain.active = true;
+                            if (neighbourTerrain.enabled)
+                            {
+                                neighbourTerrain.terrain.terrainData.SetHeightsDelayLOD(0, 0, neighbourTerrain.modifiedHeights);
+                                neighbourTerrain.modifiedHeights = neighbourTerrain.terrain.terrainData.GetHeights(0, 0, activeTerrain.mapRes, activeTerrain.mapRes);
+                                neighbourTerrain.active = true;
+                            }
                         }
 
                         // Corner neighbour terrain
@@ -516,35 +560,45 @@ public class TerrainDeform : MonoBehaviour
                                     // Update deformations
                                     if (cornerFlag)
                                     {
-                                        cornerTerrain.modifiedHeights[yPosNeighbor, xPosNeighbor] -= deformationAmount;
+                                        if(cornerTerrain.enabled) cornerTerrain.modifiedHeights[yPosNeighbor, xPosNeighbor] -= deformationAmount;
                                     }
 
                                     if (northsouthFlag)
                                     {
-                                        northSouthTerrain.modifiedHeights[yPosNeighborNS, xPosNeighborNS] -= deformationAmount;
+                                        if(northSouthTerrain.enabled) northSouthTerrain.modifiedHeights[yPosNeighborNS, xPosNeighborNS] -= deformationAmount;
                                     }
 
                                     if (eastwestFlag)
                                     {
-                                        eastWestTerrain.modifiedHeights[yPosNeighborEW, xPosNeighborEW] -= deformationAmount;
+                                        if(eastWestTerrain.enabled) eastWestTerrain.modifiedHeights[yPosNeighborEW, xPosNeighborEW] -= deformationAmount;
                                     }
                                 }
                             }
 
                             // Apply deformations
-                            cornerTerrain.terrain.terrainData.SetHeightsDelayLOD(0, 0, cornerTerrain.modifiedHeights);
-                            cornerTerrain.modifiedHeights = cornerTerrain.terrain.terrainData.GetHeights(0, 0, activeTerrain.mapRes, activeTerrain.mapRes);
-                            cornerTerrain.active = true;
+                            if (cornerTerrain.enabled)
+                            {
+                                cornerTerrain.terrain.terrainData.SetHeightsDelayLOD(0, 0, cornerTerrain.modifiedHeights);
+                                cornerTerrain.modifiedHeights = cornerTerrain.terrain.terrainData.GetHeights(0, 0, activeTerrain.mapRes, activeTerrain.mapRes);
+                                cornerTerrain.active = true;
+                            }
 
-                            northSouthTerrain.terrain.terrainData.SetHeightsDelayLOD(0, 0, northSouthTerrain.modifiedHeights);
-                            northSouthTerrain.modifiedHeights = northSouthTerrain.terrain.terrainData.GetHeights(0, 0, activeTerrain.mapRes, activeTerrain.mapRes);
-                            northSouthTerrain.active = true;
+                            if (northSouthTerrain.enabled)
+                            {
+                                northSouthTerrain.terrain.terrainData.SetHeightsDelayLOD(0, 0, northSouthTerrain.modifiedHeights);
+                                northSouthTerrain.modifiedHeights = northSouthTerrain.terrain.terrainData.GetHeights(0, 0, activeTerrain.mapRes, activeTerrain.mapRes);
+                                northSouthTerrain.active = true;
+                            }
 
-                            eastWestTerrain.terrain.terrainData.SetHeightsDelayLOD(0, 0, eastWestTerrain.modifiedHeights);
-                            eastWestTerrain.modifiedHeights = eastWestTerrain.terrain.terrainData.GetHeights(0, 0, activeTerrain.mapRes, activeTerrain.mapRes);
-                            eastWestTerrain.active = true;
+                            if (eastWestTerrain.enabled)
+                            {
+                                eastWestTerrain.terrain.terrainData.SetHeightsDelayLOD(0, 0, eastWestTerrain.modifiedHeights);
+                                eastWestTerrain.modifiedHeights = eastWestTerrain.terrain.terrainData.GetHeights(0, 0, activeTerrain.mapRes, activeTerrain.mapRes);
+                                eastWestTerrain.active = true;
+                            }
                         }
                     }
+
                     UpdateTerrains();
                 }
             }
@@ -562,8 +616,11 @@ public class TerrainDeform : MonoBehaviour
     {
         foreach (TerrainStruct terrainStruct in terrains)
         {
-            terrainStruct.terrain.terrainData.SyncHeightmap();
-            terrainStruct.SetColor(debug);
+            if (terrainStruct.enabled)
+            {
+                terrainStruct.terrain.terrainData.SyncHeightmap();
+                terrainStruct.SetColor(debug);
+            }
         }
     }
 
@@ -571,9 +628,12 @@ public class TerrainDeform : MonoBehaviour
     {
         foreach (TerrainStruct terrainStruct in terrains)
         {
-            terrainStruct.terrain.terrainData.SetHeights(0, 0, terrainStruct.originalHeights);
-            terrainStruct.modifiedHeights = terrainStruct.terrain.terrainData.GetHeights(0, 0, terrainStruct.mapRes, terrainStruct.mapRes);
-            terrainStruct.originalHeights = terrainStruct.terrain.terrainData.GetHeights(0, 0, terrainStruct.mapRes, terrainStruct.mapRes);
+            if (terrainStruct.enabled)
+            {
+                terrainStruct.terrain.terrainData.SetHeights(0, 0, terrainStruct.originalHeights);
+                terrainStruct.modifiedHeights = terrainStruct.terrain.terrainData.GetHeights(0, 0, terrainStruct.mapRes, terrainStruct.mapRes);
+                terrainStruct.originalHeights = terrainStruct.terrain.terrainData.GetHeights(0, 0, terrainStruct.mapRes, terrainStruct.mapRes);
+            }
         }
     }
 
@@ -694,8 +754,12 @@ public class TerrainDeform : MonoBehaviour
 
                     neighbourTerrain.active = true;
 
-                    originalHeight += neighbourTerrain.originalHeights[yPosNeighbor, xPosNeighbor];
-                    modifiedHeight += neighbourTerrain.modifiedHeights[yPosNeighbor, xPosNeighbor];
+                    // Todo: Average height take into account surrounding deformations.
+                    if (neighbourTerrain.enabled)
+                    {
+                        originalHeight += neighbourTerrain.originalHeights[yPosNeighbor, xPosNeighbor];
+                        modifiedHeight += neighbourTerrain.modifiedHeights[yPosNeighbor, xPosNeighbor];
+                    }
                 }
             }
         }
