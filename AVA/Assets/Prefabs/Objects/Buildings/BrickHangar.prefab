@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5143936318565315844}
   - component: {fileID: 8740046878922408715}
   - component: {fileID: 3032773584152609071}
+  - component: {fileID: 6508499938656150395}
   m_Layer: 9
   m_Name: 02_ML_031_LOD0
   m_TagString: Untagged
@@ -81,6 +82,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6508499938656150395
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2890827997549411733}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6.327462, y: 3.782042, z: 19.941935}
+  m_Center: {x: -0.00000047683716, y: 0.9410207, z: 0.016413689}
 --- !u!1 &6429311153911331849
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +187,7 @@ GameObject:
   - component: {fileID: 8173445462487651044}
   - component: {fileID: 3978920369763673493}
   m_Layer: 9
-  m_Name: Brick_Hangar_FBX
+  m_Name: BrickHangar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
