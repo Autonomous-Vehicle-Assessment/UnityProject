@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5691492523608676929}
   - component: {fileID: 5713373754638811540}
   - component: {fileID: 6337831394503923649}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BackKnuckleR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 8552595915169489058}
   - component: {fileID: 5612813948372973008}
   - component: {fileID: 7642503710140177780}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RearLeftBlinker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 9026131427551987302}
   - component: {fileID: 1597656279609543342}
   - component: {fileID: 3875525656709792234}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FrontLCAL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -417,9 +417,13 @@ GameObject:
   - component: {fileID: 5462843028766989911}
   - component: {fileID: 2211430127117835933}
   - component: {fileID: 454163007198815611}
+  - component: {fileID: 7569547810720874579}
+  - component: {fileID: 1172584196083846329}
+  - component: {fileID: 5413105642816452482}
+  - component: {fileID: 1043582156532555078}
   m_Layer: 11
   m_Name: Vehicle FED Alpha
-  m_TagString: Untagged
+  m_TagString: Vehicle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -435,10 +439,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2621526040368134368}
   - {fileID: 3485467431756251519}
   - {fileID: 7902782839003552414}
   - {fileID: 1561710777916770977}
+  - {fileID: 4401200002151478584}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -804,7 +808,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 900966193508289119}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 52185049761874147af2389bbfd7b5d1, type: 3}
   m_Name: 
@@ -818,7 +822,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 900966193508289119}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98c648f1ddb4166489327e5bd27dee56, type: 3}
   m_Name: 
@@ -835,6 +839,98 @@ MonoBehaviour:
   maxRolloffDistance: 500
   dopplerLevel: 1
   useDoppler: 0
+--- !u!114 &7569547810720874579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900966193508289119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbe5d6c7b29ed2345a0f90d22ebe406b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  globalPath: {fileID: 0}
+  autonomousDriving: 1
+  targetVelocity: 3
+  throttleCap: 0.8
+  reverseVel: 20
+  reverseAngle: 40
+  vehicleSpeed: 0
+  showTurningRadius: 1
+  currentNode: 1
+  driverRange: 20
+  showDriver: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 823
+  throttle: 0
+  brake: 0
+  steer: 0
+--- !u!114 &1172584196083846329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900966193508289119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed4fbfc9f152906468bf3e289f3fa864, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraTexture: {fileID: 0}
+  recordFeed: 0
+  logDepth: 1
+  id: 0
+  saveFrequency: 2
+--- !u!114 &5413105642816452482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900966193508289119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18c0a8b411f52454595afa0b4e1862d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensorRange: 100
+  depthLevel: 0
+  width: 150
+  height: 5
+  showFieldOfView: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 3072
+  vStepStart: 156
+  hStepStart: 271
+  debugMode: 0
+--- !u!114 &1043582156532555078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900966193508289119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00cf911ea1abb6a4ca5909877ff6b5d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensorLength: 100
+  frontSensorPosition: {x: 0, y: 1.5, z: 0}
+  sensorAngle: 45
+  angleChange: 2
+  numberOfRays: 32
+  showLidarCollision: 0
+  showLidarRays: 0
+  colorRays: 0
+  active: 0
+  frequency: 1
+  minDistance: 0.25
 --- !u!1 &900966194502703902
 GameObject:
   m_ObjectHideFlags: 0
@@ -923,7 +1019,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8583473766471864277}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Vehicle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -971,7 +1067,7 @@ GameObject:
   - component: {fileID: 8509245781998723843}
   - component: {fileID: 4284523180548449265}
   - component: {fileID: 4225050044533754255}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RearRightBlinker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1052,7 +1148,7 @@ GameObject:
   - component: {fileID: 3983875555201241841}
   - component: {fileID: 4621292520786452166}
   - component: {fileID: 3628697029609909927}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RearRightTyre
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1133,7 +1229,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5642430710030958566}
   - component: {fileID: 8645406000842033833}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FrontLightL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1226,7 +1322,7 @@ GameObject:
   - component: {fileID: 1870160377363251407}
   - component: {fileID: 8532577736030278384}
   - component: {fileID: 8060377554979086791}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BackKnuckleL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1307,7 +1403,7 @@ GameObject:
   - component: {fileID: 7576434520652183393}
   - component: {fileID: 4947980249760744283}
   - component: {fileID: 6366267981361954438}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FrontRightBlinker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1388,7 +1484,7 @@ GameObject:
   - component: {fileID: 4683683825582477417}
   - component: {fileID: 3094396193299515245}
   - component: {fileID: 5417029214560569038}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Window_Glass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1469,7 +1565,7 @@ GameObject:
   - component: {fileID: 7307661703309044342}
   - component: {fileID: 6930020077665102769}
   - component: {fileID: 5965706979540678093}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FrontLCAR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1550,7 +1646,7 @@ GameObject:
   - component: {fileID: 7542921036781470265}
   - component: {fileID: 6716700328971389632}
   - component: {fileID: 6612706644302252249}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BackLCAL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1631,7 +1727,7 @@ GameObject:
   - component: {fileID: 4210777782754416363}
   - component: {fileID: 5218803790776136154}
   - component: {fileID: 6841764409873082724}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FrontLeftRim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1712,7 +1808,7 @@ GameObject:
   - component: {fileID: 7847198796228796874}
   - component: {fileID: 7718709976909719374}
   - component: {fileID: 1109135974722960360}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RearLights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1872,7 +1968,7 @@ GameObject:
   - component: {fileID: 1668473531522634381}
   - component: {fileID: 6898453827467443903}
   - component: {fileID: 3307111769965250158}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FrontLeftTyre
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1967,7 +2063,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3881343964041268769}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.000000029802322, y: 0.444, z: -0.291}
+  m_LocalPosition: {x: -0.000000029802322, y: -0.04, z: 0.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 900966193465278872}
@@ -1976,7 +2072,7 @@ Transform:
   - {fileID: 900966192714249742}
   - {fileID: 1513886124608823954}
   m_Father: {fileID: 900966193508289108}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4155766519330875031
 GameObject:
@@ -1989,7 +2085,7 @@ GameObject:
   - component: {fileID: 8008673691806905258}
   - component: {fileID: 640560898099544222}
   - component: {fileID: 664737943712886250}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BackUCAL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2070,7 +2166,7 @@ GameObject:
   - component: {fileID: 3698659720969068146}
   - component: {fileID: 6785070670984391859}
   - component: {fileID: 62355759449541660}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FrontKnuckleR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2151,7 +2247,7 @@ GameObject:
   - component: {fileID: 6705156494704001403}
   - component: {fileID: 1497687437448128694}
   - component: {fileID: 7261377466762295929}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FrontUCAR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2290,7 +2386,7 @@ GameObject:
   - component: {fileID: 46552072648178413}
   - component: {fileID: 1127987784085078898}
   - component: {fileID: 4519935475341819916}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FrontDetail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2371,7 +2467,7 @@ GameObject:
   - component: {fileID: 9067237589789753122}
   - component: {fileID: 3237896339197378992}
   - component: {fileID: 197170084218190996}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FrontKnuckleL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2453,7 +2549,7 @@ GameObject:
   - component: {fileID: 2232289629861971132}
   - component: {fileID: 7627647386819675061}
   - component: {fileID: 3019500429819534398}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ColliderMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2548,7 +2644,7 @@ GameObject:
   - component: {fileID: 1555846262820521111}
   - component: {fileID: 6400149901048933868}
   - component: {fileID: 1390534063428003152}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BackLCAR.wrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2629,7 +2725,7 @@ GameObject:
   - component: {fileID: 1646690900257856013}
   - component: {fileID: 4351260747101054770}
   - component: {fileID: 2671545343743011760}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2710,7 +2806,7 @@ GameObject:
   - component: {fileID: 8036415596634188609}
   - component: {fileID: 4262011106328140964}
   - component: {fileID: 8777652424838006128}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BackUCAR.wrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2790,7 +2886,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7100556256874827715}
   - component: {fileID: 6418413333386477068}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RearLightL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2872,6 +2968,80 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &6136976262089446929
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3202262208013700608}
+  - component: {fileID: 622409259413363447}
+  m_Layer: 11
+  m_Name: Depth Camera
+  m_TagString: CameraFeed
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3202262208013700608
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6136976262089446929}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.437, z: 2.16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4401200002151478584}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &622409259413363447
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6136976262089446929}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 74
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 8400000, guid: 18ea7347f73e1b04e95b5e317f6bbcae, type: 2}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
 --- !u!1 &6303542194653335972
 GameObject:
   m_ObjectHideFlags: 0
@@ -2883,7 +3053,7 @@ GameObject:
   - component: {fileID: 6512070227783151477}
   - component: {fileID: 1689021892470048134}
   - component: {fileID: 204887851541238573}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Grill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2963,7 +3133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7082679079652712952}
   - component: {fileID: 4581701773064926624}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RearLightR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3045,6 +3215,38 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &6479198222321612961
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4401200002151478584}
+  m_Layer: 11
+  m_Name: Cameras
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4401200002151478584
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6479198222321612961}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.48400003, z: -1.3699999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 3202262208013700608}
+  - {fileID: 2621526040368134368}
+  m_Father: {fileID: 900966193508289108}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6513390063456911246
 GameObject:
   m_ObjectHideFlags: 0
@@ -3056,7 +3258,7 @@ GameObject:
   - component: {fileID: 2909734017471804848}
   - component: {fileID: 554444124070436509}
   - component: {fileID: 1129753643565527504}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FrontRightRim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3150,11 +3352,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6541586017840734402}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.149, z: -0.05}
+  m_LocalPosition: {x: 0, y: -0.33500004, z: 0.38100004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 900966193508289108}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7332520068729931202
 GameObject:
@@ -3167,7 +3369,7 @@ GameObject:
   - component: {fileID: 9214036716843662746}
   - component: {fileID: 8570391901394363020}
   - component: {fileID: 5158805015480232405}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RearRightRim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3247,7 +3449,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1937869797957154333}
   - component: {fileID: 4340843637143010511}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FrontLightR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3340,7 +3542,7 @@ GameObject:
   - component: {fileID: 108467468461279550}
   - component: {fileID: 1272712189726758739}
   - component: {fileID: 8375954485234100177}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FrontRightTyre
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3420,7 +3622,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8850868275181718170}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Lights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3476,7 +3678,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7902782839003514558}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.656, z: -0.129}
+  m_LocalPosition: {x: 0, y: -1.14, z: 0.30200005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6910629151397629099}
@@ -3487,7 +3689,7 @@ Transform:
   - {fileID: 8583473766471864277}
   - {fileID: 8850868275181718170}
   m_Father: {fileID: 900966193508289108}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5185133255696014156
 MonoBehaviour:
@@ -3514,7 +3716,7 @@ GameObject:
   - component: {fileID: 6117331185844517689}
   - component: {fileID: 5877161604962833694}
   - component: {fileID: 6894272702702687170}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FrontLights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3595,7 +3797,7 @@ GameObject:
   - component: {fileID: 4440878290771188897}
   - component: {fileID: 6189099535214052741}
   - component: {fileID: 6146542932661534585}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FrontUCAL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3676,7 +3878,7 @@ GameObject:
   - component: {fileID: 6415878330690703331}
   - component: {fileID: 8503859088526805226}
   - component: {fileID: 8762110817494018012}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RearLeftTyre
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3758,7 +3960,7 @@ GameObject:
   - component: {fileID: 2768710846182884775}
   - component: {fileID: 4055493742577950551}
   - component: {fileID: 4193080502102944756}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RearLeftRim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3839,7 +4041,7 @@ GameObject:
   - component: {fileID: 8462653272836098600}
   - component: {fileID: 7254155535341178558}
   - component: {fileID: 9193490796081407364}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FrontLeftBlinker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3914,27 +4116,32 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 900966193508289108}
+    m_TransformParent: {fileID: 4401200002151478584}
     m_Modifications:
     - target: {fileID: 8629081368222803418, guid: 3b3a434bedf6fb94a93821385fd4caad,
         type: 3}
       propertyPath: m_Name
-      value: Main Camera
+      value: 3rd Person
+      objectReference: {fileID: 0}
+    - target: {fileID: 8629081368222803418, guid: 3b3a434bedf6fb94a93821385fd4caad,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8629081368222803419, guid: 3b3a434bedf6fb94a93821385fd4caad,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.00038226577
+      value: 0.0003824234
       objectReference: {fileID: 0}
     - target: {fileID: 8629081368222803419, guid: 3b3a434bedf6fb94a93821385fd4caad,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.7000002
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 8629081368222803419, guid: 3b3a434bedf6fb94a93821385fd4caad,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: -8.199005
       objectReference: {fileID: 0}
     - target: {fileID: 8629081368222803419, guid: 3b3a434bedf6fb94a93821385fd4caad,
         type: 3}
@@ -3959,7 +4166,7 @@ PrefabInstance:
     - target: {fileID: 8629081368222803419, guid: 3b3a434bedf6fb94a93821385fd4caad,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8629081368222803419, guid: 3b3a434bedf6fb94a93821385fd4caad,
         type: 3}
@@ -3981,6 +4188,11 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1561710777916770977}
+    - target: {fileID: 8629081368222803421, guid: 3b3a434bedf6fb94a93821385fd4caad,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b3a434bedf6fb94a93821385fd4caad, type: 3}
 --- !u!4 &2621526040368134368 stripped
