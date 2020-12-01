@@ -4,14 +4,14 @@ public class PathNode : MonoBehaviour
 {
     public float targetVelocity;
     public bool activeNode;
-    static LayerMask layerMask = ~13;
     public float targetHeight = 1;
     private float deltaHeight;
     public SpeedType speedType;
 
     public void SetHeight()
     {
-        if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, 250, layerMask))
+        LayerMask mask = LayerMask.GetMask("Terrain");
+        if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, 250, mask))
         {
             deltaHeight = targetHeight + transform.InverseTransformPoint(hit.point).y;
 

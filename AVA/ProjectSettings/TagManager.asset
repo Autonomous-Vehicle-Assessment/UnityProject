@@ -21,7 +21,7 @@ TagManager:
   - Objects
   - Terrain
   - Vehicle
-  - Base Terrain
+  - WrapTerrain
   - Terrain Polygons
   - Trees
   - Grass

@@ -86,6 +86,14 @@ public class TerrainStruct
 
         return withinTerrain;
     }
+
+    public void InitHeights()
+    {
+        // Store original terrain deformation and make copy for modified heights
+        originalHeights = terrain.terrainData.GetHeights(0, 0, mapRes, mapRes);
+        modifiedHeights = originalHeights;
+        deltaHeights = originalHeights;
+    }
 }
 
 
@@ -124,57 +132,50 @@ public class TerrainDeform : MonoBehaviour
 
     private void Awake()
     {
-        // Load all terrains from master
-        Terrain[] tempTerrains = terrainMaster.GetComponentsInChildren<Terrain>();
-        terrains = new List<TerrainStruct>();
-        // get the heightmap points of the terrain, store values in a float array.
-        int index = 0;
-        float[,] height = new float[65, 65];
-        float heightConstant = 0.8f;
-        for (int row = 0; row < 65; row++)
-        {
-            for (int coloumn = 0; coloumn < 65; coloumn++)
-            {
-                height[row, coloumn] = heightConstant;
-            }
-        }
+        //// Load all terrains from master
+        //Terrain[] tempTerrains = terrainMaster.GetComponentsInChildren<Terrain>();
+        //terrains = new List<TerrainStruct>();
+        //// get the heightmap points of the terrain, store values in a float array.
+        //int index = 0;
+        //float[,] height = new float[65, 65];
+        //float heightConstant = 0.8f;
+        //for (int row = 0; row < 65; row++)
+        //{
+        //    for (int coloumn = 0; coloumn < 65; coloumn++)
+        //    {
+        //        height[row, coloumn] = heightConstant;
+        //    }
+        //}
 
-        TerrainStruct.tiles = 0;
+        //TerrainStruct.tiles = 0;
 
-        foreach (Terrain terrain in tempTerrains)
-        {
-            if (terrain.GetComponent<Terrain>().isActiveAndEnabled)
-            {
-                TerrainData terrainData = new TerrainData();
-                terrainData.name = "terrain" + index.ToString();
-                terrainData.heightmapResolution = 65;
-                terrainData.size = new Vector3(4, 10, 4);
-                terrainData.SetHeights(0, 0, height);
+        //foreach (Terrain terrain in tempTerrains)
+        //{
+        //    if (terrain.GetComponent<Terrain>().isActiveAndEnabled)
+        //    {
+        //        TerrainData terrainData = new TerrainData();
+        //        terrainData.name = "terrain" + index.ToString();
+        //        terrainData.heightmapResolution = 65;
+        //        terrainData.size = new Vector3(4, 10, 4);
+        //        terrainData.SetHeights(0, 0, height);
 
-                terrain.terrainData = terrainData;
-                terrain.GetComponent<TerrainCollider>().terrainData = terrainData;
-                terrains.Add(new TerrainStruct(terrain, defaultMaterial));
-                index++;
-            }
-            else
-            {
-                terrains.Add(new TerrainStruct());
-            }
-        }
+        //        terrain.terrainData = terrainData;
+        //        terrain.GetComponent<TerrainCollider>().terrainData = terrainData;
+        //        terrains.Add(new TerrainStruct(terrain, defaultMaterial));
+        //        index++;
+        //    }
+        //    else
+        //    {
+        //        terrains.Add(new TerrainStruct());
+        //    }
+        //}
 
         // Load all wheelcolliders from master
         wheelColliders = wheelColliderMaster.GetComponentsInChildren<WheelCollider>();
 
-    }
+        InitTerrain();
 
-    private void OnGUI()
-    {
-        if (GUI.Button(new Rect(30, 30, 200, 30), "Reset Terrain"))
-        {
-            ResetTerrain();
-        }
     }
-
     private void FixedUpdate()
     {
         foreach (TerrainStruct terrainStruct in terrains)
@@ -609,6 +610,7 @@ public class TerrainDeform : MonoBehaviour
 
     void OnApplicationQuit()
     {
+        // Load the heightmaps
         ResetTerrain();
     }
 
@@ -624,7 +626,7 @@ public class TerrainDeform : MonoBehaviour
         }
     }
 
-    private void ResetTerrain()
+    public void ResetTerrain()
     {
         foreach (TerrainStruct terrainStruct in terrains)
         {
@@ -637,9 +639,108 @@ public class TerrainDeform : MonoBehaviour
         }
     }
 
+    public void LoadTerrain()
+    {
+        // Load all terrains from master
+        Terrain[] tempTerrains = terrainMaster.GetComponentsInChildren<Terrain>();
+        terrains = new List<TerrainStruct>();
+        // get the heightmap points of the terrain, store values in a float array.
+        int index = 0;
+        float[,] height = new float[65, 65];
+        float heightConstant = 1f;
+        for (int row = 0; row < 65; row++)
+        {
+            for (int coloumn = 0; coloumn < 65; coloumn++)
+            {
+                height[row, coloumn] = heightConstant;
+            }
+        }
+
+        TerrainStruct.tiles = 0;
+
+        foreach (Terrain terrain in tempTerrains)
+        {
+            if (terrain.GetComponent<Terrain>().isActiveAndEnabled)
+            {
+                TerrainData terrainData = new TerrainData();
+                terrainData.name = "terrain" + index.ToString();
+                terrainData.heightmapResolution = 65;
+                terrainData.size = new Vector3(4, 10, 4);
+                terrainData.SetHeights(0, 0, height);
+                terrainData.SetDetailResolution(8,8);
+
+                terrain.terrainData = terrainData;
+                terrain.GetComponent<TerrainCollider>().terrainData = terrainData;
+                terrains.Add(new TerrainStruct(terrain, defaultMaterial));
+                index++;
+            }
+            else
+            {
+                terrains.Add(new TerrainStruct());
+            }
+        }
+
+        // Load all wheelcolliders from master
+        wheelColliders = wheelColliderMaster.GetComponentsInChildren<WheelCollider>();
+    }
+    public void WrapTerrain()
+    {
+        foreach (TerrainStruct terrainStruct in terrains)
+        {
+            if (terrainStruct.enabled)
+            {
+                TerrainData data = terrainStruct.terrain.terrainData;
+                int res = data.heightmapResolution;
+                float size = data.size.x;
+                float step = size / (res - 1f);
+                float originalHeight = data.GetHeight(0, 0);
+                Vector3 terrainOrigin = terrainStruct.terrain.transform.position;
+                LayerMask terrainLayer = LayerMask.GetMask("WrapTerrain");
+                float[,] WrapHeights = new float[res,res];
+                for (int xVert = 0; xVert < res; xVert++) // width -> x
+                {
+                    float xPos = terrainOrigin.x + step * xVert;
+                    for (int zVert = 0; zVert < res; zVert++) // depth -> y (z)
+                    {
+                        float zPos = terrainOrigin.z + step * zVert;
+                        Vector3 position = new Vector3(xPos, terrainOrigin.y+originalHeight, zPos);
+                        if (Physics.Raycast(position, -transform.up, out RaycastHit hit, 250, terrainLayer))
+                        {
+                            WrapHeights[zVert, xVert] = transform.InverseTransformPoint(hit.point).y / 10f;
+
+                        }
+                    }
+                }
+
+                // Get terrain vertices world x,y position //
+
+                // Raycast down to get height data for all vertices //
+
+                // Set height //
+                terrainStruct.terrain.terrainData.SetHeights(0, 0, WrapHeights);
+                terrainStruct.InitHeights();
+            }
+        }
+    }
+
+    public void InitTerrain()
+    {
+        foreach (TerrainStruct terrainStruct in terrains)
+        {
+            if (terrainStruct.enabled)
+            {
+                terrainStruct.InitHeights();
+            }
+        }
+    }
+
+
     private TerrainStruct TerrainSelect(Vector2Int id)
     {
         int index = id[0] + id[1] * TerrainStruct.tilesWidth;
+
+        if (index < 0) index = 0;
+        if (index > TerrainStruct.tiles-1) index = 0;
         return terrains[index];
 
     }
