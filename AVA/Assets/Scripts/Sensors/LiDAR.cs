@@ -94,7 +94,7 @@ public class LiDAR : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         if (showLidarRays || showLidarCollision)
         {
@@ -162,7 +162,48 @@ public class LiDAR : MonoBehaviour
         }
     }
 
-    private void GetDepth()
+    public Vector3[] GetDepthArray()
+    {
+        List<Vector3> depthList = new List<Vector3>();
+        int index = 0;
+        for (int angle = 0; angle < angleSteps; angle++)
+        {
+            float yOffset = -Mathf.Sin(sensorAngle / 2f * Mathf.Deg2Rad) * sensorLength;
+            float zOffset = Mathf.Cos(sensorAngle / 2f * Mathf.Deg2Rad) * sensorLength - sensorLength;
+            Vector3 offsetDown = new Vector3(0, yOffset, zOffset);
+
+            for (int ray = 0; ray < numberOfRays; ray++)
+            {
+                Quaternion angleRotation = transform.rotation * Quaternion.Euler(0, (360f / angleSteps) * angle, 0);
+                Handles.matrix = Matrix4x4.TRS(transform.TransformPoint(frontSensorPosition), angleRotation, Vector3.one);
+                float rayAngle = -sensorAngle / 2f + sensorAngle / (numberOfRays - 1) * ray;
+                float yOffsetPoint = Mathf.Sin(rayAngle * Mathf.Deg2Rad) * sensorLength - yOffset;
+                float zOffsetPoint = Mathf.Cos(rayAngle * Mathf.Deg2Rad) * sensorLength - zOffset - sensorLength;
+
+                Vector3 offsetUp = new Vector3(0, yOffsetPoint, zOffsetPoint);
+                Vector3 target = new Vector3(0, 0, 1) * sensorLength + offsetDown + offsetUp;
+
+
+                Vector3 pos = transform.TransformPoint(frontSensorPosition);
+                Vector3 dir = Handles.matrix.MultiplyVector(target);
+
+                if (Physics.Raycast(pos, dir, out RaycastHit hit, sensorLength))
+                {
+                    if ((hit.point - pos).magnitude > minDistance)
+                    {
+                        depthList.Add(transform.TransformVector(hit.point - pos));
+                    }
+                }
+            }
+        }
+
+        //Vector3[] depthArray = new Vector3[depthList.Count];
+        Vector3[] depthArray = depthList.ToArray();
+
+        return depthArray;
+    }
+
+    public Vector3[,] GetDepthMatrix()
     {
         Vector3[,] depthArray = new Vector3[numberOfRays, angleSteps];
 
@@ -196,13 +237,15 @@ public class LiDAR : MonoBehaviour
                 }
             }
         }
+
+        return depthArray;
     }
 
     IEnumerator LidarRoutine()
     {
         while (active)
         {
-            GetDepth();
+            GetDepthMatrix();
             yield return new WaitForSeconds(1f / frequency);
         }
     }

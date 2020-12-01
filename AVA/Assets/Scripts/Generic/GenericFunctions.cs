@@ -69,6 +69,24 @@ public static class GenericFunctions
         return (SpeedString, SpeedCoefficient);
     }
 
+    public static float SpeedTypeConverterFloat(SpeedType SpeedType)
+    {
+        float SpeedCoefficient = 1.0f;
+        switch (SpeedType)
+        {
+            case SpeedType.MPH:
+                SpeedCoefficient = 2.23693629f;
+                break;
+            case SpeedType.KPH:
+                SpeedCoefficient = 3.6f;
+                break;
+            case SpeedType.MPS:
+                SpeedCoefficient = 1.0f;
+                break;
+        }
+        return SpeedCoefficient;
+    }
+
     public static float GetGaussian()
     {
         float v1, v2, x, s, gauss;
