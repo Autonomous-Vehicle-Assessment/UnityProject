@@ -146,7 +146,11 @@ public class EngineModel : MonoBehaviour
     }
     public void UpdateState()
     {
-        //UpdateTerrainWheelParameters();
+        if(terrainTracker != null)
+        {
+            UpdateTerrainWheelParameters();
+        }
+        
         transmissionRPM = Mathf.Max(wheels[0].collider.rpm, wheels[1].collider.rpm, wheels[2].collider.rpm, wheels[3].collider.rpm);
         engineRPM = transmissionRPM * GearingRatioEff();
         engineRPM = Mathf.Abs(engineRPM);
@@ -158,6 +162,35 @@ public class EngineModel : MonoBehaviour
         engineRPM = Mathf.Clamp(engineRPM, minRpm, maxRpm);
 
         engineTorque = motorCurve.Evaluate(engineRPM);
+    }
+
+    public void LockedDifferential()
+    {
+        float avgRpm = 0;
+        // locked differential
+        foreach (StandardWheel wheel in wheels)
+        {
+            avgRpm += wheel.collider.rpm;
+        }
+
+        avgRpm /= wheels.Count;
+
+        foreach (StandardWheel wheel in wheels)
+        {
+            float slip = 0;
+            float wheelRpm = wheel.collider.rpm;
+
+            if (wheelRpm > avgRpm)
+            {
+                slip = avgRpm / wheelRpm - 1;
+            }
+            else if (wheelRpm < avgRpm)
+            {
+                slip = 1 - wheelRpm / avgRpm;
+            }
+            
+        }
+
     }
     public void Move(float steering, float accel, float footbrake, float handbrake)
     {

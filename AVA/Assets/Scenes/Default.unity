@@ -256,7 +256,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84ae1bb693d1da84d941acfec6fa20cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TerrainMain: {fileID: 0}
+  terrainMain: {fileID: 0}
+  wheelCollider: {fileID: 0}
+  groundStiffness: 0
+  groundDamping: 0
+  deformationStrength: 0
 --- !u!1 &302181966
 GameObject:
   m_ObjectHideFlags: 0
@@ -1685,6 +1689,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 438145330974302393, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 900966193508289108, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1872,6 +1881,11 @@ PrefabInstance:
     - target: {fileID: 195079846828990397, guid: b6d4eb1bc65c83b459ba6991220c17a0,
         type: 3}
       propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1565922036437706998, guid: b6d4eb1bc65c83b459ba6991220c17a0,
+        type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -47,26 +47,44 @@ public static class GenericFunctions
         return Angle;
     }
 
-    public static (string,float) SpeedTypeConverter(SpeedType SpeedType)
+    public static (string,float) SpeedTypeConverter(SpeedType speedType)
     {
-        float SpeedCoefficient = 1.0f;
-        string SpeedString = "m/s";
-        switch (SpeedType)
+        float speedCoefficient = 1.0f;
+        string speedString = "m/s";
+        switch (speedType)
         {
             case SpeedType.MPH:
-                SpeedString = " MPH";
-                SpeedCoefficient = 2.23693629f;
+                speedString = " MPH";
+                speedCoefficient = 2.23693629f;
                 break;
             case SpeedType.KPH:
-                SpeedString = " km/h";
-                SpeedCoefficient = 3.6f;
+                speedString = " km/h";
+                speedCoefficient = 3.6f;
                 break;
             case SpeedType.MPS:
-                SpeedString = " m/s";
-                SpeedCoefficient = 1.0f;
+                speedString = " m/s";
+                speedCoefficient = 1.0f;
                 break;
         }
-        return (SpeedString, SpeedCoefficient);
+        return (speedString, speedCoefficient);
+    }
+
+    public static float SpeedCoefficient(SpeedType speedType)
+    {
+        float speedCoefficient = 1.0f;
+        switch (speedType)
+        {
+            case SpeedType.MPH:
+                speedCoefficient = 2.23693629f;
+                break;
+            case SpeedType.KPH:
+                speedCoefficient = 3.6f;
+                break;
+            case SpeedType.MPS:
+                speedCoefficient = 1.0f;
+                break;
+        }
+        return speedCoefficient;
     }
 
     public static float SpeedTypeConverterFloat(SpeedType SpeedType)

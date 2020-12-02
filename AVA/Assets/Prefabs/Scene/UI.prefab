@@ -449,6 +449,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SlowMotionValue: 0.1
+  skyboxOriginal: {fileID: 0}
+  skyboxBlack: {fileID: 0}
+  blackOut: 0
 --- !u!1 &195079847627863170
 GameObject:
   m_ObjectHideFlags: 0
@@ -1755,7 +1758,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1565922036437706998
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1776,7 +1779,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -10, y: -10}
-  m_SizeDelta: {x: -260, y: 0}
+  m_SizeDelta: {x: -260, y: -141.9643}
   m_Pivot: {x: 1, y: 1}
 --- !u!223 &2278823077899543105
 Canvas:
