@@ -1527,7 +1527,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineColor: {r: 0, g: 1, b: 0.15520024, a: 1}
-  pathNodes: []
+  pathNodes:
+  - {fileID: 741305402}
+  - {fileID: 2079650289}
+  - {fileID: 1613379340}
+  - {fileID: 824451231}
+  - {fileID: 459666901}
+  - {fileID: 1441752057}
+  - {fileID: 1094096270}
+  - {fileID: 490621060}
+  - {fileID: 1716897705}
+  - {fileID: 780103982}
+  - {fileID: 1616661041}
+  - {fileID: 2094210791}
+  - {fileID: 1374145499}
+  - {fileID: 641411671}
+  - {fileID: 21159132}
+  - {fileID: 156066466}
 --- !u!4 &508788911
 Transform:
   m_ObjectHideFlags: 0
@@ -1924,6 +1940,42 @@ Terrain:
   m_GroupingID: 0
   m_RenderingLayerMask: 1
   m_AllowAutoConnect: 1
+--- !u!1 &738392948 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 900966193508289119, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+    type: 3}
+  m_PrefabInstance: {fileID: 1861839649}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &738392957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738392948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbe5d6c7b29ed2345a0f90d22ebe406b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathMaster: {fileID: 1747442721}
+  autonomousDriving: 0
+  targetVelocity: 0
+  throttleCap: 0.8
+  reverseVel: 10
+  reverseAngle: 30
+  vehicleSpeed: 0
+  showTurningRadius: 1
+  currentNode: 0
+  currentPath: 0
+  driverRange: 20
+  showDriver: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  throttle: 0
+  brake: 0
+  steer: 0
 --- !u!1 &741305400
 GameObject:
   m_ObjectHideFlags: 0
@@ -5477,7 +5529,7 @@ PrefabInstance:
     - target: {fileID: 900966193508289119, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 900966193508289119, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}

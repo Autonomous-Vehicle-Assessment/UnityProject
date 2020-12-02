@@ -19,7 +19,6 @@ public class PathLoaderEditor : Editor
         {
             pathLoader.OpenDialog();
             pathLoader.ReadTextFile();
-            pathLoader.GeneratePath();
         }
 
         if (GUILayout.Button("Clear"))
@@ -27,10 +26,11 @@ public class PathLoaderEditor : Editor
             pathLoader.ClearPath();
         }
 
-        //if(GUILayout.Button("Update Speeds"))
-        //{
-        //    pathLoader.UpdateSpeeds();
-        //}
+        if (GUILayout.Button("Save Path"))
+        {
+            pathLoader.OpenDialogSave();
+            pathLoader.WriteTextFile();
+        }
 
         EditorGUILayout.EndHorizontal();
 

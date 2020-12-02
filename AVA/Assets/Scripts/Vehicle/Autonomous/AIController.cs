@@ -14,13 +14,13 @@ public class AIController : MonoBehaviour
     [Header("Driver")]
     public bool autonomousDriving;
     public float targetVelocity;
-    public float throttleCap;
-    public float reverseVel;
-    public float reverseAngle;
+    public float throttleCap = 0.8f;
+    public float reverseVel = 10f;
+    public float reverseAngle = 30f;
 
     public float vehicleSpeed;
     private float speedError;
-    private float proportionalGain = 1;
+    private float proportionalGain = 0.2f;
     private float wheelDistanceLength;
     private float wheelDistanceWidth;
 
@@ -38,7 +38,7 @@ public class AIController : MonoBehaviour
     [Header("Pathfinder")]
     public int currentNode = 0;
     public int currentPath = 0;
-    public float driverRange;
+    public float driverRange = 10f;
     public bool showDriver;
     private float nodeDistance;
     private Vector3 wirePoint;
@@ -84,8 +84,8 @@ public class AIController : MonoBehaviour
         CheckWaypointDistance();
         Steer();
         Drive();
-
         if (autonomousDriving) engine.Move(steer, throttle, brake, 0);
+
     }
 
     private void Steer()
@@ -185,6 +185,11 @@ public class AIController : MonoBehaviour
                 else
                 {
                     currentPath++;
+
+                    if (currentPath == 6)
+                    {
+                        currentPath++;
+                    }
                 }
             }
             else
