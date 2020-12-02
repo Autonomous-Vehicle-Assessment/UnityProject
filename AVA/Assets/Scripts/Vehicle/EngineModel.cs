@@ -146,10 +146,10 @@ public class EngineModel : MonoBehaviour
     }
     public void UpdateState()
     {
-        if(terrainTracker != null)
-        {
-            UpdateTerrainWheelParameters();
-        }
+        //if(terrainTracker != null)
+        //{
+        //    UpdateTerrainWheelParameters();
+        //}
         
         transmissionRPM = Mathf.Max(wheels[0].collider.rpm, wheels[1].collider.rpm, wheels[2].collider.rpm, wheels[3].collider.rpm);
         engineRPM = transmissionRPM * GearingRatioEff();
@@ -222,8 +222,8 @@ public class EngineModel : MonoBehaviour
             {
                 float currentAngle = wheels[i].collider.steerAngle;
                 
-                float appliedAngleOuter = Mathf.Lerp(currentAngle, m_SteerAngleOuter, 10 * Time.deltaTime);
-                float appliedAngleInner = Mathf.Lerp(currentAngle, m_SteerAngleInner, 10 * Time.deltaTime);
+                float appliedAngleOuter = Mathf.Lerp(currentAngle, m_SteerAngleOuter, 3 * Time.deltaTime);
+                float appliedAngleInner = Mathf.Lerp(currentAngle, m_SteerAngleInner, 3 * Time.deltaTime);
 
 
                 if (steering > 0) // Turning right, apply outer and inner steering angle

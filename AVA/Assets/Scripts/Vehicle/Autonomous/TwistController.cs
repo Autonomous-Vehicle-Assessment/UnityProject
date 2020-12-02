@@ -55,7 +55,7 @@ public class TwistController : MonoBehaviour
         Drive();
 
         if (autonomousDriving) engine.Move(steer, throttle, brake, 0);
-        else engine.Move(0, 0, 1, 0);
+        //else engine.Move(0, 0, 1, 0);
         // Debug.Log(engine.wheels[1].collider.steerAngle);
     }
 
@@ -67,6 +67,8 @@ public class TwistController : MonoBehaviour
         { 
             steer = 0;
             angularVelocity = 0;
+            targetTurningRadius = 0;
+            turningRadius = 0;
         }
         else
         {
@@ -76,7 +78,12 @@ public class TwistController : MonoBehaviour
 
             targetTurningRadius = linearVelocity / targetAngularVelocity;
 
-            steer = Mathf.Asin(wheelDistanceLength / targetTurningRadius) * 1 / (engine.maximumInnerSteerAngle * Mathf.Deg2Rad);
+            if(Mathf.Abs(targetTurningRadius) < 6)
+            {
+                if (Mathf.Abs(targetTurningRadius) < 1) steer = 0;
+                else steer = Mathf.Sign(targetTurningRadius);
+            }
+            else steer = Mathf.Asin(wheelDistanceLength / targetTurningRadius) * 1 / (engine.maximumInnerSteerAngle * Mathf.Deg2Rad);
 
                 // Mathf.Sign(targetTurningRadius) * Mathf.Tan(wheelDistanceLength / (Mathf.Abs(targetTurningRadius) - wheelDistanceWidth / 2)) / (engine.maximumInnerSteerAngle * Mathf.Deg2Rad);
         }

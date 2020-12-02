@@ -249,6 +249,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 999418073760609334, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1068743491922695456, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -259,6 +264,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 1109135974722960360, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2f8601a5077d1f64280aaa6f5974324d, type: 2}
     - target: {fileID: 1129365155864654952, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -583,6 +593,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6894272702702687170, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 914612ae87f1feb418c292fe8f805e68, type: 2}
+    - target: {fileID: 6928017460450369677, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: lidar
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7332520068729931202, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
@@ -712,6 +732,8 @@ PrefabInstance:
     - {fileID: 2621526040368134375, guid: e741e23d882cb8a4488ef50ec8c7bf18, type: 3}
     - {fileID: 2621526040368134374, guid: e741e23d882cb8a4488ef50ec8c7bf18, type: 3}
     - {fileID: 2621526040368134373, guid: e741e23d882cb8a4488ef50ec8c7bf18, type: 3}
+    - {fileID: 7222123204553881066, guid: e741e23d882cb8a4488ef50ec8c7bf18, type: 3}
+    - {fileID: 5326246333562445458, guid: e741e23d882cb8a4488ef50ec8c7bf18, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e741e23d882cb8a4488ef50ec8c7bf18, type: 3}
 --- !u!1 &4911398874657676195 stripped
 GameObject:

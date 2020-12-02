@@ -188,11 +188,12 @@ public class LiDAR : MonoBehaviour
                 Vector3 pos = transform.TransformPoint(frontSensorPosition);
                 Vector3 dir = Handles.matrix.MultiplyVector(target);
 
-                if (Physics.Raycast(pos, dir, out RaycastHit hit, sensorLength))
+                if (Physics.Raycast(pos, dir, out RaycastHit hit, sensorLength, layerMask))
                 {
                     if ((hit.point - pos).magnitude > minDistance)
                     {
-                        depthList.Add(transform.TransformVector(hit.point - pos));
+                        Vector3 point = transform.InverseTransformPoint(hit.point - pos);
+                        depthList.Add(transform.InverseTransformPoint(hit.point));// new Vector3(point.x, point.y - transform.position.y, point.z));
                     }
                 }
             }
