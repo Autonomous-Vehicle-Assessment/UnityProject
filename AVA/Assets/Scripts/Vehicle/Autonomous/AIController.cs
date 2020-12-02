@@ -186,10 +186,10 @@ public class AIController : MonoBehaviour
                 {
                     currentPath++;
 
-                    if (currentPath == 6)
-                    {
-                        currentPath++;
-                    }
+                    //if (currentPath == 6)
+                    //{
+                    //    currentPath++;
+                    //}
                 }
             }
             else
