@@ -3,7 +3,9 @@
 public class PathNode : MonoBehaviour
 {
     public float targetVelocity;
+    [HideInInspector]
     public bool activeNode;
+    [HideInInspector]
     public float targetHeight = 1;
     private float deltaHeight;
     public SpeedType speedType;

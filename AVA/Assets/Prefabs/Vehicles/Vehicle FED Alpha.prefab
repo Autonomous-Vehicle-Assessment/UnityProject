@@ -853,7 +853,7 @@ MonoBehaviour:
   targetVelocity: 0
   throttleCap: 1
   reverseVel: 10
-  reverseAngle: 30
+  reverseAngle: 0.7
   vehicleSpeed: 0
   showTurningRadius: 1
   currentNode: 0

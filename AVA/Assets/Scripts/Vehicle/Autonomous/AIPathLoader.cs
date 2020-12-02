@@ -193,7 +193,7 @@ public class AIPathLoader : MonoBehaviour
 
     private void ConstructPathAVA()
     {
-        ClearPath();
+        //ClearPath();
 
         for (int row = 1; row < parsedList.Count; row++)
         {
@@ -226,7 +226,8 @@ public class AIPathLoader : MonoBehaviour
 
     private void ConstructPathUnitTest()
     {
-        ClearPath();
+        //ClearPath();
+
         for (int row = 1; row < parsedList.Count; row++)
         {
             pathPoints = new List<Vector3>();
@@ -262,7 +263,7 @@ public class AIPathLoader : MonoBehaviour
 
     private void ConstructPathKRC()
     {
-        ClearPath();
+        //ClearPath();
 
         for (int row = 1; row < parsedList.Count; row++)
         {
@@ -342,7 +343,7 @@ public class AIPathLoader : MonoBehaviour
     public void OpenDialogSave()
     {
         pathWrite = EditorUtility.OpenFilePanel(
-                    "Open file",
+                    "Save as",
                     "",
                     "*");
     }
