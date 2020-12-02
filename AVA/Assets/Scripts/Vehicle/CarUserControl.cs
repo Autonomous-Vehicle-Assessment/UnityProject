@@ -12,6 +12,7 @@ namespace UnityStandardAssets.Vehicles.Car
 
         [SerializeField] public TransferCase m_CurrentTransfercase;
         [SerializeField] public bool TrackPoints;
+        [SerializeField] public bool active = true;
         [SerializeField] public int RenderTime = 1;
         private LineRenderer[] lineRenderers;
         private List<Vector3[]> points;
@@ -52,7 +53,7 @@ namespace UnityStandardAssets.Vehicles.Car
 
             if (Engine != null)
             {
-                Engine.Move(h, v, footbrake, handbrake);
+                if(active) Engine.Move(h, v, footbrake, handbrake);
             }
 
             string s_Time = Time.time.ToString();

@@ -189,8 +189,9 @@ public class EngineModel : MonoBehaviour
             {
                 float currentAngle = wheels[i].collider.steerAngle;
                 
-                float appliedAngleOuter = currentAngle - (currentAngle - m_SteerAngleOuter) * Time.deltaTime * 5f;
-                float appliedAngleInner = currentAngle - (currentAngle - m_SteerAngleInner) * Time.deltaTime * 5f;
+                float appliedAngleOuter = Mathf.Lerp(currentAngle, m_SteerAngleOuter, 10 * Time.deltaTime);
+                float appliedAngleInner = Mathf.Lerp(currentAngle, m_SteerAngleInner, 10 * Time.deltaTime);
+
 
                 if (steering > 0) // Turning right, apply outer and inner steering angle
                 {

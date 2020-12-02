@@ -18,7 +18,8 @@ public class TwistController : MonoBehaviour
     public bool autonomousDriving;
     public float linearVelocity;
     public float angularVelocity;
-    private float proportionalGain = .2f;
+    public float turningRadius;
+    private float proportionalGain = .4f;
     private float brakeVel = 3;
     private float throttleCap = 1;
 
@@ -40,9 +41,9 @@ public class TwistController : MonoBehaviour
         engine = GetComponent<EngineModel>();
         vehicleStats = GetComponent<VehicleStats>();
 
-        wheelDistanceLength = Vector2.Distance(engine.wheels[0].collider.transform.position, engine.wheels[3].collider.transform.position);
-        wheelDistanceWidth = Vector2.Distance(engine.wheels[0].collider.transform.position, engine.wheels[1].collider.transform.position);
-        
+        wheelDistanceLength = Vector3.Distance(engine.wheels[0].collider.transform.position, engine.wheels[2].collider.transform.position);
+        wheelDistanceWidth = Vector3.Distance(engine.wheels[0].collider.transform.position, engine.wheels[1].collider.transform.position);
+
         turningRadiusMin = wheelDistanceLength / Mathf.Atan(engine.maximumInnerSteerAngle * Mathf.Deg2Rad) + wheelDistanceWidth / 2;
     }
 
@@ -55,6 +56,7 @@ public class TwistController : MonoBehaviour
 
         if (autonomousDriving) engine.Move(steer, throttle, brake, 0);
         else engine.Move(0, 0, 1, 0);
+        // Debug.Log(engine.wheels[1].collider.steerAngle);
     }
 
     private void Steer()
@@ -68,15 +70,15 @@ public class TwistController : MonoBehaviour
         }
         else
         {
-            float turningRadius = wheelDistanceLength / Mathf.Atan(Mathf.Abs(steer) * engine.maximumInnerSteerAngle * Mathf.Deg2Rad) + wheelDistanceWidth / 2;
+            turningRadius = wheelDistanceLength / Mathf.Sin(steer * engine.maximumInnerSteerAngle * Mathf.Deg2Rad);
 
             angularVelocity = linearVelocity / turningRadius;
 
-            // float yawError = targetAngularVelocity - angularVelocity;
-
             targetTurningRadius = linearVelocity / targetAngularVelocity;
 
-            steer = Mathf.Sign(targetTurningRadius) * Mathf.Tan(wheelDistanceLength / (Mathf.Abs(targetTurningRadius) - wheelDistanceWidth / 2)) / (engine.maximumInnerSteerAngle * Mathf.Deg2Rad);
+            steer = Mathf.Asin(wheelDistanceLength / targetTurningRadius) * 1 / (engine.maximumInnerSteerAngle * Mathf.Deg2Rad);
+
+                // Mathf.Sign(targetTurningRadius) * Mathf.Tan(wheelDistanceLength / (Mathf.Abs(targetTurningRadius) - wheelDistanceWidth / 2)) / (engine.maximumInnerSteerAngle * Mathf.Deg2Rad);
         }
 
         steer = Mathf.Min(1, Mathf.Max(-1, steer));
