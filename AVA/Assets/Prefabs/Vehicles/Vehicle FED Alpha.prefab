@@ -417,6 +417,7 @@ GameObject:
   - component: {fileID: 5462843028766989911}
   - component: {fileID: 2211430127117835933}
   - component: {fileID: 454163007198815611}
+  - component: {fileID: 8284222869394974088}
   m_Layer: 11
   m_Name: Vehicle FED Alpha
   m_TagString: Untagged
@@ -835,6 +836,36 @@ MonoBehaviour:
   maxRolloffDistance: 500
   dopplerLevel: 1
   useDoppler: 0
+--- !u!114 &8284222869394974088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900966193508289119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbe5d6c7b29ed2345a0f90d22ebe406b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathMaster: {fileID: 0}
+  autonomousDriving: 0
+  targetVelocity: 0
+  throttleCap: 1
+  reverseVel: 10
+  reverseAngle: 30
+  vehicleSpeed: 0
+  showTurningRadius: 1
+  currentNode: 0
+  currentPath: 1
+  driverRange: 20
+  showDriver: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 16896
+  throttle: 0
+  brake: 0
+  steer: 0
 --- !u!1 &900966194502703902
 GameObject:
   m_ObjectHideFlags: 0

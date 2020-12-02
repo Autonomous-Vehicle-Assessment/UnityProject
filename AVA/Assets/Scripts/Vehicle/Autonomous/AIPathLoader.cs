@@ -7,7 +7,7 @@ using System.IO;
 public enum WaypointFormat
 {
     AVA,
-    Custom,
+    UnitTest,
     KRC
 }
 
@@ -61,7 +61,7 @@ public class AIPathLoader : MonoBehaviour
             AIPath[] aiPath = transform.GetComponentsInChildren<AIPath>();
 
             List<string> pathList = new List<string>();
-
+            pathList.Add("Name;R;G;B;X;Z;Vel");
             foreach (AIPath path in aiPath)
             {
                 string pathString = "";
@@ -114,8 +114,8 @@ public class AIPathLoader : MonoBehaviour
                 ParseListAVA();
                 break;
 
-            case WaypointFormat.Custom:
-                ParseListCustom();
+            case WaypointFormat.UnitTest:
+                ParseListUnitTest();
                 break;
 
             case WaypointFormat.KRC:
@@ -131,7 +131,7 @@ public class AIPathLoader : MonoBehaviour
 
         for (int i = 0; i < stringList.Count; i++)
         {
-            string[] temp = stringList[i].Split(',');
+            string[] temp = stringList[i].Split(';');
             for (int j = 0; j < temp.Length; j++)
             {
                 temp[j] = temp[j].Trim();  //removed the blank spaces
@@ -140,7 +140,7 @@ public class AIPathLoader : MonoBehaviour
         }
     }
 
-    private void ParseListCustom()
+    private void ParseListUnitTest()
     {
         parsedList = new List<string[]>();
 
@@ -180,8 +180,8 @@ public class AIPathLoader : MonoBehaviour
                 ConstructPathAVA();
                 break;
 
-            case WaypointFormat.Custom:
-                ConstructPathCustom();
+            case WaypointFormat.UnitTest:
+                ConstructPathUnitTest();
                 break;
 
             case WaypointFormat.KRC:
@@ -193,24 +193,38 @@ public class AIPathLoader : MonoBehaviour
 
     private void ConstructPathAVA()
     {
-        pathPoints = new List<Vector3>();
-        pathVel = new List<float>();
+        ClearPath();
 
         for (int row = 1; row < parsedList.Count; row++)
         {
-            float posX = float.Parse(parsedList[row][0]);
-            float posZ = float.Parse(parsedList[row][1]);
+            pathPoints = new List<Vector3>();
+            pathVel = new List<float>();
 
-            float vel = float.Parse(parsedList[row][2]);
+            pathDescription = parsedList[row][0];
+            float colorR = float.Parse(parsedList[row][1]);
+            float colorG = float.Parse(parsedList[row][2]);
+            float colorB = float.Parse(parsedList[row][3]);
+            pathColor = new Color(colorR, colorG, colorB);
+            string[] xStrs = parsedList[row][4].Split(',');
+            string[] zStrs = parsedList[row][5].Split(',');
+            string[] velStrs = parsedList[row][6].Split(',');
 
-            Vector3 transform = new Vector3(posX, 100, posZ);
+            for (int point = 0; point < xStrs.Length; point++)
+            {
+                System.Globalization.NumberStyles numberStyle = System.Globalization.NumberStyles.AllowDecimalPoint | System.Globalization.NumberStyles.AllowLeadingSign;
+                float x = float.Parse(xStrs[point].Replace('.', ','), numberStyle);
+                float z = float.Parse(zStrs[point].Replace('.', ','), numberStyle);
+                float vel = float.Parse(velStrs[point].Replace('.', ','), numberStyle);
 
-            pathPoints.Add(transform);
-            pathVel.Add(vel);
+                Vector3 position = new Vector3(x, 100, z);
+                pathPoints.Add(position);
+                pathVel.Add(vel);
+            }
+            GeneratePath();
         }
     }
 
-    private void ConstructPathCustom()
+    private void ConstructPathUnitTest()
     {
         ClearPath();
         for (int row = 1; row < parsedList.Count; row++)
@@ -358,8 +372,8 @@ public class AIPathLoader : MonoBehaviour
         float xPos = float.Parse(xPosStr, numberStyle);
         float yPos = float.Parse(yPosStr, numberStyle);
 
-        float z = (float)(-1f * xPos);
-        float x = (float)(yPos - knownOffsetX);
+        float z = -1f * xPos;
+        float x = yPos - knownOffsetX;
 
         Vector3 position = new Vector3(x, 100, z);
 
