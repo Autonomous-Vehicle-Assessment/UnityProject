@@ -6,21 +6,21 @@ using UnityEditor;
 public class AIController : MonoBehaviour
 {
     private EngineModel engine;               // Engine model
-    private VehicleStats vehicleStats;
+    private VehicleStats vehicleStats;               // Engine model
 
-    public Transform globalPath;
+    public Transform pathMaster;
     private GameObject wayPoint;
 
     [Header("Driver")]
     public bool autonomousDriving;
     public float targetVelocity;
-    public float throttleCap;
-    public float reverseVel;
-    public float reverseAngle;
+    public float throttleCap = 0.8f;
+    public float reverseVel = 10f;
+    public float reverseAngle = 30f;
 
     public float vehicleSpeed;
     private float speedError;
-    private float proportionalGain = 1;
+    private float proportionalGain = 0.2f;
     private float wheelDistanceLength;
     private float wheelDistanceWidth;
 
@@ -29,24 +29,24 @@ public class AIController : MonoBehaviour
 
     private bool targetBehind;
     private bool withinTurning;
-    private bool objectAhead;
     private bool reverse;
     private float turningRadiusMin;
     private float distance;
     private Vector3 turningRadiusCenter;
     private Vector3 offsetMin;
 
-    private List<PathNode> pathNodes = new List<PathNode>();
-
     [Header("Pathfinder")]
     public int currentNode = 0;
-    public float driverRange;
+    public int currentPath = 0;
+    public float driverRange = 10f;
     public bool showDriver;
     private float nodeDistance;
     private Vector3 wirePoint;
     private Vector3 linePoint;
-    private Vector3 longWaypoint;
     public LayerMask layerMask;
+    private List<AIPath> paths;
+    private Vector3 targetWaypoint;
+    private List<PathNode> pathNodes;
 
     [Header("Output")]
     [Range(0,1)]
@@ -62,24 +62,18 @@ public class AIController : MonoBehaviour
         // get the controller
         engine = GetComponent<EngineModel>();
         vehicleStats = GetComponent<VehicleStats>();
-
-        if (globalPath != null)
+        
+        paths = new List<AIPath>();
+        foreach (AIPath path in pathMaster.GetComponentsInChildren<AIPath>())
         {
-            PathNode[] nodes = globalPath.GetComponentsInChildren<PathNode>();
-            pathNodes = new List<PathNode>();
-
-            for (int i = 0; i < nodes.Length; i++)
-            {
-                if (nodes[i].transform != transform)
-                {
-                    pathNodes.Add(nodes[i]);
-                }
-            }
-            wayPoint = new GameObject("Waypoint");
-
-            wayPoint.transform.parent = globalPath;
+            paths.Add(path);
         }
 
+        pathNodes = new List<PathNode>();
+        pathNodes = paths[currentPath].pathNodes;
+
+        wayPoint = new GameObject("Waypoint");
+        
         wheelDistanceLength = Vector2.Distance(engine.wheels[0].collider.transform.position, engine.wheels[3].collider.transform.position);
         wheelDistanceWidth = Vector2.Distance(engine.wheels[0].collider.transform.position, engine.wheels[1].collider.transform.position);
     }
@@ -90,9 +84,8 @@ public class AIController : MonoBehaviour
         CheckWaypointDistance();
         Steer();
         Drive();
-
         if (autonomousDriving) engine.Move(steer, throttle, brake, 0);
-        else engine.Move(0, 0, 1, 0);
+
     }
 
     private void Steer()
@@ -100,7 +93,10 @@ public class AIController : MonoBehaviour
         Vector3 relativeVector = transform.InverseTransformPoint(wayPoint.transform.position);
         steer = relativeVector.x / relativeVector.magnitude;
 
-        Vector2 targetPosition = new Vector2(longWaypoint.x, longWaypoint.z);
+        Vector2 currentPosition = new Vector2(transform.position.x, transform.position.z);
+        Vector2 targetPosition = new Vector2(wayPoint.transform.position.x, wayPoint.transform.position.z);
+
+        nodeDistance = Vector2.Distance(currentPosition, targetPosition);
 
         turningRadiusMin = wheelDistanceLength / Mathf.Atan(engine.maximumInnerSteerAngle * Mathf.Deg2Rad) + wheelDistanceWidth / 2;
         turningRadius = wheelDistanceLength / Mathf.Atan(Mathf.Abs(steer) * engine.maximumInnerSteerAngle * Mathf.Deg2Rad) + wheelDistanceWidth / 2; ;
@@ -111,24 +107,9 @@ public class AIController : MonoBehaviour
         distance = Vector2.Distance(new Vector2(turningRadiusCenter.x,turningRadiusCenter.z), targetPosition);
 
         withinTurning = distance < turningRadiusMin && Mathf.Abs(relativeVector.x / relativeVector.magnitude) > Mathf.Sin(reverseAngle * Mathf.Deg2Rad) && relativeVector.magnitude > 1;
-        
         targetBehind = relativeVector.z < -5;
 
-        if (Physics.BoxCast(transform.position, new Vector3(turningRadiusMin, .5f, turningRadiusMin), transform.forward, out RaycastHit hitinfo, transform.rotation, 1, layerMask))
-        {
-            objectAhead = true;
-            Handles.color = Color.red;
-            Handles.DrawLine(transform.position, hitinfo.point);
-        }
-
-        Handles.color = Color.cyan;
-        Handles.matrix = transform.localToWorldMatrix;
-        Handles.DrawWireCube(transform.position, new Vector3(turningRadiusMin, .5f, turningRadiusMin));
-        Handles.matrix = Matrix4x4.identity;
-
-
-
-        if (reverse || withinTurning || targetBehind || objectAhead)
+        if (withinTurning || reverse || targetBehind)
         {
             reverse = true;
             if (vehicleSpeed < reverseVel)
@@ -154,8 +135,9 @@ public class AIController : MonoBehaviour
 
     private void Drive()
     {
-        vehicleSpeed = engine.speed * 1 / GenericFunctions.SpeedTypeConverterFloat(vehicleStats.m_SpeedType);
-        targetVelocity = pathNodes[currentNode].targetVelocity;
+        vehicleSpeed = engine.speed * 1 / GenericFunctions.SpeedCoefficient(vehicleStats.m_SpeedType);                                      // Vehicle velocity in m/s
+        targetVelocity = pathNodes[currentNode].targetVelocity * 1 / GenericFunctions.SpeedCoefficient(pathNodes[currentNode].speedType);   // Target velocity in m/s
+
         if (reverse)
         {
             targetVelocity = -targetVelocity / 2f;
@@ -187,30 +169,20 @@ public class AIController : MonoBehaviour
     private void CheckWaypointDistance()
     {
         UpdatePath();
-
         Vector2 currentPosition = new Vector2(wayPoint.transform.position.x, wayPoint.transform.position.z);
         Vector2 targetPosition = new Vector2(pathNodes[currentNode].transform.position.x, pathNodes[currentNode].transform.position.z);
         
         nodeDistance = Vector2.Distance(currentPosition, targetPosition);
         if ( nodeDistance < .5f)
         {
-            if(currentNode == pathNodes.Count - 1)
-            {
-                currentNode = 0;
-            }
-            else
-            {
-                currentNode++;
-                pathNodes[currentNode].activeNode = true;
-                pathNodes[currentNode-1].activeNode = false;
-            }
+            IncrementNode();
         }
-
-        pathNodes[currentNode].activeNode = true;
     }
 
     private void UpdatePath()
     {
+        pathNodes = paths[currentPath].pathNodes;
+
         Vector3 relativeVector = transform.InverseTransformPoint(pathNodes[currentNode].transform.position);
         wirePoint = transform.position + transform.TransformVector(relativeVector).normalized * Mathf.Min(relativeVector.magnitude, driverRange);
         Vector3 initialPath;
@@ -247,7 +219,6 @@ public class AIController : MonoBehaviour
         relativeVector = transform.TransformVector(transform.InverseTransformPoint(linePoint));
         Vector3 finalPath = transform.position + relativeVector.normalized * Mathf.Min(forwardRange, Mathf.Min(relativeVector.magnitude, driverRange));
         Vector3 wayPointPath = transform.position + relativeVector.normalized * Mathf.Min(forwardRange, Mathf.Min(relativeVector.magnitude, driverRange * 1 / 3f));
-        longWaypoint = transform.position + relativeVector.normalized * Mathf.Min(forwardRange, Mathf.Min(relativeVector.magnitude, driverRange));
 
         if (forwardRange < driverRange)
         {
@@ -287,7 +258,6 @@ public class AIController : MonoBehaviour
                     distanceToGoal = currentDistance;
                     finalPath = currentPath;
                     wayPointPath = transform.position + raycastDir * Mathf.Min(relativeVector.magnitude, driverRange * 1 / 3f);
-                    longWaypoint = transform.position + raycastDir * Mathf.Min(relativeVector.magnitude, driverRange);
                     //wayPointPath = transform.position + raycastDir * Mathf.Min(forwardRange, Mathf.Min(relativeVector.magnitude, driverRange * 1 / 3f));
                 }
 
@@ -299,24 +269,37 @@ public class AIController : MonoBehaviour
             nodeDistance = Vector2.Distance(currentPosition, targetPosition);
             if (nodeDistance < .5f)
             {
-                if (currentNode == pathNodes.Count - 1)
-                {
-                    currentNode = 0;
-                }
-                else
-                {
-                    currentNode++;
-                    pathNodes[currentNode].activeNode = true;
-                    pathNodes[currentNode - 1].activeNode = false;
-                }
+                IncrementNode();
             }
-
-            pathNodes[currentNode].activeNode = true;
         }
 
 
         wayPoint.transform.position = wayPointPath;
     }
+
+    private void IncrementNode()
+    {
+        int prevNode = currentNode;
+        int prevPath = currentPath;
+
+        // End of current path
+        if (currentNode == pathNodes.Count - 1)
+        {
+            currentNode = 0;
+
+            // End of paths
+            if (currentPath == paths.Count - 1) currentPath = 0;
+            else currentPath++;
+
+            pathNodes = paths[currentPath].pathNodes;
+        }
+        else currentNode++;
+
+        paths[prevPath].pathNodes[prevNode].activeNode = false;
+
+        pathNodes[currentNode].Activate();
+    }
+
     private void OnDrawGizmos()
     {
         if (showDriver)

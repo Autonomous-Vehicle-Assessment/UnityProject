@@ -42,7 +42,15 @@ public class AIPath : MonoBehaviour
 
             if (pathNodes[i].activeNode)
             {
-                Gizmos.color = Color.red;
+                if (lineColor == Color.white)
+                {
+                    Gizmos.color = Color.black;
+                }
+                else
+                {
+                    Gizmos.color = Color.white;
+                }
+
             }
             else
             {

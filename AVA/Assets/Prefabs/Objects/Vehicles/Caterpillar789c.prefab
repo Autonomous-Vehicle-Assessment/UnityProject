@@ -92,6 +92,8 @@ GameObject:
   - component: {fileID: 2605766588213993471}
   - component: {fileID: 1852545834328792864}
   - component: {fileID: 2864833974369025333}
+  - component: {fileID: 7845503945925781992}
+  - component: {fileID: 5488272377567817799}
   m_Layer: 9
   m_Name: Caterpillar789c
   m_TagString: Untagged
@@ -162,6 +164,33 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7845503945925781992
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8472397612541068474}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: -1
+  m_Mesh: {fileID: 5901745275195420139, guid: ac7e9d75bca036549a15f50515765e0e, type: 3}
+--- !u!65 &5488272377567817799
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8472397612541068474}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6.365372, y: 8.405308, z: 5.2276654}
+  m_Center: {x: -0.03601098, y: -0.7137089, z: -0.19524789}
 --- !u!1 &9048669465852741496
 GameObject:
   m_ObjectHideFlags: 0
