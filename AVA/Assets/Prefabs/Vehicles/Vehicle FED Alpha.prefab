@@ -442,8 +442,8 @@ Transform:
   - {fileID: 7902782839003552414}
   - {fileID: 1561710777916770977}
   - {fileID: 3957979529392353401}
-  - {fileID: 3414475046954371862}
   - {fileID: 2110588439447748952}
+  - {fileID: 3414475046954371862}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -985,6 +985,7 @@ GameObject:
   - component: {fileID: 6928017460450369677}
   - component: {fileID: 7520566618161586092}
   - component: {fileID: 6188510183670874192}
+  - component: {fileID: 6122424421947722342}
   m_Layer: 0
   m_Name: RosConnector
   m_TagString: Untagged
@@ -1021,7 +1022,7 @@ MonoBehaviour:
   SecondsTimeout: 10
   Serializer: 0
   protocol: 0
-  RosBridgeServerUrl: ws://10.122.12.7:9090
+  RosBridgeServerUrl: ws://10.122.12.2:9090
 --- !u!114 &8792207492144116768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1137,6 +1138,22 @@ MonoBehaviour:
   PublishedTransform: {fileID: 3414475046954371862}
   FrameId: map
   childFrameID: base_link
+--- !u!114 &6122424421947722342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 999418073760609334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 824303ca6aaf7fd46a63810c759f997a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Topic: /path
+  pathMaster: {fileID: 0}
+  FrameId: map
+  activeFeed: 0
 --- !u!1 &1068743491922695456
 GameObject:
   m_ObjectHideFlags: 0
@@ -1737,11 +1754,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2787043272815745253}
   m_LocalRotation: {x: 0.26078075, y: -0, z: -0, w: 0.9653981}
-  m_LocalPosition: {x: 0, y: 3.89, z: -4.82}
+  m_LocalPosition: {x: 0, y: 3.8900003, z: -4.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 900966193508289108}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 30.233, y: 0, z: 0}
 --- !u!20 &1349767537653346542
 Camera:
@@ -3406,7 +3423,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3414475046954371862}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Sensors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3425,7 +3442,7 @@ Transform:
   m_Children:
   - {fileID: 5956514083304237630}
   m_Father: {fileID: 900966193508289108}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6513390063456911246
 GameObject:
