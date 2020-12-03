@@ -175,32 +175,8 @@ public class AIController : MonoBehaviour
         nodeDistance = Vector2.Distance(currentPosition, targetPosition);
         if ( nodeDistance < .5f)
         {
-            if(currentNode == pathNodes.Count - 1)
-            {
-                currentNode = 0;
-                if (currentPath == paths.Count - 1)
-                {
-                    currentPath = 0;
-                }
-                else
-                {
-                    currentPath++;
-
-                    //if (currentPath == 6)
-                    //{
-                    //    currentPath++;
-                    //}
-                }
-            }
-            else
-            {
-                currentNode++;
-                pathNodes[currentNode].activeNode = true;
-                pathNodes[currentNode-1].activeNode = false;
-            }
+            IncrementNode();
         }
-
-        pathNodes[currentNode].activeNode = true;
     }
 
     private void UpdatePath()
@@ -293,23 +269,35 @@ public class AIController : MonoBehaviour
             nodeDistance = Vector2.Distance(currentPosition, targetPosition);
             if (nodeDistance < .5f)
             {
-                if (currentNode == pathNodes.Count - 1)
-                {
-                    currentNode = 0;
-                }
-                else
-                {
-                    currentNode++;
-                    pathNodes[currentNode].activeNode = true;
-                    pathNodes[currentNode - 1].activeNode = false;
-                }
+                IncrementNode();
             }
-
-            pathNodes[currentNode].activeNode = true;
         }
 
 
         wayPoint.transform.position = wayPointPath;
+    }
+
+    private void IncrementNode()
+    {
+        int prevNode = currentNode;
+        int prevPath = currentPath;
+
+        // End of current path
+        if (currentNode == pathNodes.Count - 1)
+        {
+            currentNode = 0;
+
+            // End of paths
+            if (currentPath == paths.Count - 1) currentPath = 0;
+            else currentPath++;
+
+            pathNodes = paths[currentPath].pathNodes;
+        }
+        else currentNode++;
+
+        paths[prevPath].pathNodes[prevNode].activeNode = false;
+
+        pathNodes[currentNode].Activate();
     }
 
     private void OnDrawGizmos()

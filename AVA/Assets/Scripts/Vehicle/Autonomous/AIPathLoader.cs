@@ -132,10 +132,10 @@ public class AIPathLoader : MonoBehaviour
         for (int i = 0; i < stringList.Count; i++)
         {
             string[] temp = stringList[i].Split(';');
-            for (int j = 0; j < temp.Length; j++)
-            {
-                temp[j] = temp[j].Trim();  //removed the blank spaces
-            }
+            //for (int j = 0; j < temp.Length; j++)
+            //{
+            //    temp[j] = temp[j].Trim();  //removed the blank spaces
+            //}
             parsedList.Add(temp);
         }
     }
@@ -328,24 +328,20 @@ public class AIPathLoader : MonoBehaviour
         }
     }
 
-    public void SavePath()
+     public void OpenDialog()
     {
-
-    }
-    public void OpenDialog()
-    {
-        pathRead = EditorUtility.OpenFilePanel(
+        pathRead = EditorUtility.OpenFilePanelWithFilters(
                     "Open file",
-                    "",
-                    "*");
+                    Application.dataPath.Replace("Assets", "Waypoints"),
+                    new string[] { "AVA Path files", "path", "Text files", "txt", "All files", "*" });
     }
 
     public void OpenDialogSave()
     {
-        pathWrite = EditorUtility.OpenFilePanel(
+            pathWrite = EditorUtility.OpenFilePanelWithFilters(
                     "Save as",
-                    "",
-                    "*");
+                    Application.dataPath.Replace("Assets", "Waypoints"),
+                    new string[] { "AVA Path files", "path", "Text files", "txt", "All files", "*" });
     }
 
     public void ClearPath()

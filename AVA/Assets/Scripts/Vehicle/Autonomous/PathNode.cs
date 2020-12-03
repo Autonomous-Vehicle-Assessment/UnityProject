@@ -10,6 +10,11 @@ public class PathNode : MonoBehaviour
     private float deltaHeight;
     public SpeedType speedType;
 
+    [Header("Events")]
+    public Transform eventObject;
+
+
+
     public void SetHeight()
     {
         LayerMask mask = LayerMask.GetMask("Terrain");
@@ -29,8 +34,22 @@ public class PathNode : MonoBehaviour
         targetVelocity = targetVelocity * GenericFunctions.SpeedCoefficient(speedType);
     }
 
-    public void WaypointEvent()
+    public void WayPointEvent()
     {
+        Debug.Log(eventObject.name);
 
+        if (eventObject != null)
+        {
+            Debug.Log("What is this even?");
+            eventObject.gameObject.SetActive(false);
+        }
     }
+
+    public void Activate()
+    {
+        Debug.Log("Activate");
+        activeNode = true;
+        WayPointEvent();
+    }
+
 }
