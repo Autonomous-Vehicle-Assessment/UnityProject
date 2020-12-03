@@ -443,6 +443,7 @@ Transform:
   - {fileID: 1561710777916770977}
   - {fileID: 3957979529392353401}
   - {fileID: 3414475046954371862}
+  - {fileID: 2110588439447748952}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -853,9 +854,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensorLength: 100
   frontSensorPosition: {x: 0, y: 0.86, z: -0.64}
-  sensorAngle: 8
-  angleChange: 3
-  numberOfRays: 2
+  sensorAngle: 10
+  angleChange: 2
+  numberOfRays: 5
   showLidarCollision: 0
   showLidarRays: 0
   colorRays: 0
@@ -864,7 +865,7 @@ MonoBehaviour:
   minDistance: 0.25
   layerMask:
     serializedVersion: 2
-    m_Bits: 63287
+    m_Bits: 29495
 --- !u!114 &5326246333562445458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1051,7 +1052,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Topic: /base_pose
   PublishedTransform: {fileID: 3414475046954371862}
-  FrameId: Unity
+  FrameId: map
 --- !u!114 &6009768043959395401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1059,19 +1060,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 999418073760609334}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a908e83b1e7ce9e428caae2838615cc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Topic: /unityCamera/compressed
-  ImageCamera: {fileID: 0}
+  ImageCamera: {fileID: 1349767537653346542}
   FrameId: Camera
-  resolutionWidth: 672
-  resolutionHeight: 376
+  resolutionWidth: 510
+  resolutionHeight: 348
   qualityLevel: 50
   activeFeed: 0
-  frequency: 1
+  frequency: 3
 --- !u!114 &5671486251963162865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1134,7 +1135,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Topic: /odom
   PublishedTransform: {fileID: 3414475046954371862}
-  FrameId: base_link
+  FrameId: map
+  childFrameID: base_link
 --- !u!1 &1068743491922695456
 GameObject:
   m_ObjectHideFlags: 0
@@ -1709,6 +1711,89 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2787043272815745253
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2110588439447748952}
+  - component: {fileID: 1349767537653346542}
+  - component: {fileID: 6639416194917410183}
+  m_Layer: 11
+  m_Name: FrontFeed
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2110588439447748952
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2787043272815745253}
+  m_LocalRotation: {x: 0.26078075, y: -0, z: -0, w: 0.9653981}
+  m_LocalPosition: {x: 0, y: 3.89, z: -4.82}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 900966193508289108}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 30.233, y: 0, z: 0}
+--- !u!20 &1349767537653346542
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2787043272815745253}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 65.8
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!81 &6639416194917410183
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2787043272815745253}
+  m_Enabled: 0
 --- !u!1 &2888763051167661015
 GameObject:
   m_ObjectHideFlags: 0

@@ -6908,26 +6908,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BaseLink
       objectReference: {fileID: 0}
-    - target: {fileID: 7222123204553881066, guid: e741e23d882cb8a4488ef50ec8c7bf18,
-        type: 3}
-      propertyPath: showLidarCollision
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7222123204553881066, guid: e741e23d882cb8a4488ef50ec8c7bf18,
-        type: 3}
-      propertyPath: angleChange
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7222123204553881066, guid: e741e23d882cb8a4488ef50ec8c7bf18,
-        type: 3}
-      propertyPath: numberOfRays
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7222123204553881066, guid: e741e23d882cb8a4488ef50ec8c7bf18,
-        type: 3}
-      propertyPath: sensorAngle
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 7569547810720874579, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: m_Enabled
