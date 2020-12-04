@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace UnityStandardAssets.Vehicles.Car
-{
+
     public class VehicleStats : MonoBehaviour
     {
         private GameObject InterfaceObject;
@@ -27,13 +26,16 @@ namespace UnityStandardAssets.Vehicles.Car
             InterfaceObject = GameObject.Find("UI");
             Engine = GetComponent<EngineModel>();
             VehicleRigidBody = GetComponent<Rigidbody>();
-            Speedometer = InterfaceObject.GetComponent<SpeedometerScript>();
-            GraphObject = InterfaceObject.transform.Find("Canvas").gameObject.transform.Find("WindowGraph").GetComponent<WindowGraph>();
-            graph = InterfaceObject.GetComponent<Graph>();
-            GearField = InterfaceObject.transform.Find("Canvas").gameObject.transform.Find("Gear").GetComponent<Text>();
 
+            if (InterfaceObject != null)
+            {
+                Speedometer = InterfaceObject.GetComponent<SpeedometerScript>();
+                GraphObject = InterfaceObject.transform.Find("Canvas").gameObject.transform.Find("WindowGraph").GetComponent<WindowGraph>();
+                graph = InterfaceObject.GetComponent<Graph>();
+                GearField = InterfaceObject.transform.Find("Canvas").gameObject.transform.Find("Gear").GetComponent<Text>();
+            }
+            
             (s_SpeedType, m_SpeedCoefficient) = GenericFunctions.SpeedTypeConverter(m_SpeedType);
-
         }
 
         // Update is called once per frame
@@ -55,13 +57,14 @@ namespace UnityStandardAssets.Vehicles.Car
                     break;
             }
 
-            Engine.m_Speed = VehicleRigidBody.velocity.magnitude * m_SpeedCoefficient;
+            Engine.speed = VehicleRigidBody.velocity.magnitude * m_SpeedCoefficient;
 
-            graph.UpdateGraph(Engine.m_Speed,Engine.m_EngineRPM,Engine.m_CurrentGear + 1);
-            Speedometer.UpdateDisplay(Engine.m_Speed, Engine.m_EngineRPM, s_SpeedType);
+            if (InterfaceObject != null)
+            {
+                graph.UpdateGraph(Engine.speed, Engine.engineRPM, Engine.currentGear + 1);
+                Speedometer.UpdateDisplay(Engine.speed, Engine.engineRPM, s_SpeedType);
 
-            GearField.text = string.Format("{0}{1}", Engine.m_CurrentGear+1,GenericFunctions.ToOrdinal(Engine.m_CurrentGear + 1));            
+                GearField.text = string.Format("{0}{1}", Engine.currentGear + 1, GenericFunctions.ToOrdinal(Engine.currentGear + 1));
+            }
         }
     }
-
-}

@@ -107,7 +107,7 @@ namespace UnityStandardAssets.Vehicles.Car
             if (m_StartedSound)
             {
                 // The pitch is interpolated between the min and max values, according to the car's revs.
-                float pitch = ULerp(lowPitchMin, lowPitchMax, Mathf.InverseLerp(Engine.m_MinRpm, Engine.m_MaxRpm, Engine.m_EngineRPM));
+                float pitch = ULerp(lowPitchMin, lowPitchMax, Mathf.InverseLerp(Engine.minRpm, Engine.maxRpm, Engine.engineRPM));
 
                 // clamp to minimum pitch (note, not clamped to max for high revs while burning out)
                 pitch = Mathf.Min(lowPitchMax, pitch);
@@ -134,7 +134,7 @@ namespace UnityStandardAssets.Vehicles.Car
                     float decFade = 1 - accFade;
 
                     // get the high fade value based on the cars revs
-                    float highFade = Mathf.InverseLerp(0.2f, 0.8f, Mathf.InverseLerp(Engine.m_MinRpm, Engine.m_MaxRpm, Engine.m_EngineRPM));
+                    float highFade = Mathf.InverseLerp(0.2f, 0.8f, Mathf.InverseLerp(Engine.minRpm, Engine.maxRpm, Engine.engineRPM));
                     float lowFade = 1 - highFade;
 
                     // adjust the values to be more realistic

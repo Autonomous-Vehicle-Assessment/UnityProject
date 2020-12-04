@@ -27,8 +27,8 @@ public class EngineEditor : Editor
 
         if (e_EngineStats)
         {
-            Engine.m_EngineRPM = EditorGUILayout.Slider("Engine RPM", Engine.m_EngineRPM, Engine.m_MinRpm, Engine.m_MaxRpm);
-            Engine.m_EngineTorque = EditorGUILayout.Slider("Engine Torque", Engine.m_EngineTorque, 0f, (float)Engine.e_TorqueCurveValues.Max());
+            Engine.engineRPM = EditorGUILayout.Slider("Engine RPM", Engine.engineRPM, Engine.minRpm, Engine.maxRpm);
+            Engine.engineTorque = EditorGUILayout.Slider("Engine Torque", Engine.engineTorque, 0f, (float)Engine.torqueCurveValues.Max());
         }
 
 
@@ -39,44 +39,44 @@ public class EngineEditor : Editor
 
         if (e_EngineFoldout)
         {
-            Engine.m_MaxTorqueRpm = EditorGUILayout.IntSlider(new GUIContent("Max Torque RPM", "Engine speed at maximum torque - rounds per minute [rpm]"), Engine.m_MaxTorqueRpm, 0, 10000);
-            Engine.m_MaxPowerRpm = EditorGUILayout.IntSlider(new GUIContent("Max Power RPM", "Engine speed at maximum power - rounds per minute [rpm]"), Engine.m_MaxPowerRpm, 0, 10000);
+            Engine.maxTorqueRpm = EditorGUILayout.IntSlider(new GUIContent("Max Torque RPM", "Engine speed at maximum torque - rounds per minute [rpm]"), Engine.maxTorqueRpm, 0, 10000);
+            Engine.maxPowerRpm = EditorGUILayout.IntSlider(new GUIContent("Max Power RPM", "Engine speed at maximum power - rounds per minute [rpm]"), Engine.maxPowerRpm, 0, 10000);
 
             GUILayout.Space(10);
 
-            Engine.m_MinRpm = EditorGUILayout.IntSlider(new GUIContent("Min RPM", "Minimum engine speed"), Engine.m_MinRpm, 0, 3000);
-            Engine.m_MaxRpm = EditorGUILayout.IntSlider(new GUIContent("Max RPM", "Maximum engine speed"), Engine.m_MaxRpm, Engine.m_MinRpm, 10000);
+            Engine.minRpm = EditorGUILayout.IntSlider(new GUIContent("Min RPM", "Minimum engine speed"), Engine.minRpm, 0, 3000);
+            Engine.maxRpm = EditorGUILayout.IntSlider(new GUIContent("Max RPM", "Maximum engine speed"), Engine.maxRpm, Engine.minRpm, 10000);
 
             GUILayout.Space(20);
 
             // ----- Motor Curve ----- //
-            Engine.m_MotorCurve = EditorGUILayout.CurveField("Motor Curve", Engine.m_MotorCurve, GUILayout.Height(100));
-            int len = Engine.m_MotorCurve.length;
+            Engine.motorCurve = EditorGUILayout.CurveField("Motor Curve", Engine.motorCurve, GUILayout.Height(100));
+            int len = Engine.motorCurve.length;
 
             // Clear Curve
             for (int i = 0; i < len; i++)
             {
-                Engine.m_MotorCurve.RemoveKey(len - i - 1);
+                Engine.motorCurve.RemoveKey(len - i - 1);
             }
 
             // Plot Curve
-            Keyframe[] ks = new Keyframe[Engine.e_SpeedCurveValues.Count];
-            for (int i = 0; i < Engine.e_SpeedCurveValues.Count; i++)
+            Keyframe[] ks = new Keyframe[Engine.speedCurveValues.Count];
+            for (int i = 0; i < Engine.speedCurveValues.Count; i++)
             {
-                ks[i] = new Keyframe(Engine.e_SpeedCurveValues[i], Engine.e_TorqueCurveValues[i]);
+                ks[i] = new Keyframe(Engine.speedCurveValues[i], Engine.torqueCurveValues[i]);
             }
 
-            Engine.m_MotorCurve.keys = ks;
+            Engine.motorCurve.keys = ks;
 
-            for (int i = 1; i < Engine.e_SpeedCurveValues.Count - 1; i++)
+            for (int i = 1; i < Engine.speedCurveValues.Count - 1; i++)
             {
-                if (Engine.e_TorqueCurveValues[i] != Engine.e_TorqueCurveValues[i + 1] && Engine.e_TorqueCurveValues[i] != Engine.e_TorqueCurveValues[i - 1])
+                if (Engine.torqueCurveValues[i] != Engine.torqueCurveValues[i + 1] && Engine.torqueCurveValues[i] != Engine.torqueCurveValues[i - 1])
                 {
-                    Engine.m_MotorCurve.SmoothTangents(i, 1);
+                    Engine.motorCurve.SmoothTangents(i, 1);
                 }
             }
-            Engine.m_MotorCurve.SmoothTangents(0, 1);
-            Engine.m_MotorCurve.SmoothTangents(Engine.e_SpeedCurveValues.Count - 1, 1);
+            Engine.motorCurve.SmoothTangents(0, 1);
+            Engine.motorCurve.SmoothTangents(Engine.speedCurveValues.Count - 1, 1);
 
             GUILayout.Space(10);
 
@@ -85,27 +85,27 @@ public class EngineEditor : Editor
 
             if (e_MotorCurveFoldout)
             {
-                Engine.e_CurvePoints = EditorGUILayout.DelayedIntField("Points", Engine.e_CurvePoints);
-                Engine.e_CurvePoints = Mathf.Max(0, Engine.e_CurvePoints);
+                Engine.curvePoints = EditorGUILayout.DelayedIntField("Points", Engine.curvePoints);
+                Engine.curvePoints = Mathf.Max(0, Engine.curvePoints);
 
                 // Increase array size
-                if (Engine.e_CurvePoints > Engine.e_SpeedCurveValues.Count)
+                if (Engine.curvePoints > Engine.speedCurveValues.Count)
                 {
-                    len = Engine.e_SpeedCurveValues.Count;
-                    for (int k = 0; k < Engine.e_CurvePoints - len; k++)
+                    len = Engine.speedCurveValues.Count;
+                    for (int k = 0; k < Engine.curvePoints - len; k++)
                     {
-                        Engine.e_SpeedCurveValues.Add(0);
-                        Engine.e_TorqueCurveValues.Add(0);
+                        Engine.speedCurveValues.Add(0);
+                        Engine.torqueCurveValues.Add(0);
                     }
                 }
 
                 // Reduce array size
-                if (Engine.e_CurvePoints < Engine.e_SpeedCurveValues.Count)
+                if (Engine.curvePoints < Engine.speedCurveValues.Count)
                 {
-                    for (int k = Engine.e_SpeedCurveValues.Count - 1; k + 1 > Engine.e_CurvePoints; k--)
+                    for (int k = Engine.speedCurveValues.Count - 1; k + 1 > Engine.curvePoints; k--)
                     {
-                        Engine.e_SpeedCurveValues.RemoveAt(k);
-                        Engine.e_TorqueCurveValues.RemoveAt(k);
+                        Engine.speedCurveValues.RemoveAt(k);
+                        Engine.torqueCurveValues.RemoveAt(k);
                     }
                 }
 
@@ -117,11 +117,11 @@ public class EngineEditor : Editor
                 EditorGUILayout.EndHorizontal();
 
                 // Input fields
-                for (int i = 0; i < Engine.e_CurvePoints; i++)
+                for (int i = 0; i < Engine.curvePoints; i++)
                 {
                     EditorGUILayout.BeginHorizontal();
-                    Engine.e_SpeedCurveValues[i] = EditorGUILayout.IntField(Engine.e_SpeedCurveValues[i]);
-                    Engine.e_TorqueCurveValues[i] = EditorGUILayout.IntField(Engine.e_TorqueCurveValues[i]);
+                    Engine.speedCurveValues[i] = EditorGUILayout.IntField(Engine.speedCurveValues[i]);
+                    Engine.torqueCurveValues[i] = EditorGUILayout.IntField(Engine.torqueCurveValues[i]);
                     EditorGUILayout.EndHorizontal();
                 }
 
@@ -141,7 +141,7 @@ public class EngineEditor : Editor
             if (e_GearRatioFoldout)
             {
                 // Number of gears
-                Engine.m_NumberOfGears = EditorGUILayout.IntSlider("Number of Gears", Engine.m_NumberOfGears, 1, 10);
+                Engine.numberOfGears = EditorGUILayout.IntSlider("Number of Gears", Engine.numberOfGears, 1, 10);
 
                 GUILayout.Space(10);
 
@@ -152,12 +152,12 @@ public class EngineEditor : Editor
                 EditorGUILayout.LabelField("Efficiency", GUILayout.Width(150));
                 EditorGUILayout.EndHorizontal();
 
-                for (int i = 0; i < Engine.m_NumberOfGears; i++)
+                for (int i = 0; i < Engine.numberOfGears; i++)
                 {
                     EditorGUILayout.BeginHorizontal();
                     EditorGUILayout.LabelField(string.Format("{0}{1}", i + 1, GenericFunctions.ToOrdinal(i + 1)),GUILayout.Width(120));
-                    Engine.m_GearRatio[i] = EditorGUILayout.Slider(Engine.m_GearRatio[i], 0, 10,GUILayout.Width(150));
-                    Engine.m_GearEff[i] = EditorGUILayout.Slider(Engine.m_GearEff[i], 0, 1, GUILayout.Width(150));
+                    Engine.gearRatio[i] = EditorGUILayout.Slider(Engine.gearRatio[i], 0, 10,GUILayout.Width(150));
+                    Engine.gearEff[i] = EditorGUILayout.Slider(Engine.gearEff[i], 0, 1, GUILayout.Width(150));
                     EditorGUILayout.EndHorizontal();
                 }
 
@@ -165,8 +165,8 @@ public class EngineEditor : Editor
                 GUILayout.Space(5);
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Reverse", GUILayout.Width(120));
-                Engine.m_ReverseGearRatio = EditorGUILayout.Slider(Engine.m_ReverseGearRatio, -5, 0, GUILayout.Width(150));
-                Engine.m_ReverseGearEff = EditorGUILayout.Slider(Engine.m_ReverseGearEff, 0, 1, GUILayout.Width(150));
+                Engine.reverseGearRatio = EditorGUILayout.Slider(Engine.reverseGearRatio, -5, 0, GUILayout.Width(150));
+                Engine.reverseGearEff = EditorGUILayout.Slider(Engine.reverseGearEff, 0, 1, GUILayout.Width(150));
                 EditorGUILayout.EndHorizontal();
 
                 GUILayout.Space(10);
@@ -174,22 +174,22 @@ public class EngineEditor : Editor
                 // Final drive ratio (i_0)
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Final drive (i\u2080)", GUILayout.Width(120));
-                Engine.m_FinalDriveRatio = EditorGUILayout.Slider(Engine.m_FinalDriveRatio, 0, 10, GUILayout.Width(150));
-                Engine.m_FinalDriveEff = EditorGUILayout.Slider(Engine.m_FinalDriveEff, 0, 1, GUILayout.Width(150));
+                Engine.finalDriveRatio = EditorGUILayout.Slider(Engine.finalDriveRatio, 0, 10, GUILayout.Width(150));
+                Engine.finalDriveEff = EditorGUILayout.Slider(Engine.finalDriveEff, 0, 1, GUILayout.Width(150));
                 EditorGUILayout.EndHorizontal();
 
                 GUILayout.Space(10);
 
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Transfer Case (Low)", GUILayout.Width(120));
-                Engine.m_TransferCaseRatio[0] = EditorGUILayout.Slider(Engine.m_TransferCaseRatio[0], 0, 10);
-                Engine.m_TransferCaseEff[0] = EditorGUILayout.Slider(Engine.m_TransferCaseEff[0], 0, 1, GUILayout.Width(150));
+                Engine.transferCaseRatio[0] = EditorGUILayout.Slider(Engine.transferCaseRatio[0], 0, 10);
+                Engine.transferCaseEff[0] = EditorGUILayout.Slider(Engine.transferCaseEff[0], 0, 1, GUILayout.Width(150));
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Transfer Case (High)", GUILayout.Width(120));
-                Engine.m_TransferCaseRatio[1] = EditorGUILayout.Slider(Engine.m_TransferCaseRatio[1], 0, 10);
-                Engine.m_TransferCaseEff[1] = EditorGUILayout.Slider(Engine.m_TransferCaseEff[1], 0, 1, GUILayout.Width(150));
+                Engine.transferCaseRatio[1] = EditorGUILayout.Slider(Engine.transferCaseRatio[1], 0, 10);
+                Engine.transferCaseEff[1] = EditorGUILayout.Slider(Engine.transferCaseEff[1], 0, 1, GUILayout.Width(150));
                 EditorGUILayout.EndHorizontal();
 
                 GUILayout.Space(20);
@@ -205,28 +205,28 @@ public class EngineEditor : Editor
         e_WheelsFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(e_WheelsFoldout, "Wheels");
         if (e_WheelsFoldout)
         {
-            Engine.NumberofWheels = EditorGUILayout.DelayedIntField("Number of wheels", Engine.NumberofWheels);
-            Engine.NumberofWheels = Mathf.Abs(Engine.NumberofWheels);
+            Engine.numberofWheels = EditorGUILayout.DelayedIntField("Number of wheels", Engine.numberofWheels);
+            Engine.numberofWheels = Mathf.Abs(Engine.numberofWheels);
 
             GUILayout.Space(10);
-            if (Engine.m_Wheel == null)
+            if (Engine.wheels == null)
             {
-                Engine.m_Wheel = new List<StandardWheel>();
+                Engine.wheels = new List<StandardWheel>();
             }
-            if (Engine.NumberofWheels > Engine.m_Wheel.Count)
+            if (Engine.numberofWheels > Engine.wheels.Count)
             {
-                int ListSize = Engine.m_Wheel.Count;
-                for (int i = 0; i < Engine.NumberofWheels - ListSize; i++)
+                int ListSize = Engine.wheels.Count;
+                for (int i = 0; i < Engine.numberofWheels - ListSize; i++)
                 {
-                    Engine.m_Wheel.Add(new StandardWheel());
+                    Engine.wheels.Add(new StandardWheel());
                 }
             }
-            if(Engine.NumberofWheels < Engine.m_Wheel.Count)
+            if(Engine.numberofWheels < Engine.wheels.Count)
             {
-                int ListSize = Engine.m_Wheel.Count;
-                for (int i = 0; i < ListSize - Engine.NumberofWheels; i++)
+                int ListSize = Engine.wheels.Count;
+                for (int i = 0; i < ListSize - Engine.numberofWheels; i++)
                 {
-                    Engine.m_Wheel.RemoveAt(Engine.m_Wheel.Count - i - 1);
+                    Engine.wheels.RemoveAt(Engine.wheels.Count - i - 1);
                 }
             }
 
@@ -242,25 +242,25 @@ public class EngineEditor : Editor
             EditorGUILayout.LabelField("Side", EditorStyles.boldLabel, GUILayout.Width(50));
             EditorGUILayout.EndHorizontal();
 
-            for (int i = 0; i < Engine.NumberofWheels; i++)
+            for (int i = 0; i < Engine.numberofWheels; i++)
             {
                 EditorGUILayout.BeginHorizontal();
-                Engine.m_Wheel[i].mesh = (GameObject)EditorGUILayout.ObjectField(Engine.m_Wheel[i].mesh, typeof(GameObject), true, GUILayout.Width(80));
-                Engine.m_Wheel[i].m_collider = (WheelCollider)EditorGUILayout.ObjectField(Engine.m_Wheel[i].m_collider, typeof(WheelCollider), true, GUILayout.Width(80));
-                Engine.m_Wheel[i].steering = EditorGUILayout.Toggle(Engine.m_Wheel[i].steering, GUILayout.Width(50));
-                Engine.m_Wheel[i].drive = EditorGUILayout.Toggle(Engine.m_Wheel[i].drive, GUILayout.Width(50));
-                Engine.m_Wheel[i].serviceBrake = EditorGUILayout.Toggle(Engine.m_Wheel[i].serviceBrake, GUILayout.Width(50));
-                Engine.m_Wheel[i].handBrake = EditorGUILayout.Toggle(Engine.m_Wheel[i].handBrake, GUILayout.Width(50));
-                if (Engine.m_Wheel[i].steering)
+                Engine.wheels[i].mesh = (GameObject)EditorGUILayout.ObjectField(Engine.wheels[i].mesh, typeof(GameObject), true, GUILayout.Width(80));
+                Engine.wheels[i].collider = (WheelCollider)EditorGUILayout.ObjectField(Engine.wheels[i].collider, typeof(WheelCollider), true, GUILayout.Width(80));
+                Engine.wheels[i].steering = EditorGUILayout.Toggle(Engine.wheels[i].steering, GUILayout.Width(50));
+                Engine.wheels[i].drive = EditorGUILayout.Toggle(Engine.wheels[i].drive, GUILayout.Width(50));
+                Engine.wheels[i].serviceBrake = EditorGUILayout.Toggle(Engine.wheels[i].serviceBrake, GUILayout.Width(50));
+                Engine.wheels[i].handBrake = EditorGUILayout.Toggle(Engine.wheels[i].handBrake, GUILayout.Width(50));
+                if (Engine.wheels[i].steering)
                 {
-                    Engine.m_Wheel[i].wheelSide = (WheelSide)EditorGUILayout.EnumPopup(Engine.m_Wheel[i].wheelSide, GUILayout.Width(50));
+                    Engine.wheels[i].wheelSide = (WheelSide)EditorGUILayout.EnumPopup(Engine.wheels[i].wheelSide, GUILayout.Width(50));
                 }
                 EditorGUILayout.EndHorizontal();
             }
             GUILayout.Space(20);
 
-            Engine.m_MaximumInnerSteerAngle = EditorGUILayout.IntSlider("Maximum inside turn angle", (int)Engine.m_MaximumInnerSteerAngle, 0, 90);
-            Engine.m_MaximumOuterSteerAngle = EditorGUILayout.IntSlider("Maximum outside turn angle", (int)Engine.m_MaximumOuterSteerAngle, 0, 90);
+            Engine.maximumInnerSteerAngle = EditorGUILayout.IntSlider("Maximum inside turn angle", (int)Engine.maximumInnerSteerAngle, 0, 90);
+            Engine.maximumOuterSteerAngle = EditorGUILayout.IntSlider("Maximum outside turn angle", (int)Engine.maximumOuterSteerAngle, 0, 90);
 
             GUILayout.Space(20);
         }
@@ -268,9 +268,9 @@ public class EngineEditor : Editor
 
         // ----- Anti Sway Bar ----- //
         Engine.swayBarActive = EditorGUILayout.Toggle("Anti-Sway Bar: ", Engine.swayBarActive);
-        Engine.AntiRoll = EditorGUILayout.FloatField("Anti Roll Value: ", Engine.AntiRoll);
+        Engine.antiRoll = EditorGUILayout.FloatField("Anti Roll Value: ", Engine.antiRoll);
 
-        Engine.m_CenterofMass = (GameObject)EditorGUILayout.ObjectField("Center of Mass: ", Engine.m_CenterofMass, typeof(GameObject), true);
+        Engine.centerofMass = (GameObject)EditorGUILayout.ObjectField("Center of Mass: ", Engine.centerofMass, typeof(GameObject), true);
 
 
         if (!UnityEditor.EditorApplication.isPlaying)

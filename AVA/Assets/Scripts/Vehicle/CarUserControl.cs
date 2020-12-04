@@ -46,7 +46,7 @@ namespace UnityStandardAssets.Vehicles.Car
                 }
             }
             
-            Engine.m_CurrentTransferCase = m_CurrentTransfercase;
+            Engine.currentTransferCase = m_CurrentTransfercase;
 
             Engine.UpdateState();
 
@@ -56,26 +56,26 @@ namespace UnityStandardAssets.Vehicles.Car
             }
 
             string s_Time = Time.time.ToString();
-            string s_Velocity = Engine.m_Speed.ToString();
-            string s_EngineRPM = Engine.m_EngineRPM.ToString();
-            string s_EngineTorque = Engine.m_EngineTorque.ToString();
+            string s_Velocity = Engine.speed.ToString();
+            string s_EngineRPM = Engine.engineRPM.ToString();
+            string s_EngineTorque = Engine.engineTorque.ToString();
 
             float m_TransmissionTorque = 0;
             float m_WheelForce = 0;
 
-            for (int i = 0; i < Engine.m_Wheel.Count; i++)
+            for (int i = 0; i < Engine.wheels.Count; i++)
             {
-                m_TransmissionTorque += Engine.m_Wheel[i].m_collider.motorTorque;
-                m_WheelForce += Engine.m_Wheel[i].m_collider.motorTorque * Engine.m_Wheel[i].m_collider.radius;
+                m_TransmissionTorque += Engine.wheels[i].collider.motorTorque;
+                m_WheelForce += Engine.wheels[i].collider.motorTorque * Engine.wheels[i].collider.radius;
             }
 
             string s_WheelForce = m_WheelForce.ToString();
             string s_TransmissionTorque = m_TransmissionTorque.ToString();
 
-            string s_CurrentGear = (Engine.m_CurrentGear + 1).ToString();
+            string s_CurrentGear = (Engine.currentGear + 1).ToString();
 
             // Log data
-            dataLogger.WriteToFile(s_Time + ";" + s_Velocity + ";" + s_WheelForce + ";" + s_TransmissionTorque + ";" + s_CurrentGear + ";" + s_EngineRPM + ";" + s_EngineTorque + "\n");
+            if(dataLogger.isActiveAndEnabled) dataLogger.WriteToFile(s_Time + ";" + s_Velocity + ";" + s_WheelForce + ";" + s_TransmissionTorque + ";" + s_CurrentGear + ";" + s_EngineRPM + ";" + s_EngineTorque + "\n");
 
 
             // Draw line at wheels
@@ -86,7 +86,7 @@ namespace UnityStandardAssets.Vehicles.Car
                 points = new List<Vector3[]>();
                 for (int i = 0; i < 4; i++)
                 {
-                    lineRenderers[i] = Engine.m_Wheel[i].m_collider.gameObject.AddComponent<LineRenderer>();
+                    lineRenderers[i] = Engine.wheels[i].collider.gameObject.AddComponent<LineRenderer>();
                     lineRenderers[i].material = new Material(Shader.Find("Sprites/Default"));
                     lineRenderers[i].material.color = ColorArray[i];
                     lineRenderers[i].widthMultiplier = 0.02f;
@@ -95,7 +95,7 @@ namespace UnityStandardAssets.Vehicles.Car
                     points.Add(new Vector3[(int)(RenderTime / Time.fixedDeltaTime)]);
                     for (int k = 0; k < points[i].Length; k++)
                     {
-                        points[i][k] = Engine.m_Wheel[i].mesh.transform.position;
+                        points[i][k] = Engine.wheels[i].mesh.transform.position;
                     }
                     lineRenderers[i].SetPositions(points[i]);
                 }
@@ -107,7 +107,7 @@ namespace UnityStandardAssets.Vehicles.Car
                 {
                     points[i][k] = points[i][k + 1];
                 }
-                points[i][points[i].Length - 1] = Engine.m_Wheel[i].mesh.transform.position;
+                points[i][points[i].Length - 1] = Engine.wheels[i].mesh.transform.position;
                 lineRenderers[i].SetPositions(points[i]);
             }
 

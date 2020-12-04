@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - CameraFeed
+  - UIMaster
+  - UICameraFeed
+  - Vehicle
   layers:
   - Default
   - TransparentFX
@@ -17,10 +21,10 @@ TagManager:
   - Objects
   - Terrain
   - Vehicle
-  - Base Terrain
-  - 
-  - 
-  - 
+  - WrapTerrain
+  - Terrain Polygons
+  - Trees
+  - Grass
   - 
   - 
   - 
