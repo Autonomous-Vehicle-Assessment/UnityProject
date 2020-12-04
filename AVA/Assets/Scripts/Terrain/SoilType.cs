@@ -5,6 +5,9 @@
 /// </summary>
 public enum TerrainType
 {
+    KRCFineGrain,
+    KRCFineGrainWet,
+    KRCCoarsePit,
     SandyBrendan,
     YoloLoamBrendan,
     Custom,
@@ -26,13 +29,20 @@ public class SoilType
     //private float k_o;      // Unloading/Reloading Terrain Parameter [kN/m^3]
     //private float A_u;      // Unloading/Reloading Terrain Parameter [kN/m^4]
 
-    private float k_1;      //[]
-    private float k_2;      //[]
+    private float kc;      //[kN/(m^n+1)]
+    private float kphi;    //[kN/(m^n+2)]
+    private float k1;      //[]
+    private float k2;      //[]
     private float n;        //[]
+    private float ko;      //[kN/m^3]
+    private float Au;       //[kN/m^4]
     private float c;        //Cohesion [Pa]
+    private float c_rub;    //Cohesion [Pa]
     private float phi;      //Angle of Shear Resistance [rad]
+    private float phi_rub;  //Angle of Shear Resistance [rad]
     private float Kx;       //[m]
     private float Ky;       //[m]
+    private float K_avgRub; //[m]
     private float gamma_s;  //Density [kg/m^3]
     private const float DeltaT_desired = Mathf.Deg2Rad * 10f;//0.01f; //[rad]
     private const float delta = 0.1f;
@@ -48,10 +58,55 @@ public class SoilType
         terrainType = _terrainType;
         switch (_terrainType)
         {
+            case TerrainType.KRCFineGrain:
+                terrainName = _terrainType.ToString();
+                n = 1.491f;
+                kc = -6355.11018411948f;
+                kphi = 154544.800357557f;
+                ko = 93970.3170744924f;
+                Au = 3746425.05128522f;
+                c = 1.05006281f;
+                phi = 37.4078f * Mathf.Deg2Rad; // deg to rad
+                Kx = 24.1554f / 1000f; // mm to m
+                Ky = 24.1554f / 1000f; // mm to m
+                c_rub = 0;
+                phi_rub = 28.5651f * Mathf.Deg2Rad; // deg to rad
+                K_avgRub = 5.97069333333333f / 1000f; // mm to m
+                break;
+            case TerrainType.KRCCoarsePit:
+                terrainName = _terrainType.ToString();
+                n = 0.4567f;
+                kc = 32.4754881971102f;
+                kphi = 931.801934559231f;
+                ko = 120421.522732809f;
+                Au = 2309750.44379254f;
+                c = 1.56164955f;
+                phi = 30.3543f * Mathf.Deg2Rad; // deg to rad
+                Kx = 18.6038066666667f / 1000f; // mm to m
+                Ky = 18.6038066666667f / 1000f; // mm to m
+                c_rub = 0.31784567f;
+                phi_rub = 26.3917f * Mathf.Deg2Rad; // deg to rad
+                K_avgRub = 8.87984f / 1000f; // mm to m
+                break;
+            case TerrainType.KRCFineGrainWet:
+                terrainName = _terrainType.ToString();
+                n = 3.568f;
+                kc = -73082.5228717309f;
+                kphi = 1714497.2928229f;
+                ko = -89437.3757251451f;
+                Au = 1954322.01888026f;
+                c = 3.05642051f;
+                phi = 37.3431f * Mathf.Deg2Rad; // deg to rad
+                Kx = 27.5336f / 1000f; // mm to m
+                Ky = 27.5336f / 1000f; // mm to m
+                c_rub = 0.46401331f;
+                phi_rub = 28.6895f * Mathf.Deg2Rad; // deg to rad
+                K_avgRub = 6.53457333333333f / 1000f; // mm to m
+                break;
             case TerrainType.SandyBrendan:
                 terrainName = _terrainType.ToString();
-                k_1 = 2f;
-                k_2 = 17659.75f;
+                k1 = 2f;
+                k2 = 17659.75f;
                 n = 0.77f;
                 c = 130f;
                 phi = 31.1f * Mathf.Deg2Rad;
@@ -61,8 +116,8 @@ public class SoilType
                 break;
             case TerrainType.YoloLoamBrendan:
                 terrainName = _terrainType.ToString();
-                k_1 = 3.25f;
-                k_2 = 4600f;
+                k1 = 3.25f;
+                k2 = 4600f;
                 n = 0.99f;
                 c = 22670f;
                 phi = 22f * Mathf.Deg2Rad;
@@ -83,12 +138,14 @@ public class SoilType
     /// <param name="_phi">Angle of shearing resistance [rad]</param>
     /// <param name="_KxKy">Shear deformation parameter [m]</param>
     /// <param name="_gamma_s">Density [kg/m^3]</param>
-    public SoilType(string _terrainType, float _k1, float _k2, float _n, float _c, float _phi, float _KxKy, float _gamma_s)
+    public SoilType(string _terrainType, float _kc, float _kphi,float _k1, float _k2, float _n, float _c, float _phi, float _KxKy, float _gamma_s)
     {
         terrainType = TerrainType.Custom;
         terrainName = _terrainType;
-        k_1 = _k1;
-        k_2 = _k2;
+        kc = _kc;
+        kphi = _kphi;
+        k1 = _k1;
+        k2 = _k2;
         n = _n;
         c = _c;
         phi = _phi * Mathf.Deg2Rad;
@@ -369,7 +426,7 @@ public class SoilType
     /// <param name="pressurePlateMainDimension"></param>
     /// <param name="slipRatio"></param>
     /// <returns>theta1 [rad]</returns>
-    public float EntryAngle(float tyreWidth, float tyreRadius, float pressurePlateMainDimension, float slipRatio)
+    private float EntryAngle(float tyreWidth, float tyreRadius, float pressurePlateMainDimension, float slipRatio)
     {
         // Insert fminsearch here, currently fixed.
         //return Mathf.PI / 6;
@@ -383,7 +440,7 @@ public class SoilType
     /// Fixed Exit angle based on Brendan Juin-Yih Chan 2008 Page 82
     /// </summary>
     /// <returns>theta2 [rad]</returns>
-    public float ExitAngle()
+    private float ExitAngle()
     {
         // Fixed according to Brendan
         return -5f * Mathf.Deg2Rad;
@@ -397,7 +454,7 @@ public class SoilType
     /// <param name="pressurePlateMainDimension"></param>
     /// <param name="slipRatio"></param>
     /// <returns>j_x [m]</returns>
-    public float ShearDisplacement(float angle, float tyreWidth, float tyreRadius, float pressurePlateMainDimension, float slipRatio)
+    private float ShearDisplacement(float angle, float tyreWidth, float tyreRadius, float pressurePlateMainDimension, float slipRatio)
     {
         float entryAngle = EntryAngle(tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
         return tyreRadius * ((entryAngle - angle) - (1f - slipRatio) * (Mathf.Sin(entryAngle) - Mathf.Sin(angle)));
@@ -407,7 +464,7 @@ public class SoilType
     /// </summary>
     /// <param name="normalPressure">Applied normal pressure at current point.</param>
     /// <returns>s_max [N/m^2] or [Pa]</returns>
-    public float MaxShear(float normalPressure)
+    private float MaxShear(float normalPressure)
     {
         return c + normalPressure * Mathf.Tan(phi);
     }
@@ -421,7 +478,7 @@ public class SoilType
     /// <param name="pressurePlateMainDimension"></param>
     /// <param name="slipRatio"></param>
     /// <returns>S [Pa] or [N/m^2]</returns>
-    public float ShearStress(float angle, float normalPressure, float tyreWidth, float tyreRadius, float pressurePlateMainDimension, float slipRatio)
+    private float ShearStress(float angle, float normalPressure, float tyreWidth, float tyreRadius, float pressurePlateMainDimension, float slipRatio)
     {
         float shearDisplacement = ShearDisplacement(angle, tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
         Debug.Log($"Shear Displacement at {angle}[rad] = {shearDisplacement}[m]");
@@ -433,7 +490,7 @@ public class SoilType
     /// </summary>
     /// <param name="slipRatio"></param>
     /// <returns>thetaN [rad]</returns>
-    public float MaxRadialStressAngle(float slipRatio)
+    private float MaxRadialStressAngle(float slipRatio)
     {
         float k = Mathf.Tan(Mathf.PI / 4f - phi / 2f); // kappa/my
         float y = -(Mathf.Pow(k, 2f) - Mathf.Sqrt(Mathf.Pow(k, 4f) * Mathf.Pow(slipRatio, 2f) - 2 * Mathf.Pow(k, 4f) 
@@ -454,10 +511,10 @@ public class SoilType
     /// <param name="pressurePlateMainDimension"></param>
     /// <param name="slipRatio"></param>
     /// <returns>sigma_nf [Pa] or [N/m^2]</returns>
-    public float RadialStressFront(float angle, float tyreWidth, float tyreRadius, float pressurePlateMainDimension, float slipRatio)
+    private float RadialStressFront(float angle, float tyreWidth, float tyreRadius, float pressurePlateMainDimension, float slipRatio)
     {
         float entryAngle = EntryAngle(tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
-        return (c * k_1 + gamma_s * pressurePlateMainDimension * k_2) * Mathf.Pow(tyreRadius / pressurePlateMainDimension, n) 
+        return (c * k1 + gamma_s * pressurePlateMainDimension * k2) * Mathf.Pow(tyreRadius / pressurePlateMainDimension, n) 
             * Mathf.Pow(Mathf.Cos(angle) - Mathf.Cos(entryAngle), n);
     }
     /// <summary>
@@ -472,7 +529,7 @@ public class SoilType
     private float RadialStressRear(float angle, float tyreWidth, float tyreRadius, float pressurePlateMainDimension, float slipRatio)
     {
         float entryAngle = EntryAngle(tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
-        float sigma_nr = (c * k_1 + gamma_s * pressurePlateMainDimension * k_2) 
+        float sigma_nr = (c * k1 + gamma_s * pressurePlateMainDimension * k2) 
             * Mathf.Pow(tyreRadius / pressurePlateMainDimension, n) 
             * Mathf.Pow(Mathf.Cos(entryAngle - (angle - ExitAngle()) / (MaxRadialStressAngle(slipRatio) - ExitAngle()) 
             * (entryAngle - MaxRadialStressAngle(slipRatio))) - Mathf.Cos(entryAngle), n);
@@ -488,7 +545,7 @@ public class SoilType
     /// <param name="pressurePlateMainDimension"></param>
     /// <param name="slipRatio"></param>
     /// <returns>sigma_n [Pa] or [N/m^2]</returns>
-    public float RadialStress(float angle, float tyreWidth, float tyreRadius, float pressurePlateMainDimension, float slipRatio)
+    private float RadialStress(float angle, float tyreWidth, float tyreRadius, float pressurePlateMainDimension, float slipRatio)
     {
         float entryAngle = EntryAngle(tyreWidth, tyreRadius, pressurePlateMainDimension, slipRatio);
         float sigma_n = 0f;
@@ -512,18 +569,27 @@ public class SoilType
 
 
 
+    public float BekkerPressureSinkage(float sinkage, float pressurePlateDimension)
+    {
+        return (kc / pressurePlateDimension + kphi) * Mathf.Pow(sinkage, n);
+    }
 
+    public float InverseBekkerPressureSinkage(float pressure, float pressurePlateDimension)
+    {
+        return Mathf.Pow(pressure / (kc / pressurePlateDimension + kphi), 1f / n);
+    }
 
-    //public float BekkerPressureSinkage(float sinkage, float pressurePlateDimension)
-    //{
-    //    return (k_c / pressurePlateDimension + k_phi) * Mathf.Pow(sinkage, n);
-    //}
+    public float BekkerUnloading(float sinkage, float unloadingSinkage, float unloadingPressure)
+    {
+        float ku = ko + Au * unloadingSinkage;
+        return unloadingPressure - ku * (unloadingSinkage - sinkage);
+    }
 
-    //public float BekkerUnloading(float sinkage, float unloadingSinkage, float unloadingPressure)
-    //{
-    //    float k_u = k_o + A_u * unloadingSinkage;
-    //    return unloadingPressure - k_u * (unloadingSinkage - sinkage);
-    //}
+    public float InverseBekkerUnloading(float pressure, float unloadingSinkage, float unloadingPressure)
+    {
+        float ku = ko + Au * unloadingSinkage;
+        return (pressure - unloadingPressure + ku * unloadingSinkage) / ku;
+    }
 
     //public float ReecePressureSinkage(float sinkage, float pressurePlateDimension)
     //{
