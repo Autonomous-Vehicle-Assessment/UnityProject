@@ -166,7 +166,7 @@ public class LiDAR : MonoBehaviour
     public Vector3[] GetDepthArray()
     {
         List<Vector3> depthList = new List<Vector3>();
-        int index = 0;
+
         for (int angle = 0; angle < angleSteps; angle++)
         {
             float yOffset = -Mathf.Sin(sensorAngle / 2f * Mathf.Deg2Rad) * sensorLength;
@@ -199,7 +199,6 @@ public class LiDAR : MonoBehaviour
             }
         }
 
-        //Vector3[] depthArray = new Vector3[depthList.Count];
         Vector3[] depthArray = depthList.ToArray();
 
         return depthArray;
