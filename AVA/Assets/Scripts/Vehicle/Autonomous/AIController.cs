@@ -27,11 +27,12 @@ public class AIController : MonoBehaviour
 
     private float turningRadius;
     public bool showTurningRadius;
+    public bool showDriver;
 
-    public bool targetBehind;
-    public bool withinTurning;
-    public bool reverse;
-    public bool objectAhead;
+    private bool targetBehind;
+    private bool withinTurning;
+    private bool reverse;
+    private bool objectAhead;
     private RaycastHit collisionHit;
     private Vector3 alternativeWaypoint;
 
@@ -48,7 +49,6 @@ public class AIController : MonoBehaviour
     public float driverRange = 10f;
     public float waypointRange = 3f;
     public float objectDistance = 10f;
-    public bool showDriver;
     private float nodeDistance;
     private Vector3 wirePoint;
     private Vector3 linePoint;
@@ -60,7 +60,7 @@ public class AIController : MonoBehaviour
     private Vector3 wayPointPathLong;
 
     [Header("Output")]
-    [Range(0,1)]
+    [Range(-1,1)]
     public float throttle;
     [Range(0,1)]
     public float brake;

@@ -18,6 +18,8 @@ GameObject:
   - component: {fileID: 6651133744263470480}
   - component: {fileID: 7057695464657355372}
   - component: {fileID: 6981917571276621914}
+  - component: {fileID: 2476981694753454930}
+  - component: {fileID: 7468681269604931001}
   m_Layer: 0
   m_Name: RosConnector
   m_TagString: Untagged
@@ -186,3 +188,37 @@ MonoBehaviour:
   pathMaster: {fileID: 0}
   FrameId: map
   activeFeed: 0
+--- !u!114 &2476981694753454930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4165087388496147978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7f42cda3039123468cfd98a69efc524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Topic: /zed2/zed_node/point_cloud/cloud_registered
+  imagePublisher: {fileID: 7454870981856667253}
+  depthCamera: {fileID: 0}
+  FrameId: zed2_left_camera_frame
+  frequency: 0.5
+  activeFeed: 0
+--- !u!114 &7468681269604931001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4165087388496147978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dfd1420515da88409e175ff23333dbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Topic: /move_base/Current_goal
+  TimeStep: 0
+  PublishedTransform: {fileID: 0}
+  position: {x: 0, y: 0, z: 0}

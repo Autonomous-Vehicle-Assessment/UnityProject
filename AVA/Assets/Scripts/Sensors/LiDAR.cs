@@ -11,6 +11,8 @@ public class LiDAR : MonoBehaviour
     public float sensorAngle = 30f;
     [Range(.5f, 360f)]
     public float angleChange = 180;
+    [Range(1f, 360f)]
+    public float sensorYaw = 360f;
     [Range(1,128)]
     public int numberOfRays = 3;
     private int angleSteps;
@@ -30,7 +32,7 @@ public class LiDAR : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        angleSteps = (int)(360f / angleChange);
+        angleSteps = (int)(sensorYaw / angleChange);
         lidarRoutine = LidarRoutine();
         routineActive = false;
 
@@ -101,7 +103,7 @@ public class LiDAR : MonoBehaviour
         {
             Gizmos.color = Color.cyan;
             Handles.color = Color.red;
-            int angleSteps = (int)(360f / angleChange);
+            int angleSteps = (int)(sensorYaw / angleChange);
 
             for (int i = 0; i < angleSteps; i++)
             {
@@ -111,7 +113,7 @@ public class LiDAR : MonoBehaviour
 
                 for (int j = 0; j < numberOfRays; j++)
                 {
-                    Quaternion angleRotation = transform.rotation * Quaternion.Euler(0, (360f / angleSteps) * i, 0);
+                    Quaternion angleRotation = transform.rotation * Quaternion.Euler(0, -sensorYaw / 2 + (sensorYaw / angleSteps) * i, 0);
                     Gizmos.matrix = Matrix4x4.TRS(transform.TransformPoint(frontSensorPosition), angleRotation, Vector3.one);
                     float angle = -sensorAngle / 2f + sensorAngle / (numberOfRays - 1) * j;
                     float yOffsetPoint = Mathf.Sin(angle * Mathf.Deg2Rad) * sensorLength - yOffset;
@@ -175,7 +177,7 @@ public class LiDAR : MonoBehaviour
 
             for (int ray = 0; ray < numberOfRays; ray++)
             {
-                Quaternion angleRotation = transform.rotation * Quaternion.Euler(0, (360f / angleSteps) * angle, 0);
+                Quaternion angleRotation = transform.rotation * Quaternion.Euler(0, -sensorYaw/2 + (sensorYaw / angleSteps) * angle, 0);
                 Handles.matrix = Matrix4x4.TRS(transform.TransformPoint(frontSensorPosition), angleRotation, Vector3.one);
                 float rayAngle = -sensorAngle / 2f + sensorAngle / (numberOfRays - 1) * ray;
                 float yOffsetPoint = Mathf.Sin(rayAngle * Mathf.Deg2Rad) * sensorLength - yOffset;
