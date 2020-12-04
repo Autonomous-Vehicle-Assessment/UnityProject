@@ -61,45 +61,45 @@ public class SoilType
             case TerrainType.KRCFineGrain:
                 terrainName = _terrainType.ToString();
                 n = 1.491f;
-                kc = -6355.11018411948f;
-                kphi = 154544.800357557f;
-                ko = 93970.3170744924f;
-                Au = 3746425.05128522f;
-                c = 1.05006281f;
+                kc = -6355.11018411948f * 1000f; // kN to N
+                kphi = 154544.800357557f * 1000f; // kN to N
+                ko = 93970.3170744924f * 1000f; // kN to N
+                Au = 3746425.05128522f * 1000f; // kN to N
+                c = 1.05006281f * 1000f; // kPA to Pa
                 phi = 37.4078f * Mathf.Deg2Rad; // deg to rad
                 Kx = 24.1554f / 1000f; // mm to m
                 Ky = 24.1554f / 1000f; // mm to m
-                c_rub = 0;
+                c_rub = 0 * 1000f; // kPA to Pa
                 phi_rub = 28.5651f * Mathf.Deg2Rad; // deg to rad
                 K_avgRub = 5.97069333333333f / 1000f; // mm to m
                 break;
             case TerrainType.KRCCoarsePit:
                 terrainName = _terrainType.ToString();
                 n = 0.4567f;
-                kc = 32.4754881971102f;
-                kphi = 931.801934559231f;
-                ko = 120421.522732809f;
-                Au = 2309750.44379254f;
-                c = 1.56164955f;
+                kc = 32.4754881971102f * 1000f; // kN to N
+                kphi = 931.801934559231f * 1000f; // kN to N
+                ko = 120421.522732809f * 1000f; // kN to N
+                Au = 2309750.44379254f * 1000f; // kN to N
+                c = 1.56164955f * 1000f; // kPA to Pa
                 phi = 30.3543f * Mathf.Deg2Rad; // deg to rad
                 Kx = 18.6038066666667f / 1000f; // mm to m
                 Ky = 18.6038066666667f / 1000f; // mm to m
-                c_rub = 0.31784567f;
+                c_rub = 0.31784567f * 1000f; // kPA to Pa
                 phi_rub = 26.3917f * Mathf.Deg2Rad; // deg to rad
                 K_avgRub = 8.87984f / 1000f; // mm to m
                 break;
             case TerrainType.KRCFineGrainWet:
                 terrainName = _terrainType.ToString();
                 n = 3.568f;
-                kc = -73082.5228717309f;
-                kphi = 1714497.2928229f;
-                ko = -89437.3757251451f;
-                Au = 1954322.01888026f;
-                c = 3.05642051f;
+                kc = -73082.5228717309f * 1000f; // kN to N
+                kphi = 1714497.2928229f * 1000f; // kN to N
+                ko = -89437.3757251451f * 1000f; // kN to N
+                Au = 1954322.01888026f * 1000f; // kN to N
+                c = 3.05642051f * 1000f; // kPA to Pa
                 phi = 37.3431f * Mathf.Deg2Rad; // deg to rad
                 Kx = 27.5336f / 1000f; // mm to m
                 Ky = 27.5336f / 1000f; // mm to m
-                c_rub = 0.46401331f;
+                c_rub = 0.46401331f * 1000f; // kPA to Pa
                 phi_rub = 28.6895f * Mathf.Deg2Rad; // deg to rad
                 K_avgRub = 6.53457333333333f / 1000f; // mm to m
                 break;
