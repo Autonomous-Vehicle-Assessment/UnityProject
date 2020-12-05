@@ -853,13 +853,17 @@ MonoBehaviour:
   targetVelocity: 0
   throttleCap: 1
   reverseVel: 10
+  brakeVel: 10
   reverseAngle: 0.7
   vehicleSpeed: 0
   showTurningRadius: 1
+  showDriver: 1
   currentNode: 0
   currentPath: 0
+  planRange: 30
   driverRange: 20
-  showDriver: 1
+  waypointRange: 3
+  objectDistance: 10
   layerMask:
     serializedVersion: 2
     m_Bits: 16896
