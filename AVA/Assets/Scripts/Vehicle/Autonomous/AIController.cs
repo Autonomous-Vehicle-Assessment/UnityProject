@@ -8,7 +8,7 @@ public class AIController : MonoBehaviour
     private EngineModel engine;               // Engine model
     private VehicleStats vehicleStats;               // Engine model
 
-    public Transform pathMaster;
+    public PathLoader pathMaster;
     private GameObject wayPoint;
 
     [Header("Driver")]
@@ -54,7 +54,7 @@ public class AIController : MonoBehaviour
     private Vector3 linePoint;
 
     public LayerMask layerMask;
-    private List<AIPath> paths;
+    private List<WaypointPath> paths;
     private Vector3 targetWaypoint;
     private List<PathNode> pathNodes;
     private Vector3 wayPointPathLong;
@@ -74,8 +74,8 @@ public class AIController : MonoBehaviour
         engine = GetComponent<EngineModel>();
         vehicleStats = GetComponent<VehicleStats>();
 
-        paths = new List<AIPath>();
-        foreach (AIPath path in pathMaster.GetComponentsInChildren<AIPath>())
+        paths = new List<WaypointPath>();
+        foreach (WaypointPath path in pathMaster.GetComponentsInChildren<WaypointPath>())
         {
             paths.Add(path);
         }
@@ -84,6 +84,8 @@ public class AIController : MonoBehaviour
         pathNodes = paths[currentPath].pathNodes;
 
         wayPoint = new GameObject("TargetWaypoint");
+        
+        wayPoint.transform.parent = pathMaster.transform;
 
         wheelDistanceLength = Vector3.Distance(engine.wheels[0].collider.transform.position, engine.wheels[2].collider.transform.position);
         wheelDistanceWidth = Vector3.Distance(engine.wheels[0].collider.transform.position, engine.wheels[1].collider.transform.position);
@@ -328,7 +330,7 @@ public class AIController : MonoBehaviour
         pathNodes[currentNode].Activate();
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         if (showDriver)
         {

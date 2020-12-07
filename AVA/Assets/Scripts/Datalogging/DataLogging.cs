@@ -7,6 +7,7 @@ using UnityEngine;
 public class DataLogging : MonoBehaviour
 {
     private string filePath;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,12 +31,40 @@ public class DataLogging : MonoBehaviour
     }
 
 
-    public void Stamp()
+    /// <summary>
+    /// Stamp vehicle state in log file.
+    /// </summary>
+    /// <param name="engine">Vehicle model</param>
+    public void Stamp(EngineModel engine)
     {
+        string s_Time = Time.time.ToString();
+        string s_Velocity = engine.speed.ToString();
+        string s_EngineRPM = engine.engineRPM.ToString();
+        string s_EngineTorque = engine.engineTorque.ToString();
 
+        float m_TransmissionTorque = 0;
+        float m_WheelForce = 0;
+
+        for (int i = 0; i < engine.wheels.Count; i++)
+        {
+            m_TransmissionTorque += engine.wheels[i].collider.motorTorque;
+            m_WheelForce += engine.wheels[i].collider.motorTorque * engine.wheels[i].collider.radius;
+        }
+
+        string s_WheelForce = m_WheelForce.ToString();
+        string s_TransmissionTorque = m_TransmissionTorque.ToString();
+
+        string s_CurrentGear = (engine.currentGear + 1).ToString();
+
+        // Log data
+        if (isActiveAndEnabled) WriteToFile(s_Time + ";" + s_Velocity + ";" + s_WheelForce + ";" + s_TransmissionTorque + ";" + s_CurrentGear + ";" + s_EngineRPM + ";" + s_EngineTorque + "\n");
     }
 
 
+    /// <summary>
+    /// Write msg to csv file.
+    /// </summary>
+    /// <param name="msg"></param>
     public void WriteToFile(string msg)
     {
         try

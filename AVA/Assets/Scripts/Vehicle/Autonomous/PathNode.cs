@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 public enum LeaderFollowerMode
 {
@@ -37,10 +38,9 @@ public class PathNode : MonoBehaviour
 
     public void SetHeight()
     {
-        LayerMask mask1 = LayerMask.GetMask("Terrain");
-        LayerMask mask2 = LayerMask.GetMask("Terrain");
+        LayerMask mask = LayerMask.GetMask("Terrain");
 
-        if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, 250, mask1))
+        if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, 250, mask))
         {
             deltaHeight = targetHeight + transform.InverseTransformPoint(hit.point).y;
 

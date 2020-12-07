@@ -10,12 +10,8 @@ public class LevelManager : MonoBehaviour
     public float SlowMotionValue = 0.1f;
     public Material skyboxOriginal;
     public Material skyboxBlack;
-    public bool blackOut;
+    private bool blackOut;
 
-    private void Awake()
-    {
-
-    }
     // Update is called once per frame
     void LateUpdate()
     {
@@ -58,10 +54,11 @@ public class LevelManager : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Q))
         {
             blackOut = !blackOut;
+            BlackoutUpdate();
         }
     }
 
-    private void OnGUI()
+    public void BlackoutUpdate()
     {
         if (blackOut)
         {

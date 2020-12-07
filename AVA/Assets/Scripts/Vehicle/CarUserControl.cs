@@ -4,10 +4,10 @@ using UnityEngine;
 [RequireComponent(typeof(EngineModel))]
 public class CarUserControl : MonoBehaviour
 {
-    private EngineModel Engine;               // Engine model
+    private EngineModel engine;               // Engine model
     private DataLogging dataLogger;
 
-    [SerializeField] public TransferCase m_CurrentTransfercase;
+    [SerializeField] public TransferCase currentTransfercase;
     [SerializeField] public bool trackPoints;
     [SerializeField] public bool active;
     [SerializeField] public int renderTime = 1;
@@ -18,7 +18,7 @@ public class CarUserControl : MonoBehaviour
     private void Awake()
     {
         // get the controller
-        Engine = GetComponent<EngineModel>();
+        engine = GetComponent<EngineModel>();
 
         // DataLogger
         dataLogger = GetComponent<DataLogging>();
@@ -35,65 +35,47 @@ public class CarUserControl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E)||Input.GetKeyDown(KeyCode.JoystickButton0))
         {
-            if (m_CurrentTransfercase == TransferCase.High)
+            if (currentTransfercase == TransferCase.High)
             {
-                m_CurrentTransfercase = TransferCase.Low;
+                currentTransfercase = TransferCase.Low;
             }
             else
             {
-                m_CurrentTransfercase = TransferCase.High;
+                currentTransfercase = TransferCase.High;
             }
         }
             
-        Engine.currentTransferCase = m_CurrentTransfercase;
+        engine.currentTransferCase = currentTransfercase;
 
-        Engine.UpdateState();
+        engine.UpdateState();
 
-        if (Engine != null)
+        if (engine != null)
         {
-            if (active) Engine.Move(h, v, footbrake, handbrake);
+            if (active) engine.Move(h, v, footbrake, handbrake);
         }
 
-        string s_Time = Time.time.ToString();
-        string s_Velocity = Engine.speed.ToString();
-        string s_EngineRPM = Engine.engineRPM.ToString();
-        string s_EngineTorque = Engine.engineTorque.ToString();
 
-        float m_TransmissionTorque = 0;
-        float m_WheelForce = 0;
+        dataLogger.Stamp(engine);
 
-        for (int i = 0; i < Engine.wheels.Count; i++)
-        {
-            m_TransmissionTorque += Engine.wheels[i].collider.motorTorque;
-            m_WheelForce += Engine.wheels[i].collider.motorTorque * Engine.wheels[i].collider.radius;
-        }
-
-        string s_WheelForce = m_WheelForce.ToString();
-        string s_TransmissionTorque = m_TransmissionTorque.ToString();
-
-        string s_CurrentGear = (Engine.currentGear + 1).ToString();
-
-        // Log data
-        if(dataLogger.isActiveAndEnabled) dataLogger.WriteToFile(s_Time + ";" + s_Velocity + ";" + s_WheelForce + ";" + s_TransmissionTorque + ";" + s_CurrentGear + ";" + s_EngineRPM + ";" + s_EngineTorque + "\n");
-
-
-        
+        UpdateLineRenderer();
     }
 
     /// <summary>
-    /// Draw lines from wheel centers.
+    /// Creates Line Renderer master and sub line renderes to draw lines from wheel centers.
     /// </summary>
     private void UpdateLineRenderer()
     {
-        if (lineRenderers == null || points == null && trackPoints)
+        if (lineRenderers == null || points == null)
         {
             Color[] ColorArray = { new Color(1, 0, 0), new Color(1, 0, 0), new Color(0, 0, 1), new Color(0, 0, 1) };
-
+            GameObject lineRendererMaster = new GameObject("Line Renderer Master");
             lineRenderers = new LineRenderer[4];
             points = new List<Vector3[]>();
             for (int i = 0; i < 4; i++)
             {
-                lineRenderers[i] = Engine.wheels[i].collider.gameObject.AddComponent<LineRenderer>();
+                GameObject lineRenderer = new GameObject($"Line Renderer ({i})");
+                lineRenderer.transform.parent = lineRendererMaster.transform;
+                lineRenderers[i] = lineRenderer.AddComponent<LineRenderer>();
                 lineRenderers[i].material = new Material(Shader.Find("Sprites/Default"));
                 lineRenderers[i].material.color = ColorArray[i];
                 lineRenderers[i].widthMultiplier = 0.02f;
@@ -102,26 +84,25 @@ public class CarUserControl : MonoBehaviour
                 points.Add(new Vector3[(int)(renderTime / Time.fixedDeltaTime)]);
                 for (int k = 0; k < points[i].Length; k++)
                 {
-                    points[i][k] = Engine.wheels[i].mesh.transform.position;
+                    points[i][k] = engine.wheels[i].mesh.transform.position;
                 }
                 lineRenderers[i].SetPositions(points[i]);
             }
+        }
 
-            for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
+        {
+            for (int k = 0; k < points[i].Length - 1; k++)
             {
-                for (int k = 0; k < points[i].Length - 1; k++)
-                {
-                    points[i][k] = points[i][k + 1];
-                }
-                points[i][points[i].Length - 1] = Engine.wheels[i].mesh.transform.position;
-                lineRenderers[i].SetPositions(points[i]);
+                points[i][k] = points[i][k + 1];
             }
+            points[i][points[i].Length - 1] = engine.wheels[i].mesh.transform.position;
+            lineRenderers[i].SetPositions(points[i]);
+        }
 
-            for (int i = 0; i < 4; i++)
-            {
-                lineRenderers[i].enabled = trackPoints;
-            }
-
-        }        
+        for (int i = 0; i < 4; i++)
+        {
+            lineRenderers[i].enabled = trackPoints;
+        }
     }
 }

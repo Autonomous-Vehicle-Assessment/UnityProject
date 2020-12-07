@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(AIPathLoader))]
+[CustomEditor(typeof(PathLoader))]
 public class PathLoaderEditor : Editor
 {
     // Start is called before the first frame update
@@ -11,7 +11,7 @@ public class PathLoaderEditor : Editor
     {
         DrawDefaultInspector();
 
-        AIPathLoader pathLoader = (AIPathLoader)target;
+        PathLoader pathLoader = (PathLoader)target;
 
         EditorGUILayout.BeginHorizontal();
 
