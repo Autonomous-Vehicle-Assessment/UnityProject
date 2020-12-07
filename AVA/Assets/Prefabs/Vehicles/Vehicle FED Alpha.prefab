@@ -485,8 +485,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentTransfercase: 1
-  TrackPoints: 0
-  RenderTime: 5
+  trackPoints: 0
+  active: 0
+  renderTime: 1
 --- !u!114 &2315250435903404941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -819,7 +820,7 @@ MonoBehaviour:
   - 0.44
   - 0.37
   - 0.37
-  - 0.37
+  - 0.74
   - 0.94
   - 0.94
   - 0.94
@@ -872,6 +873,8 @@ MonoBehaviour:
   brakeVel: 10
   reverseAngle: 0.7
   vehicleSpeed: 0
+  proportionalGain: 0.2
+  distanceProportionalGain: 1
   showTurningRadius: 1
   showDriver: 1
   currentNode: 0

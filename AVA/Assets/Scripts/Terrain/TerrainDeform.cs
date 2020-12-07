@@ -109,13 +109,14 @@ public class TerrainDeform : MonoBehaviour
     private WheelCollider[] wheelColliders;
 
     [Space(10)]
-    public float groundStiffness;
     [Range(1,10)]
     public float groundDamping;
     public float minDeformation;
 
     public bool deformTerrain;
     public float deformationStrength;
+    private SoilType soilType;
+
 
     private static float[,] tireMark = {    { .75f, .80f, .85f, .90f, .85f, .80f, .75f },
                                             { .80f, .85f, .90f, .95f, .90f, .85f, .80f },
@@ -132,49 +133,10 @@ public class TerrainDeform : MonoBehaviour
 
     private void Awake()
     {
-        //// Load all terrains from master
-        //Terrain[] tempTerrains = terrainMaster.GetComponentsInChildren<Terrain>();
-        //terrains = new List<TerrainStruct>();
-        //// get the heightmap points of the terrain, store values in a float array.
-        //int index = 0;
-        //float[,] height = new float[65, 65];
-        //float heightConstant = 0.8f;
-        //for (int row = 0; row < 65; row++)
-        //{
-        //    for (int coloumn = 0; coloumn < 65; coloumn++)
-        //    {
-        //        height[row, coloumn] = heightConstant;
-        //    }
-        //}
-
-        //TerrainStruct.tiles = 0;
-
-        //foreach (Terrain terrain in tempTerrains)
-        //{
-        //    if (terrain.GetComponent<Terrain>().isActiveAndEnabled)
-        //    {
-        //        TerrainData terrainData = new TerrainData();
-        //        terrainData.name = "terrain" + index.ToString();
-        //        terrainData.heightmapResolution = 65;
-        //        terrainData.size = new Vector3(4, 10, 4);
-        //        terrainData.SetHeights(0, 0, height);
-
-        //        terrain.terrainData = terrainData;
-        //        terrain.GetComponent<TerrainCollider>().terrainData = terrainData;
-        //        terrains.Add(new TerrainStruct(terrain, defaultMaterial));
-        //        index++;
-        //    }
-        //    else
-        //    {
-        //        terrains.Add(new TerrainStruct());
-        //    }
-        //}
-
         // Load all wheelcolliders from master
         wheelColliders = wheelColliderMaster.GetComponentsInChildren<WheelCollider>();
-
         InitTerrain();
-
+        soilType = new SoilType(TerrainType.KRCFineGrain);
     }
 
     private void FixedUpdate()
@@ -726,7 +688,6 @@ public class TerrainDeform : MonoBehaviour
 
     public void InitTerrain()
     {
-
         TerrainStruct.tiles = 0;
         foreach (TerrainStruct terrainStruct in terrains)
         {
@@ -875,10 +836,14 @@ public class TerrainDeform : MonoBehaviour
         float deltaModified = originalHeight - modifiedHeight;
 
         float impactForce = hit.force;
-        float groundForce = deltaModified * groundStiffness;
+        float impactPressure = impactForce / ((7f * 4f / 64f) * (7f * 4f / 64f)); // F/A = Sigma
 
-        float deformationForce = impactForce - groundForce;
+        float targetSinkage = soilType.InverseBekkerPressureSinkage(impactPressure);
 
-        return deformationStrength = Mathf.Max(0, (deformationForce / groundStiffness) * Time.deltaTime / (Time.deltaTime * groundDamping));
+        float sinkage = targetSinkage - deltaModified;
+
+        
+
+        return deformationStrength = Mathf.Max(0, sinkage * Time.deltaTime / (Time.deltaTime * groundDamping));
     }
 }

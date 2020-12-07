@@ -569,13 +569,15 @@ public class SoilType
 
 
 
-    public float BekkerPressureSinkage(float sinkage, float pressurePlateDimension)
+    public float BekkerPressureSinkage(float sinkage)
     {
+        float pressurePlateDimension = 7f * 4f / 64f;
         return (kc / pressurePlateDimension + kphi) * Mathf.Pow(sinkage, n);
     }
 
-    public float InverseBekkerPressureSinkage(float pressure, float pressurePlateDimension)
+    public float InverseBekkerPressureSinkage(float pressure)
     {
+        float pressurePlateDimension = 7f * 4f / 64f;
         return Mathf.Pow(pressure / (kc / pressurePlateDimension + kphi), 1f / n);
     }
 
