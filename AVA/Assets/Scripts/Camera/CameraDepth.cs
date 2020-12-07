@@ -1,21 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 [ExecuteInEditMode]
 public class CameraDepth : MonoBehaviour
 {
     private Camera targetCamera;
-    private Transform targetVehicle;
-    public float sensorRange;
+    public Transform targetVehicle;
+    public float sensorRange = 100f;
 
-    [Range(0f, 3f)]
-    public float depthLevel;
+    //[Range(0f, 3f)]
+    //public float depthLevel;
 
-    [Range(1,672)]
-    public int width;
+    [Range(1, 672)]
+    public int width = 100;
     [Range(1, 376)]
-    public int height;
+    public int height = 4;
     public bool showFieldOfView;
     public LayerMask layerMask;
 
@@ -38,9 +39,9 @@ public class CameraDepth : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Transform camerasObject = transform.Find("Cameras");
-        Transform depthCameraObject = camerasObject.Find("Depth Camera");
-        targetCamera = depthCameraObject.GetComponent<Camera>();
+        // Transform camerasObject = transform.Find("Cameras");
+        // Transform depthCameraObject = camerasObject.Find("Depth Camera");
+        targetCamera = GetComponent<Camera>();
 
         targetCamera.depthTextureMode = DepthTextureMode.Depth;
 
@@ -56,13 +57,13 @@ public class CameraDepth : MonoBehaviour
         widthStepFull = hDistance / targetCamera.pixelWidth;
         heightStepFull = vDistance / targetCamera.pixelHeight;
 
-        foreach (GameObject vehicle in GameObject.FindGameObjectsWithTag("Vehicle"))
-        {
-            if (vehicle.name.Contains("Leader"))
-            {
-                targetVehicle = vehicle.transform.Find("Vehicle Mesh").Find("ColliderMesh");
-            }
-        }
+        //foreach (GameObject vehicle in GameObject.FindGameObjectsWithTag("Vehicle"))
+        //{
+        //    if (vehicle.name.Contains("Leader"))
+        //    {
+        //        targetVehicle = vehicle.transform.Find("Vehicle Mesh").Find("ColliderMesh");
+        //    }
+        //}
     }
 
     private void Update()
@@ -124,11 +125,11 @@ public class CameraDepth : MonoBehaviour
                 int hStepCenter = (int)(hOffsetCenter / widthStepFull);
 
                 // Find offset from edge
-                int vStepStart = Mathf.Max(0,Mathf.Min(targetCamera.pixelHeight - height - 1, vStepCenter - height / 2 - 1));
+                int vStepStart = Mathf.Max(0, Mathf.Min(targetCamera.pixelHeight - height - 1, vStepCenter - height / 2 - 1));
                 int hStepStart = Mathf.Max(0, Mathf.Min(targetCamera.pixelWidth - width - 1, hStepCenter - width / 2 - 1));
 
-                float yVector = Mathf.Tan(-vFoV * Mathf.Deg2Rad / 2 ) + heightStepFull* vStepStart + heightStepFull / 2;
-                float xVector = Mathf.Tan(-hFoV * Mathf.Deg2Rad / 2 ) + widthStepFull * hStepStart + widthStepFull / 2;
+                float yVector = Mathf.Tan(-vFoV * Mathf.Deg2Rad / 2) + heightStepFull * vStepStart + heightStepFull / 2;
+                float xVector = Mathf.Tan(-hFoV * Mathf.Deg2Rad / 2) + widthStepFull * hStepStart + widthStepFull / 2;
 
                 Vector3 localDirection = new Vector3(xVector, yVector, 1);
                 Vector3 direction = targetCamera.transform.TransformVector(localDirection);
@@ -181,6 +182,34 @@ public class CameraDepth : MonoBehaviour
         }
     }
 
+
+    public Vector3[] GetDepthArray()
+    {
+        List<Vector3> depth = new List<Vector3>();
+        for (int row = 0; row < height; row++)
+        {
+            float yVector = Mathf.Tan(-vFoV * Mathf.Deg2Rad / 2 + heightStep * row + heightStep / 2);
+
+            for (int column = 0; column < width; column++)
+            {
+                // Setup unit vector
+                float xVector = Mathf.Tan(-hFoV * Mathf.Deg2Rad / 2 + widthStep * column + widthStep / 2);
+
+                Vector3 localDirection = new Vector3(xVector, yVector, 1);
+                Vector3 direction = targetCamera.transform.TransformVector(localDirection);
+
+                if (Physics.Raycast(targetCamera.transform.position, direction, out RaycastHit hit, sensorRange, layerMask))
+                {
+                    depth.Add(transform.InverseTransformPoint(hit.point));
+                }
+                else
+                {
+                    depth.Add(new Vector3(float.NaN, float.NaN, float.NaN));
+                }
+            }
+        }
+        return depth.ToArray();
+    }
     public Vector3[,] GetDepth()
     {
         Vector3[,] depth = new Vector3[width, height];
@@ -207,6 +236,63 @@ public class CameraDepth : MonoBehaviour
             }
         }
         return depth;
+    }
+
+    public Vector3[] GetVehicleDepthArray()
+    {
+        List<Vector3> depth = new List<Vector3>();
+
+        vStepStart = 0;
+        hStepStart = 0;
+
+        if (targetVehicle != null)
+        {
+            Vector3 targetVector = targetCamera.transform.InverseTransformPoint(targetVehicle.position).normalized;
+            float vAngle = Mathf.Asin(targetVector.y);
+            float hAngle = Mathf.Asin(targetVector.x);
+
+            // Find closest pixel to given direction
+            float vCenter = Mathf.Tan(vAngle);
+            float hCenter = Mathf.Tan(hAngle);
+
+            float vOffsetCenter = vCenter - -vDistance / 2;
+            float hOffsetCenter = hCenter - -hDistance / 2;
+
+            int vStepCenter = (int)(vOffsetCenter / heightStepFull);
+            int hStepCenter = (int)(hOffsetCenter / widthStepFull);
+
+            // Find offset from edge
+            vStepStart = Mathf.Max(0, Mathf.Min(targetCamera.pixelHeight - height - 1, vStepCenter - height / 2 - 1));
+            hStepStart = Mathf.Max(0, Mathf.Min(targetCamera.pixelWidth - width - 1, hStepCenter - width / 2 - 1));
+
+            for (int row = 0; row < height; row++)
+            {
+                float yVector = Mathf.Tan(vFoV * Mathf.Deg2Rad / 2) - heightStepFull * (vStepStart + row) + heightStepFull / 2;
+
+                for (int column = 0; column < width; column++)
+                {
+                    // Setup unit vector
+                    float xVector = Mathf.Tan(-hFoV * Mathf.Deg2Rad / 2) + widthStepFull * (hStepStart + column) + widthStepFull / 2;
+
+                    Vector3 localDirection = new Vector3(xVector, yVector, 1);
+                    Vector3 direction = targetCamera.transform.TransformVector(localDirection);
+                    RaycastHit hit;
+
+                    if (Physics.Raycast(targetCamera.transform.position, direction, out hit, sensorRange, layerMask))
+                    {
+                        depth.Add(targetCamera.transform.InverseTransformPoint(hit.point));
+
+                        if (debugMode) Debug.DrawLine(targetCamera.transform.position, hit.point, Color.red);
+                    }
+                    else
+                    {
+                        depth.Add(new Vector3(float.NaN, float.NaN, float.NaN));
+                    }
+                }
+            }
+        }
+
+        return depth.ToArray();
     }
 
     public Vector3[,] GetVehicleDepth()
@@ -262,7 +348,7 @@ public class CameraDepth : MonoBehaviour
                 }
             }
         }
-        
+
         return depth;
     }
 }

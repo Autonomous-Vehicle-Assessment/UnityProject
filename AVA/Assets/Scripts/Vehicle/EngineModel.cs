@@ -45,7 +45,7 @@ public class EngineModel : MonoBehaviour
     public float handbrakeTorque = 50000f;
     public float brakeTorque = 3000f;
     public TransferCase transferCase;
-    public Rigidbody rigidbody;
+    public Rigidbody rb;
     public int numberofWheels = 4;
     public int numberofDrivingWheels;
     public float speed;
@@ -94,7 +94,7 @@ public class EngineModel : MonoBehaviour
             wheels[0].collider.attachedRigidbody.centerOfMass = centerofMass.transform.localPosition;
         }
 
-        rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         terrainTracker = GetComponent<TerrainTracker>();
 
         numberofDrivingWheels = 0;
@@ -135,10 +135,10 @@ public class EngineModel : MonoBehaviour
 
 
                 if (groundedL)
-                    rigidbody.AddForceAtPosition(WheelL.transform.up * -antiRollForce,
+                    rb.AddForceAtPosition(WheelL.transform.up * -antiRollForce,
                            WheelL.transform.position);
                 if (groundedR)
-                    rigidbody.AddForceAtPosition(WheelR.transform.up * antiRollForce,
+                    rb.AddForceAtPosition(WheelR.transform.up * antiRollForce,
                            WheelR.transform.position);
             }
 

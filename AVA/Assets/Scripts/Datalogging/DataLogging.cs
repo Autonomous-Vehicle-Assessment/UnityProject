@@ -30,6 +30,12 @@ public class DataLogging : MonoBehaviour
     }
 
 
+    public void Stamp()
+    {
+
+    }
+
+
     public void WriteToFile(string msg)
     {
         try

@@ -11,14 +11,16 @@ public class LiDAR : MonoBehaviour
     public float sensorAngle = 30f;
     [Range(.5f, 360f)]
     public float angleChange = 180;
-    [Range(1,128)]
+    [Range(1f, 360f)]
+    public float sensorYaw = 360f;
+    [Range(1, 128)]
     public int numberOfRays = 3;
     private int angleSteps;
     public bool showLidarCollision;
     public bool showLidarRays;
     public bool colorRays;
     public bool active;
-    [Range(1,10)]
+    [Range(1, 10)]
     public int frequency;
     public float minDistance;
     public LayerMask layerMask;
@@ -30,7 +32,7 @@ public class LiDAR : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        angleSteps = (int)(360f / angleChange);
+        angleSteps = (int)(sensorYaw / angleChange);
         lidarRoutine = LidarRoutine();
         routineActive = false;
 
@@ -45,18 +47,18 @@ public class LiDAR : MonoBehaviour
     // Update is called once per frame
     void OnGUI()
     {
-        if (active && !routineActive) 
+        if (active && !routineActive)
         {
             depthData = new Vector3[numberOfRays, angleSteps];
             StartCoroutine(lidarRoutine);
             routineActive = true;
         }
-        if (!active && routineActive) 
+        if (!active && routineActive)
         {
             StopCoroutine(lidarRoutine);
             routineActive = false;
         }
-        
+
     }
 
     private void OnApplicationQuit()
@@ -95,13 +97,13 @@ public class LiDAR : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         if (showLidarRays || showLidarCollision)
         {
             Gizmos.color = Color.cyan;
             Handles.color = Color.red;
-            int angleSteps = (int)(360f / angleChange);
+            int angleSteps = (int)(sensorYaw / angleChange);
 
             for (int i = 0; i < angleSteps; i++)
             {
@@ -111,7 +113,7 @@ public class LiDAR : MonoBehaviour
 
                 for (int j = 0; j < numberOfRays; j++)
                 {
-                    Quaternion angleRotation = transform.rotation * Quaternion.Euler(0, (360f / angleSteps) * i, 0);
+                    Quaternion angleRotation = transform.rotation * Quaternion.Euler(0, -sensorYaw / 2 + (sensorYaw / angleSteps) * i, 0);
                     Gizmos.matrix = Matrix4x4.TRS(transform.TransformPoint(frontSensorPosition), angleRotation, Vector3.one);
                     float angle = -sensorAngle / 2f + sensorAngle / (numberOfRays - 1) * j;
                     float yOffsetPoint = Mathf.Sin(angle * Mathf.Deg2Rad) * sensorLength - yOffset;
@@ -163,7 +165,48 @@ public class LiDAR : MonoBehaviour
         }
     }
 
-    private void GetDepth()
+    public Vector3[] GetDepthArray()
+    {
+        List<Vector3> depthList = new List<Vector3>();
+
+        for (int angle = 0; angle < angleSteps; angle++)
+        {
+            float yOffset = -Mathf.Sin(sensorAngle / 2f * Mathf.Deg2Rad) * sensorLength;
+            float zOffset = Mathf.Cos(sensorAngle / 2f * Mathf.Deg2Rad) * sensorLength - sensorLength;
+            Vector3 offsetDown = new Vector3(0, yOffset, zOffset);
+
+            for (int ray = 0; ray < numberOfRays; ray++)
+            {
+                Quaternion angleRotation = transform.rotation * Quaternion.Euler(0, -sensorYaw / 2 + (sensorYaw / angleSteps) * angle, 0);
+                Handles.matrix = Matrix4x4.TRS(transform.TransformPoint(frontSensorPosition), angleRotation, Vector3.one);
+                float rayAngle = -sensorAngle / 2f + sensorAngle / (numberOfRays - 1) * ray;
+                float yOffsetPoint = Mathf.Sin(rayAngle * Mathf.Deg2Rad) * sensorLength - yOffset;
+                float zOffsetPoint = Mathf.Cos(rayAngle * Mathf.Deg2Rad) * sensorLength - zOffset - sensorLength;
+
+                Vector3 offsetUp = new Vector3(0, yOffsetPoint, zOffsetPoint);
+                Vector3 target = new Vector3(0, 0, 1) * sensorLength + offsetDown + offsetUp;
+
+
+                Vector3 pos = transform.TransformPoint(frontSensorPosition);
+                Vector3 dir = Handles.matrix.MultiplyVector(target);
+
+                if (Physics.Raycast(pos, dir, out RaycastHit hit, sensorLength, layerMask))
+                {
+                    if ((hit.point - pos).magnitude > minDistance)
+                    {
+                        Vector3 point = transform.InverseTransformPoint(hit.point - pos);
+                        depthList.Add(transform.InverseTransformPoint(hit.point));// new Vector3(point.x, point.y - transform.position.y, point.z));
+                    }
+                }
+            }
+        }
+
+        Vector3[] depthArray = depthList.ToArray();
+
+        return depthArray;
+    }
+
+    public Vector3[,] GetDepthMatrix()
     {
         Vector3[,] depthArray = new Vector3[numberOfRays, angleSteps];
 
@@ -197,13 +240,15 @@ public class LiDAR : MonoBehaviour
                 }
             }
         }
+
+        return depthArray;
     }
 
     IEnumerator LidarRoutine()
     {
         while (active)
         {
-            GetDepth();
+            GetDepthMatrix();
             yield return new WaitForSeconds(1f / frequency);
         }
     }
