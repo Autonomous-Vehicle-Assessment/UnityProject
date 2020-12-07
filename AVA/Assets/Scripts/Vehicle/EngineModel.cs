@@ -83,7 +83,7 @@ public class EngineModel : MonoBehaviour
     public float antiRoll = 5000.0f;
 
     //TerrainTracker
-    public TerrainTracker terrainTracker;
+    //public TerrainTracker terrainTracker;
 
     // Initialize
     public void Awake()
@@ -95,7 +95,7 @@ public class EngineModel : MonoBehaviour
         }
 
         rigidbody = GetComponent<Rigidbody>();
-        terrainTracker = GetComponent<TerrainTracker>();
+        //terrainTracker = GetComponent<TerrainTracker>();
 
         numberofDrivingWheels = 0;
         for (int i = 0; i < numberofWheels; i++)
@@ -110,7 +110,7 @@ public class EngineModel : MonoBehaviour
 
     public void FixedUpdate()
     {
-        
+
         // Sway Bar (Anti-Roll bar)
         if (swayBarActive)
         {
@@ -132,7 +132,7 @@ public class EngineModel : MonoBehaviour
                     travelR = (-WheelR.transform.InverseTransformPoint(hitR.point).y - WheelR.radius) / WheelR.suspensionDistance;
 
                 float antiRollForce = (travelL - travelR) * antiRoll;
-            
+
 
                 if (groundedL)
                     rigidbody.AddForceAtPosition(WheelL.transform.up * -antiRollForce,
@@ -146,11 +146,11 @@ public class EngineModel : MonoBehaviour
     }
     public void UpdateState()
     {
-        if(terrainTracker != null)
-        {
-            UpdateTerrainWheelParameters();
-        }
-        
+        //if(terrainTracker != null)
+        //{
+        //    UpdateTerrainWheelParameters();
+        //}
+
         transmissionRPM = Mathf.Max(wheels[0].collider.rpm, wheels[1].collider.rpm, wheels[2].collider.rpm, wheels[3].collider.rpm);
         engineRPM = transmissionRPM * GearingRatioEff();
         engineRPM = Mathf.Abs(engineRPM);
@@ -188,7 +188,7 @@ public class EngineModel : MonoBehaviour
             {
                 slip = 1 - wheelRpm / avgRpm;
             }
-            
+
         }
 
     }
@@ -221,9 +221,10 @@ public class EngineModel : MonoBehaviour
             if (wheels[i].steering)        // Apply steering
             {
                 float currentAngle = wheels[i].collider.steerAngle;
-                
-                float appliedAngleOuter = currentAngle - (currentAngle - m_SteerAngleOuter) * Time.deltaTime * 5f;
-                float appliedAngleInner = currentAngle - (currentAngle - m_SteerAngleInner) * Time.deltaTime * 5f;
+
+                float appliedAngleOuter = Mathf.Lerp(currentAngle, m_SteerAngleOuter, 3 * Time.deltaTime);
+                float appliedAngleInner = Mathf.Lerp(currentAngle, m_SteerAngleInner, 3 * Time.deltaTime);
+
 
                 if (steering > 0) // Turning right, apply outer and inner steering angle
                 {
@@ -249,12 +250,12 @@ public class EngineModel : MonoBehaviour
                             break;
                     }
                 }
-                
+
             }
 
             if (wheels[i].drive)           // Apply torque
             {
-                wheels[i].collider.motorTorque = m_TransmissionTorque * accel;             
+                wheels[i].collider.motorTorque = m_TransmissionTorque * accel;
             }
 
             if (wheels[i].handBrake)       // Apply handbrake
@@ -274,7 +275,7 @@ public class EngineModel : MonoBehaviour
         }
 
     }
-      
+
     public float TransmissionTorque()
     {
         float TransmissionTorque = engineTorque * GearingRatioEff();
@@ -288,31 +289,31 @@ public class EngineModel : MonoBehaviour
         return Gearing;
     }
 
-    public void UpdateTerrainWheelParameters()
-    {
-        float ForwardStiffness = 1f;
-        float SidewaysStiffness = 1f;
+    //public void UpdateTerrainWheelParameters()
+    //{
+    //    float ForwardStiffness = 1f;
+    //    float SidewaysStiffness = 1f;
 
-        if (terrainTracker.surfaceIndex == 1)
-        {
-            ForwardStiffness = 0.3f;
-            SidewaysStiffness = 0.3f;
-        }
-        if (terrainTracker.surfaceIndex == 2)
-        {
-            ForwardStiffness = 0.6f;
-            SidewaysStiffness = 0.6f;
-        }
-        for (int i = 0; i < numberofWheels; i++)
-        {
-            WheelFrictionCurve fFriction = wheels[i].collider.forwardFriction;
-            WheelFrictionCurve sFriction = wheels[i].collider.sidewaysFriction;
-            fFriction.stiffness = ForwardStiffness;
-            sFriction.stiffness = SidewaysStiffness;
-            wheels[i].collider.forwardFriction = fFriction;
-            wheels[i].collider.sidewaysFriction = sFriction;
-        }
-    }
+    //    if (terrainTracker.surfaceIndex == 1)
+    //    {
+    //        ForwardStiffness = 0.3f;
+    //        SidewaysStiffness = 0.3f;
+    //    }
+    //    if (terrainTracker.surfaceIndex == 2)
+    //    {
+    //        ForwardStiffness = 0.6f;
+    //        SidewaysStiffness = 0.6f;
+    //    }
+    //    for (int i = 0; i < numberofWheels; i++)
+    //    {
+    //        WheelFrictionCurve fFriction = wheels[i].collider.forwardFriction;
+    //        WheelFrictionCurve sFriction = wheels[i].collider.sidewaysFriction;
+    //        fFriction.stiffness = ForwardStiffness;
+    //        sFriction.stiffness = SidewaysStiffness;
+    //        wheels[i].collider.forwardFriction = fFriction;
+    //        wheels[i].collider.sidewaysFriction = sFriction;
+    //    }
+    //}
 
     // ----- Gear shift scheduler - automatic gear ----- // 
     public void ShiftScheduler()

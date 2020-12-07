@@ -14,14 +14,15 @@ public class AIController : MonoBehaviour
     [Header("Driver")]
     public bool autonomousDriving;
     public float targetVelocity;
-    public float throttleCap = 0.8f;
+    public float throttleCap = 1f;
     public float reverseVel = 10f;
     public float brakeVel = 10f;
-    public float reverseAngle = 30f;
+    public float reverseAngle = .7f;
 
     public float vehicleSpeed;
     private float speedError;
-    private float proportionalGain = 0.2f;
+    public float proportionalGain = 0.2f;
+    public float distanceProportionalGain = 1f;      // km/h / m
     private float wheelDistanceLength;
     private float wheelDistanceWidth;
 
@@ -73,7 +74,7 @@ public class AIController : MonoBehaviour
         // get the controller
         engine = GetComponent<EngineModel>();
         vehicleStats = GetComponent<VehicleStats>();
-        
+
         paths = new List<AIPath>();
         foreach (AIPath path in pathMaster.GetComponentsInChildren<AIPath>())
         {
@@ -83,10 +84,10 @@ public class AIController : MonoBehaviour
         pathNodes = new List<PathNode>();
         pathNodes = paths[currentPath].pathNodes;
 
-        wayPoint = new GameObject("Waypoint");
-        
-        wheelDistanceLength = Vector2.Distance(engine.wheels[0].collider.transform.position, engine.wheels[3].collider.transform.position);
-        wheelDistanceWidth = Vector2.Distance(engine.wheels[0].collider.transform.position, engine.wheels[1].collider.transform.position);
+        wayPoint = new GameObject("TargetWaypoint");
+
+        wheelDistanceLength = Vector3.Distance(engine.wheels[0].collider.transform.position, engine.wheels[2].collider.transform.position);
+        wheelDistanceWidth = Vector3.Distance(engine.wheels[0].collider.transform.position, engine.wheels[1].collider.transform.position);
     }
 
     // Update is called once per frame
@@ -109,12 +110,12 @@ public class AIController : MonoBehaviour
         turningRadiusMin = wheelDistanceLength / Mathf.Sin(engine.maximumInnerSteerAngle * Mathf.Deg2Rad); //wheelDistanceLength / Mathf.Atan(engine.maximumInnerSteerAngle * Mathf.Deg2Rad) + wheelDistanceWidth / 2;
         turningRadius = wheelDistanceLength / Mathf.Sin(Mathf.Abs(steer) * engine.maximumInnerSteerAngle * Mathf.Deg2Rad);
 
-        offsetMin = new Vector3(turningRadiusMin * Mathf.Sign(steer), 0, wheelDistanceLength / 2);
+        offsetMin = new Vector3(turningRadiusMin * Mathf.Sign(steer), 0, -wheelDistanceLength / 2);
         turningRadiusCenter = transform.position + transform.TransformVector(offsetMin);
 
         distance = Vector2.Distance(new Vector2(turningRadiusCenter.x, turningRadiusCenter.z), targetPosition);
 
-        withinTurning = distance < turningRadiusMin && Mathf.Abs(relativeVector.x / relativeVector.magnitude) > Mathf.Sin(reverseAngle * Mathf.Deg2Rad) && relativeVector.magnitude > 1;
+        withinTurning = distance < turningRadiusMin - wheelDistanceWidth / 2 && Mathf.Abs(relativeVector.x / relativeVector.magnitude) > Mathf.Sin(reverseAngle * Mathf.Deg2Rad) && relativeVector.magnitude > 3;
         targetBehind = transform.InverseTransformPoint(wayPointPathLong).z < -5;
 
         if (withinTurning || reverse || targetBehind)
@@ -124,7 +125,6 @@ public class AIController : MonoBehaviour
             {
                 steer = Mathf.Sign(steer) * -.5f;
             }
-
         }
         if (reverse && !withinTurning && Mathf.Abs(relativeVector.x / relativeVector.magnitude) < Mathf.Sin(reverseAngle * Mathf.Deg2Rad) && relativeVector.z >= 0)
         {
@@ -145,9 +145,16 @@ public class AIController : MonoBehaviour
     private void Drive()
     {
         vehicleSpeed = engine.speed;        // Vehicle velocity in m/s
+
+        Vector3 relativeVector = transform.InverseTransformPoint(pathNodes[currentNode].transform.position);
+        float positionError = new Vector2(relativeVector.x, relativeVector.z).magnitude;
+
         targetVelocity = pathNodes[currentNode].targetVelocity * 1 / GenericFunctions.SpeedCoefficient(pathNodes[currentNode].speedType) * GenericFunctions.SpeedCoefficient(vehicleStats.m_SpeedType);   // Target velocity in m/s
+        targetVelocity += positionError * distanceProportionalGain;
+
         if (reverse) targetVelocity = -reverseVel;
         float speedError = targetVelocity - vehicleSpeed;
+
         throttle = speedError * proportionalGain;
 
         if (speedError < 0)
@@ -184,9 +191,9 @@ public class AIController : MonoBehaviour
         UpdatePath();
         Vector2 currentPosition = new Vector2(wayPoint.transform.position.x, wayPoint.transform.position.z);
         Vector2 targetPosition = new Vector2(pathNodes[currentNode].transform.position.x, pathNodes[currentNode].transform.position.z);
-        
+
         nodeDistance = Vector2.Distance(currentPosition, targetPosition);
-        if ( nodeDistance < .5f)
+        if (nodeDistance < .5f)
         {
             IncrementNode();
         }
@@ -357,7 +364,7 @@ public class AIController : MonoBehaviour
             {
                 Handles.color = Color.yellow;
 
-                Vector3 offset = new Vector3(turningRadius * Mathf.Sign(steer), 0, -wheelDistanceLength / 2 * 1.1f);
+                Vector3 offset = new Vector3(turningRadius * Mathf.Sign(steer), 0, -wheelDistanceLength / 2);
                 //Vector3 offsetMin = new Vector3(turningRadiusMin * Mathf.Sign(-steer), 0, wheelDistanceLength / 2);
                 Vector3 startPoint;
 

@@ -37,8 +37,10 @@ public class PathNode : MonoBehaviour
 
     public void SetHeight()
     {
-        LayerMask mask = LayerMask.GetMask("Terrain");
-        if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, 250, mask))
+        LayerMask mask1 = LayerMask.GetMask("Terrain");
+        LayerMask mask2 = LayerMask.GetMask("Terrain");
+
+        if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, 250, mask1))
         {
             deltaHeight = targetHeight + transform.InverseTransformPoint(hit.point).y;
 

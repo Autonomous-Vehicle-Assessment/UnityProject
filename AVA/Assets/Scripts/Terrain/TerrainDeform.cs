@@ -176,6 +176,7 @@ public class TerrainDeform : MonoBehaviour
         InitTerrain();
 
     }
+
     private void FixedUpdate()
     {
         foreach (TerrainStruct terrainStruct in terrains)
@@ -725,8 +726,11 @@ public class TerrainDeform : MonoBehaviour
 
     public void InitTerrain()
     {
+
+        TerrainStruct.tiles = 0;
         foreach (TerrainStruct terrainStruct in terrains)
         {
+            TerrainStruct.tiles++;
             if (terrainStruct.enabled)
             {
                 terrainStruct.InitHeights();

@@ -11,8 +11,9 @@ namespace UnityStandardAssets.Vehicles.Car
 
 
         [SerializeField] public TransferCase m_CurrentTransfercase;
-        [SerializeField] public bool TrackPoints;
-        [SerializeField] public int RenderTime = 1;
+        [SerializeField] public bool trackPoints;
+        [SerializeField] public bool active;
+        [SerializeField] public int renderTime = 1;
         private LineRenderer[] lineRenderers;
         private List<Vector3[]> points;
 
@@ -52,7 +53,7 @@ namespace UnityStandardAssets.Vehicles.Car
 
             if (Engine != null)
             {
-                Engine.Move(h, v, footbrake, handbrake);
+                if (active) Engine.Move(h, v, footbrake, handbrake);
             }
 
             string s_Time = Time.time.ToString();
@@ -90,9 +91,9 @@ namespace UnityStandardAssets.Vehicles.Car
                     lineRenderers[i].material = new Material(Shader.Find("Sprites/Default"));
                     lineRenderers[i].material.color = ColorArray[i];
                     lineRenderers[i].widthMultiplier = 0.02f;
-                    lineRenderers[i].positionCount = (int)(RenderTime / Time.fixedDeltaTime);
+                    lineRenderers[i].positionCount = (int)(renderTime / Time.fixedDeltaTime);
 
-                    points.Add(new Vector3[(int)(RenderTime / Time.fixedDeltaTime)]);
+                    points.Add(new Vector3[(int)(renderTime / Time.fixedDeltaTime)]);
                     for (int k = 0; k < points[i].Length; k++)
                     {
                         points[i][k] = Engine.wheels[i].mesh.transform.position;
@@ -113,7 +114,7 @@ namespace UnityStandardAssets.Vehicles.Car
 
             for (int i = 0; i < 4; i++)
             {
-                lineRenderers[i].enabled = TrackPoints;
+                lineRenderers[i].enabled = trackPoints;
             }
         }
     }

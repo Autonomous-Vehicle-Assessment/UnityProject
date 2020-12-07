@@ -1,35 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &903510799591738701
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 559074061634066423}
-  m_Layer: 0
-  m_Name: fenceReimport
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &559074061634066423
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 903510799591738701}
-  m_LocalRotation: {x: -0, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
-  m_Children: []
-  m_Father: {fileID: 8785558998589003897}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1680231308411205164
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,7 +254,7 @@ GameObject:
   - component: {fileID: 7065579267946122383}
   - component: {fileID: 8003821183423610012}
   - component: {fileID: 4441958783722621765}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Body.fence01a_reference.smd.mesh_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -633,7 +603,6 @@ Transform:
   - {fileID: 6143341608304709463}
   - {fileID: 1902503306190602158}
   - {fileID: 2827000586437148220}
-  - {fileID: 559074061634066423}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -684,7 +653,8 @@ GameObject:
   - component: {fileID: 7050597682352503309}
   - component: {fileID: 2620019475822680498}
   - component: {fileID: 1229555366248778503}
-  m_Layer: 0
+  - component: {fileID: 3131224441070401708}
+  m_Layer: 9
   m_Name: Body.fence01a_reference.smd.mesh_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -754,3 +724,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3131224441070401708
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8527227631247170741}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.044349078, y: 1.3451918, z: 1.087249}
+  m_Center: {x: 0.0000001899898, y: 0, z: 0}

@@ -57,7 +57,7 @@ using UnityEngine.UI;
                     break;
             }
 
-            Engine.speed = VehicleRigidBody.velocity.magnitude * m_SpeedCoefficient;
+            Engine.speed = VehicleRigidBody.velocity.magnitude * m_SpeedCoefficient * Mathf.Sign(transform.InverseTransformDirection(VehicleRigidBody.velocity).z);
 
             if (InterfaceObject != null)
             {
