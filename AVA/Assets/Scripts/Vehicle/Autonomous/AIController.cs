@@ -14,14 +14,15 @@ public class AIController : MonoBehaviour
     [Header("Driver")]
     public bool autonomousDriving;
     public float targetVelocity;
-    public float throttleCap = 0.8f;
+    public float throttleCap = 1f;
     public float reverseVel = 10f;
     public float brakeVel = 10f;
     public float reverseAngle = .7f;
 
     public float vehicleSpeed;
     private float speedError;
-    private float proportionalGain = 0.2f;
+    public float proportionalGain = 0.2f;
+    public float distanceProportionalGain = 1f;      // km/h / m
     private float wheelDistanceLength;
     private float wheelDistanceWidth;
 
@@ -83,7 +84,8 @@ public class AIController : MonoBehaviour
         pathNodes = new List<PathNode>();
         pathNodes = paths[currentPath].pathNodes;
 
-        wayPoint = new GameObject("Waypoint");
+        wayPoint = new GameObject("TargetWaypoint");
+        wayPoint.transform.parent = pathMaster;
         
         wheelDistanceLength = Vector2.Distance(engine.wheels[0].collider.transform.position, engine.wheels[3].collider.transform.position);
         wheelDistanceWidth = Vector2.Distance(engine.wheels[0].collider.transform.position, engine.wheels[1].collider.transform.position);
@@ -145,9 +147,16 @@ public class AIController : MonoBehaviour
     private void Drive()
     {
         vehicleSpeed = engine.speed;        // Vehicle velocity in m/s
+
+        Vector3 relativeVector = transform.InverseTransformPoint(pathNodes[currentNode].transform.position);
+        float positionError = new Vector2(relativeVector.x, relativeVector.z).magnitude;
+
         targetVelocity = pathNodes[currentNode].targetVelocity * 1 / GenericFunctions.SpeedCoefficient(pathNodes[currentNode].speedType) * GenericFunctions.SpeedCoefficient(vehicleStats.m_SpeedType);   // Target velocity in m/s
+        targetVelocity += positionError * distanceProportionalGain;
+        
         if (reverse) targetVelocity = -reverseVel;
         float speedError = targetVelocity - vehicleSpeed;
+
         throttle = speedError * proportionalGain;
 
         if (speedError < 0)

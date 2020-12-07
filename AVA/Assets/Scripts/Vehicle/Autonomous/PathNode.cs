@@ -38,7 +38,7 @@ public class PathNode : MonoBehaviour
     {
         if (eventObject != null)
         {
-            eventObject.gameObject.SetActive(false);
+            eventObject.gameObject.SetActive(true);
         }
     }
 

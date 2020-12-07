@@ -323,6 +323,11 @@ PrefabInstance:
       propertyPath: showDriver
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5678179140537447668, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: distanceProportionalGain
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5760125663579672948, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: m_Layer
