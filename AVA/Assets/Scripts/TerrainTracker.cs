@@ -5,30 +5,33 @@ using UnityEngine;
 public class TerrainTracker : MonoBehaviour
 {
     public int surfaceIndex = 0;
-    public float[] surfaceValues;
+    public float[] frictionValues;
 
-    private Terrain terrain;
-    private TerrainData terrainData;
-    private Vector3 terrainPos;
+    public Transform terrainMaster;
+    private Terrain[] terrains;
 
     // Use this for initialization
     void Start()
     {
-
-        terrain = Terrain.activeTerrain;
-        terrainData = terrain.terrainData;
-        terrainPos = terrain.transform.position;
+        terrains = terrainMaster.GetComponentsInChildren<Terrain>();
 
     }
 
-    // Update is called once per frame
-    void Update()
+    private Terrain GetActiveTerrain(Vector3 wheelPos)
     {
-        surfaceIndex = GetMainTexture(transform.position);
-        surfaceValues = GetTextureMix(transform.position);
-    }
+        Terrain activeTerrain = new Terrain();
+        foreach (Terrain terrain in terrains)
+        {
+            Vector3 position = terrain.transform.position;
+            float mapSize = terrain.terrainData.size.x;
 
-    private float[] GetTextureMix(Vector3 WorldPos)
+            bool withinTerrain = (wheelPos.x <= position.x + mapSize && wheelPos.x >= position.x && wheelPos.z <= position.z + mapSize && wheelPos.z >= position.z);
+            if (withinTerrain) activeTerrain = terrain;
+        }
+
+        return activeTerrain;
+    }
+    private float[] GetTextureMix(Vector3 wheelPos)
     {
         // returns an array containing the relative mix of textures
         // on the main terrain at this world position.
@@ -36,9 +39,13 @@ public class TerrainTracker : MonoBehaviour
         // The number of values in the array will equal the number
         // of textures added to the terrain.
 
+        Terrain terrain = GetActiveTerrain(wheelPos);
+        TerrainData terrainData = terrain.terrainData;
+        Vector3 terrainPos = terrain.transform.position;
+
         // calculate which splat map cell the worldPos falls within (ignoring y)
-        int mapX = (int)(((WorldPos.x - terrainPos.x) / terrainData.size.x) * terrainData.alphamapWidth);
-        int mapZ = (int)(((WorldPos.z - terrainPos.z) / terrainData.size.z) * terrainData.alphamapHeight);
+        int mapX = (int)(((wheelPos.x - terrainPos.x) / terrainData.size.x) * terrainData.alphamapWidth);
+        int mapZ = (int)(((wheelPos.z - terrainPos.z) / terrainData.size.z) * terrainData.alphamapHeight);
 
         // get the splat data for this cell as a 1x1xN 3d array (where N = number of textures)
         float[,,] splatmapData = terrainData.GetAlphamaps(mapX, mapZ, 1, 1);
@@ -53,7 +60,7 @@ public class TerrainTracker : MonoBehaviour
         return cellMix;
     }
 
-    private int GetMainTexture(Vector3 WorldPos)
+    public int GetMainTexture(Vector3 WorldPos)
     {
         // returns the zero-based index of the most dominant texture
         // on the main terrain at this world position.
