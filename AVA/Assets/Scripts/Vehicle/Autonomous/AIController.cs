@@ -17,10 +17,9 @@ public class AIController : MonoBehaviour
     public float throttleCap = 1f;
     public float reverseVel = 10f;
     public float brakeVel = 10f;
-    public float reverseAngle = .7f;
+    public float reverseAngle = 30f;
 
     public float vehicleSpeed;
-    private float speedError;
     public float proportionalGain = 0.2f;
     public float distanceProportionalGain = 1f;      // km/h / m
     private float wheelDistanceLength;
@@ -144,8 +143,7 @@ public class AIController : MonoBehaviour
 
     private void Drive()
     {
-        vehicleSpeed = engine.speed;        // Vehicle velocity in m/s
-
+        vehicleSpeed = engine.speed;
         Vector3 relativeVector = transform.InverseTransformPoint(pathNodes[currentNode].transform.position);
         float positionError = new Vector2(relativeVector.x, relativeVector.z).magnitude;
 
@@ -153,8 +151,8 @@ public class AIController : MonoBehaviour
         targetVelocity += positionError * distanceProportionalGain;
 
         if (reverse) targetVelocity = -reverseVel;
-        float speedError = targetVelocity - vehicleSpeed;
 
+        float speedError = targetVelocity - vehicleSpeed;
         throttle = speedError * proportionalGain;
 
         if (speedError < 0)

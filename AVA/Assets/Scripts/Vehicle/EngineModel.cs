@@ -83,7 +83,7 @@ public class EngineModel : MonoBehaviour
     public float antiRoll = 5000.0f;
 
     //TerrainTracker
-    //public TerrainTracker terrainTracker;
+    public TerrainTracker terrainTracker;
 
     // Initialize
     public void Awake()
@@ -95,7 +95,7 @@ public class EngineModel : MonoBehaviour
         }
 
         rigidbody = GetComponent<Rigidbody>();
-        //terrainTracker = GetComponent<TerrainTracker>();
+        terrainTracker = GetComponent<TerrainTracker>();
 
         numberofDrivingWheels = 0;
         for (int i = 0; i < numberofWheels; i++)
@@ -146,10 +146,10 @@ public class EngineModel : MonoBehaviour
     }
     public void UpdateState()
     {
-        //if(terrainTracker != null)
-        //{
-        //    UpdateTerrainWheelParameters();
-        //}
+        if (terrainTracker != null)
+        {
+            UpdateTerrainWheelParameters();
+        }
 
         transmissionRPM = Mathf.Max(wheels[0].collider.rpm, wheels[1].collider.rpm, wheels[2].collider.rpm, wheels[3].collider.rpm);
         engineRPM = transmissionRPM * GearingRatioEff();
