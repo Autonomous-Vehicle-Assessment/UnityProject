@@ -290,21 +290,11 @@ public class EngineModel : MonoBehaviour
 
     public void UpdateTerrainWheelParameters()
     {
-        float ForwardStiffness = 1f;
-        float SidewaysStiffness = 1f;
-
-        if (terrainTracker.surfaceIndex == 1)
-        {
-            ForwardStiffness = 0.3f;
-            SidewaysStiffness = 0.3f;
-        }
-        if (terrainTracker.surfaceIndex == 2)
-        {
-            ForwardStiffness = 0.6f;
-            SidewaysStiffness = 0.6f;
-        }
         for (int i = 0; i < numberofWheels; i++)
         {
+            int surfaceIndex = terrainTracker.GetMainTexture(wheels[i].collider.transform.position);
+            float ForwardStiffness = terrainTracker.frictionValues[surfaceIndex];
+            float SidewaysStiffness = terrainTracker.frictionValues[surfaceIndex];
             WheelFrictionCurve fFriction = wheels[i].collider.forwardFriction;
             WheelFrictionCurve sFriction = wheels[i].collider.sidewaysFriction;
             fFriction.stiffness = ForwardStiffness;
