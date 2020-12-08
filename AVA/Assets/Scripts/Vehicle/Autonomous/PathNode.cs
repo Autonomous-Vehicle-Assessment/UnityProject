@@ -26,12 +26,13 @@ public class PathNode : MonoBehaviour
 
 
     [Header("Leader Follower TBD")]
-    public Transform leaderFollower;
+    public WaypointGenerator[] leaderFollowers;
+    public EngineModel[] leaders;
     public bool leaderActive;
     public LeaderFollowerMode leaderFollowerMode;
 
     [Header("Waypoint Driver TBD")]
-    public AIController driver;
+    public WaypointController driver;
     public bool driverActive;
     public bool skipPath;
     public bool uAVThreat;
@@ -65,11 +66,28 @@ public class PathNode : MonoBehaviour
             eventObject.rotation = eventObject.rotation * Quaternion.Euler(moveOrientation);
         }
 
-        if (leaderFollower != null)
+        if (leaderFollowers != null)
         {
             // Set leader follower state and mode
-
-
+            switch (leaderFollowerMode)
+            {
+                case LeaderFollowerMode.Column:
+                    break;
+                case LeaderFollowerMode.Diamond:
+                    Vector3[] diamondFormation = { new Vector3(-5,0,-1), new Vector3(5, 0, -1), new Vector3(0, 0, -5) };
+                    int index = 0;
+                    foreach (WaypointGenerator waypointGenerator in leaderFollowers)
+                    {
+                        waypointGenerator.leader = leaders[index];
+                        waypointGenerator.offset = diamondFormation[index];
+                        index++;
+                    }
+                    break;
+                case LeaderFollowerMode.SideBySide:
+                    break;
+                default:
+                    break;
+            }
 
         }
         if (driver != null)

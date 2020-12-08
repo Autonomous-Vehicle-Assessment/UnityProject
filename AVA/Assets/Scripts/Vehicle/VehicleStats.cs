@@ -4,67 +4,111 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-
+[RequireComponent(typeof(DataLogging))]
 public class VehicleStats : MonoBehaviour
 {
-    private GameObject InterfaceObject;
-    private SpeedometerScript Speedometer;
-    private WindowGraph GraphObject;
-    private Text GearField;
-    private Rigidbody VehicleRigidBody;
-    private EngineModel Engine;
-    private Graph graph;
+    [Header("Vehicle State")]
+    public SpeedType speedType;
+    public float speed;
+    public int gear;
 
-    public SpeedType m_SpeedType;
-    private string s_SpeedType;
-    private float m_SpeedCoefficient;
-    private List<int> SpeedCurve;
+    [Header("Path Tracker")]
+    public bool trackPoints;
+    public int renderTime = 3;
+    private LineRenderer[] lineRenderers;
+    private List<Vector3[]> points;
+
+    private DataLogging dataLogger;
+
+    // UI Elements
+    private GameObject interfaceObject;
+    private SpeedometerScript speedometer;
+    private WindowGraph graphObject;
+    private Text gearField;
+    private EngineModel engine;
+    private Graph graph;
 
     // Start is called before the first frame update
     private void Awake()
     {
-        InterfaceObject = GameObject.Find("UI");
-        Engine = GetComponent<EngineModel>();
-        VehicleRigidBody = GetComponent<Rigidbody>();
+        interfaceObject = GameObject.Find("UI");
+        engine = GetComponent<EngineModel>();
+        dataLogger = GetComponent<DataLogging>();
 
-        if (InterfaceObject != null)
+        if (interfaceObject != null)
         {
-            Speedometer = InterfaceObject.GetComponent<SpeedometerScript>();
-            GraphObject = InterfaceObject.transform.Find("Canvas").gameObject.transform.Find("WindowGraph").GetComponent<WindowGraph>();
-            graph = InterfaceObject.GetComponent<Graph>();
-            GearField = InterfaceObject.transform.Find("Canvas").gameObject.transform.Find("Gear").GetComponent<Text>();
+            speedometer = interfaceObject.GetComponent<SpeedometerScript>();
+            graphObject = interfaceObject.transform.Find("Canvas").gameObject.transform.Find("WindowGraph").GetComponent<WindowGraph>();
+            graph = interfaceObject.GetComponent<Graph>();
+            gearField = interfaceObject.transform.Find("Canvas").gameObject.transform.Find("Gear").GetComponent<Text>();
         }
-            
-        (s_SpeedType, m_SpeedCoefficient) = GenericFunctions.SpeedTypeConverter(m_SpeedType);
     }
 
     // Update is called once per frame
     private void FixedUpdate()
     {
-        switch (m_SpeedType)
+        engine.UpdateState();
+
+        speed = engine.speed;
+        gear = engine.currentGear + 1;
+
+        if (interfaceObject != null)
         {
-            case SpeedType.MPH:
-                s_SpeedType = " MPH";
-                m_SpeedCoefficient = 2.23693629f;
-                break;
-            case SpeedType.KPH:
-                s_SpeedType = " km/h";
-                m_SpeedCoefficient = 3.6f;
-                break;
-            case SpeedType.MPS:
-                s_SpeedType = " m/s";
-                m_SpeedCoefficient = 1.0f;
-                break;
+            graph.UpdateGraph(engine.speed, engine.engineRPM, engine.currentGear + 1);
+            speedometer.UpdateDisplay(engine.speed, engine.engineRPM, GenericFunctions.SpeedTypeConverter(speedType).Item1);
+
+            gearField.text = string.Format("{0}{1}", engine.currentGear + 1, GenericFunctions.ToOrdinal(engine.currentGear + 1));
         }
 
-        Engine.speed = VehicleRigidBody.velocity.magnitude * m_SpeedCoefficient * Mathf.Sign(transform.InverseTransformDirection(VehicleRigidBody.velocity).z);
 
-        if (InterfaceObject != null)
+        dataLogger.UpdateLog();
+
+        UpdateLineRenderer();
+    }
+
+    /// <summary>
+    /// Creates Line Renderer master and sub line renderes to draw lines from wheel centers.
+    /// </summary>
+    private void UpdateLineRenderer()
+    {
+        if (lineRenderers == null || points == null)
         {
-            graph.UpdateGraph(Engine.speed, Engine.engineRPM, Engine.currentGear + 1);
-            Speedometer.UpdateDisplay(Engine.speed, Engine.engineRPM, s_SpeedType);
+            Color[] ColorArray = { new Color(1, 0, 0), new Color(1, 0, 0), new Color(0, 0, 1), new Color(0, 0, 1) };
+            GameObject lineRendererMaster = new GameObject("Line Renderer Master");
+            lineRenderers = new LineRenderer[4];
+            points = new List<Vector3[]>();
+            for (int i = 0; i < 4; i++)
+            {
+                GameObject lineRenderer = new GameObject($"Line Renderer ({i})");
+                lineRenderer.transform.parent = lineRendererMaster.transform;
+                lineRenderers[i] = lineRenderer.AddComponent<LineRenderer>();
+                lineRenderers[i].material = new Material(Shader.Find("Sprites/Default"));
+                lineRenderers[i].material.color = ColorArray[i];
+                lineRenderers[i].widthMultiplier = 0.02f;
+                lineRenderers[i].positionCount = (int)(renderTime / Time.fixedDeltaTime);
 
-            GearField.text = string.Format("{0}{1}", Engine.currentGear + 1, GenericFunctions.ToOrdinal(Engine.currentGear + 1));
+                points.Add(new Vector3[(int)(renderTime / Time.fixedDeltaTime)]);
+                for (int k = 0; k < points[i].Length; k++)
+                {
+                    points[i][k] = engine.wheels[i].mesh.transform.position;
+                }
+                lineRenderers[i].SetPositions(points[i]);
+            }
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            for (int k = 0; k < points[i].Length - 1; k++)
+            {
+                points[i][k] = points[i][k + 1];
+            }
+            points[i][points[i].Length - 1] = engine.wheels[i].mesh.transform.position;
+            lineRenderers[i].SetPositions(points[i]);
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            lineRenderers[i].enabled = trackPoints;
         }
     }
 }

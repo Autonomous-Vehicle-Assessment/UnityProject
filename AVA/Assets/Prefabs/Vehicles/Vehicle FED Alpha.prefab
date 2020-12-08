@@ -415,9 +415,9 @@ GameObject:
   - component: {fileID: 900966193508289104}
   - component: {fileID: 2315250435903404941}
   - component: {fileID: 5462843028766989911}
+  - component: {fileID: 7513124977409783803}
   - component: {fileID: 2211430127117835933}
   - component: {fileID: 454163007198815611}
-  - component: {fileID: 8284222869394974088}
   m_Layer: 11
   m_Name: Vehicle FED Alpha
   m_TagString: Untagged
@@ -470,7 +470,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bfa4d5e0e1b7c24d9f0530121bd93ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SpeedType: 0
+  speedType: 0
+  speed: 0
+  gear: 0
+  trackPoints: 0
+  renderTime: 3
 --- !u!114 &900966193508289104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,10 +487,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da82fe0b55b2dee479a157abb8baf781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTransfercase: 1
-  trackPoints: 0
   active: 0
-  renderTime: 1
+  speed: 0
+  currentTransfercase: 1
+  throttle: 0
+  brake: 0
+  handbrake: 0
+  steer: 0
 --- !u!114 &2315250435903404941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -798,6 +805,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bb0c4eb536d0df4aad4bde7d3920c8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7513124977409783803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900966193508289119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d85e66484594da4cbb4f14e49c59996, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 0
+  gizmo: 0
+  vehicleSpeed: 0
+  targetVelocity: 0
+  distanceProportionalGain: 0
+  planRange: 30
+  driverRange: 10
+  waypointRange: 3
+  objectDistance: 10
+  throttle: 0
+  brake: 0
+  steer: 0
+  currentNode: 0
+  currentPath: 0
+  pathMaster: {fileID: 0}
+  alternativeRoutes: 40
+  routeAngles: 50
+  avoidanceMask:
+    serializedVersion: 2
+    m_Bits: 16896
 --- !u!114 &2211430127117835933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -852,42 +891,6 @@ MonoBehaviour:
   maxRolloffDistance: 500
   dopplerLevel: 1
   useDoppler: 0
---- !u!114 &8284222869394974088
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900966193508289119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbe5d6c7b29ed2345a0f90d22ebe406b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pathMaster: {fileID: 0}
-  autonomousDriving: 0
-  targetVelocity: 0
-  throttleCap: 1
-  reverseVel: 10
-  brakeVel: 10
-  reverseAngle: 0.7
-  vehicleSpeed: 0
-  proportionalGain: 0.2
-  distanceProportionalGain: 1
-  showTurningRadius: 1
-  showDriver: 1
-  currentNode: 0
-  currentPath: 0
-  planRange: 30
-  driverRange: 20
-  waypointRange: 3
-  objectDistance: 10
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 16896
-  throttle: 0
-  brake: 0
-  steer: 0
 --- !u!1 &900966194502703902
 GameObject:
   m_ObjectHideFlags: 0
@@ -2816,7 +2819,7 @@ MeshCollider:
   m_GameObject: {fileID: 4964615144030749111}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
@@ -2913,7 +2916,6 @@ GameObject:
   - component: {fileID: 1646690900257856013}
   - component: {fileID: 4351260747101054770}
   - component: {fileID: 2671545343743011760}
-  - component: {fileID: 3108249335100775459}
   m_Layer: 0
   m_Name: Shell
   m_TagString: Untagged
@@ -2984,20 +2986,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3108249335100775459
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5590578201206577590}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -4974468161004867859, guid: b8d56ca716fabd94c8ca12984a11410b, type: 3}
 --- !u!1 &5619978131206007089
 GameObject:
   m_ObjectHideFlags: 0

@@ -56,6 +56,23 @@ public class LevelManager : MonoBehaviour
             blackOut = !blackOut;
             BlackoutUpdate();
         }
+
+        if (Input.GetKeyUp(KeyCode.Alpha1))
+        {
+            Time.timeScale = .2f;
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha2))
+        {
+            Time.timeScale = 1f;
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha3))
+        {
+            Time.timeScale = 2f;
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha4))
+        {
+            Time.timeScale = 5f;
+        }
     }
 
     public void BlackoutUpdate()

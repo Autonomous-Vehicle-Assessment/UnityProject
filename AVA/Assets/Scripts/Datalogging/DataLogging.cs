@@ -7,12 +7,20 @@ using UnityEngine;
 public class DataLogging : MonoBehaviour
 {
     private string filePath;
+    private EngineModel engine;
 
     // Start is called before the first frame update
     void Start()
     {
+        engine = GetComponent<EngineModel>();
+
+        InitializeLogFile();
+    }
+
+    private void InitializeLogFile()
+    {
         string LogTime = DateTime.UtcNow.ToLocalTime().ToString("dd_MM_HH_mm_ss");
-        filePath = (Application.dataPath).Replace("/Assets","/Logs/DataLogging/" + LogTime + ".csv");
+        filePath = (Application.dataPath).Replace("/Assets", "/Logs/DataLogging/" + LogTime + ".csv");
 
         if (File.Exists(filePath))
         {
@@ -30,12 +38,11 @@ public class DataLogging : MonoBehaviour
         WriteToFile("Time; Velocity; WheelForce; TransmissionTorque; Gear; EngineRPM; EngineTorque \n");
     }
 
-
     /// <summary>
     /// Stamp vehicle state in log file.
     /// </summary>
     /// <param name="engine">Vehicle model</param>
-    public void Stamp(EngineModel engine)
+    public void UpdateLog()
     {
         string s_Time = Time.time.ToString();
         string s_Velocity = engine.speed.ToString();

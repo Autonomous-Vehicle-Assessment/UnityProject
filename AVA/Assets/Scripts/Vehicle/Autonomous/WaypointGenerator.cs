@@ -10,9 +10,12 @@ public class WaypointGenerator : MonoBehaviour
 
     private void Update()
     {
-        pathNode.transform.position = leader.transform.TransformPoint(offset);
+        Vector3 leaderPos = leader.transform.TransformPoint(offset);
+        Vector3 currentPos = pathNode.transform.position;
+        pathNode.transform.position = Vector3.Lerp(currentPos,leaderPos, 10 * Time.deltaTime);
         pathNode.targetVelocity = leader.speed;
         pathNode.SetHeight();
+        pathNode.Activate();
     }
 
     private void OnDrawGizmosSelected()
