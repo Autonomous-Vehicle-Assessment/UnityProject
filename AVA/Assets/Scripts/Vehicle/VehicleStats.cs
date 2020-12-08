@@ -61,7 +61,7 @@ public class VehicleStats : MonoBehaviour
         }
 
 
-        dataLogger.UpdateLog();
+        // dataLogger.UpdateLog();
 
         UpdateLineRenderer();
     }

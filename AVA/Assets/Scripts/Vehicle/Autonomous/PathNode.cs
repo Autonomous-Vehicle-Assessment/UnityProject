@@ -28,11 +28,13 @@ public class PathNode : MonoBehaviour
     [Header("Leader Follower TBD")]
     public WaypointGenerator[] leaderFollowers;
     public EngineModel[] leaders;
-    public bool leaderActive;
+    public bool leaderState;
     public LeaderFollowerMode leaderFollowerMode;
 
     [Header("Waypoint Driver TBD")]
-    public WaypointController driver;
+    public WaypointController[] driver;
+    public PathLoader[] pathMasters;
+    public float driverRange;
     public bool driverActive;
     public bool skipPath;
     public bool uAVThreat;
@@ -66,32 +68,73 @@ public class PathNode : MonoBehaviour
             eventObject.rotation = eventObject.rotation * Quaternion.Euler(moveOrientation);
         }
 
+        int index = 0;
+
         if (leaderFollowers != null)
         {
-            // Set leader follower state and mode
-            switch (leaderFollowerMode)
+            if(leaders.Length != 0)
             {
-                case LeaderFollowerMode.Column:
-                    break;
-                case LeaderFollowerMode.Diamond:
-                    Vector3[] diamondFormation = { new Vector3(-5,0,-1), new Vector3(5, 0, -1), new Vector3(0, 0, -5) };
-                    int index = 0;
-                    foreach (WaypointGenerator waypointGenerator in leaderFollowers)
-                    {
-                        waypointGenerator.leader = leaders[index];
-                        waypointGenerator.offset = diamondFormation[index];
-                        index++;
-                    }
-                    break;
-                case LeaderFollowerMode.SideBySide:
-                    break;
-                default:
-                    break;
+                // Set leader follower state and mode
+                switch (leaderFollowerMode)
+                {
+                    case LeaderFollowerMode.Column:
+                        Vector3 columnFormation = new Vector3(0, 0, -4);
+                        foreach (WaypointGenerator waypointGenerator in leaderFollowers)
+                        {
+                            waypointGenerator.leader = leaders[index];
+                            waypointGenerator.offset = columnFormation;
+                            index++;
+                        }
+                        break;
+                    case LeaderFollowerMode.Diamond:
+                        Vector3[] diamondFormation = { new Vector3(-5, 0, 4), new Vector3(5, 0, 4), new Vector3(0, 0, -4) };
+                        foreach (WaypointGenerator waypointGenerator in leaderFollowers)
+                        {
+                            waypointGenerator.leader = leaders[index];
+                            waypointGenerator.offset = diamondFormation[index];
+                            index++;
+                        }
+                        break;
+                    case LeaderFollowerMode.SideBySide:
+                        Vector3[] SideBySide = { new Vector3(0, 0, 0), new Vector3(5, 0, 11), new Vector3(5, 0, 0) };
+                        foreach (WaypointGenerator waypointGenerator in leaderFollowers)
+                        {
+                            waypointGenerator.leader = leaders[index];
+                            waypointGenerator.offset = SideBySide[index];
+                            index++;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            
+
+            foreach (WaypointGenerator waypointGenerator in leaderFollowers)
+            {
+                waypointGenerator.active = leaderState;
+                waypointGenerator.pathNode.activeNode = leaderState;
             }
 
         }
+        index = 0;
+
         if (driver != null)
         {
+            foreach (WaypointController waypointController in driver)
+            {
+                if(driverRange != 0) waypointController.driverRange = driverRange;
+                if (pathMasters.Length == driver.Length) 
+                {
+                    waypointController.pathMaster = pathMasters[index];
+                    waypointController.InitPath();
+                    waypointController.currentNode = 0;
+                    waypointController.currentPath = 0;
+                }
+
+                index++;
+                
+            }
             if (uAVThreat)
             {
                 // Skip to UAV alternate return path   

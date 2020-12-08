@@ -100,19 +100,7 @@ public class WaypointController : MonoBehaviour
         engine = GetComponent<EngineModel>();
         vehicleStats = GetComponent<VehicleStats>();
 
-        paths = new List<WaypointPath>();
-        foreach (WaypointPath path in pathMaster.GetComponentsInChildren<WaypointPath>())
-        {
-            paths.Add(path);
-        }
-
-        pathNodes = new List<PathNode>();
-        pathNodes = paths[currentPath].pathNodes;
-
-        wayPoint = new GameObject("TargetWaypoint");
-        
-        wayPoint.transform.parent = pathMaster.transform;
-
+        InitPath();
 
         vehicleAvoidanceLayer = LayerMask.GetMask("Vehicle");
 
@@ -763,6 +751,22 @@ public class WaypointController : MonoBehaviour
                 Gizmos.DrawWireSphere(turningRadiusCenter, .5f);
             }
         }
+    }
+
+    public void InitPath()
+    {
+        paths = new List<WaypointPath>();
+        foreach (WaypointPath path in pathMaster.GetComponentsInChildren<WaypointPath>())
+        {
+            paths.Add(path);
+        }
+
+        pathNodes = new List<PathNode>();
+        pathNodes = paths[currentPath].pathNodes;
+
+        wayPoint = new GameObject("TargetWaypoint");
+
+        wayPoint.transform.parent = pathMaster.transform;
     }
 
     private Vector3 GetClosestPointOnInfiniteLine(Vector3 point, Vector3 line_start, Vector3 line_end)
