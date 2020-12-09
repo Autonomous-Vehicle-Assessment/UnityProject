@@ -821,11 +821,11 @@ MonoBehaviour:
   gizmo: 0
   vehicleSpeed: 0
   targetVelocity: 0
-  distanceProportionalGain: 0
-  planRange: 30
-  driverRange: 10
+  distanceProGain: 0.01
+  velocityDepDist: 0.1
+  planRange: 50
+  driverRange: 50
   waypointRange: 3
-  objectDistance: 10
   throttle: 0
   brake: 0
   steer: 0
@@ -834,6 +834,7 @@ MonoBehaviour:
   pathMaster: {fileID: 0}
   alternativeRoutes: 40
   routeAngles: 50
+  objectDistance: 10
   avoidanceMask:
     serializedVersion: 2
     m_Bits: 16896
