@@ -820,6 +820,7 @@ MonoBehaviour:
   active: 0
   gizmo: 0
   vehicleSpeed: 0
+  park: 0
   targetVelocity: 0
   distanceProGain: 0.01
   velocityDepDist: 0.1
@@ -857,9 +858,9 @@ MonoBehaviour:
   - 0.44
   - 0.44
   - 0.44
-  - 0.37
-  - 0.37
-  - 0.74
+  - 0.44
+  - 0.6
+  - 0.44
   - 0.94
   - 0.94
   - 0.94
@@ -1259,7 +1260,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.2
   m_Range: 50
   m_SpotAngle: 40
   m_InnerSpotAngle: 21.80208
@@ -2240,7 +2241,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3485467431756251519}
-  m_Layer: 11
+  m_Layer: 16
   m_Name: Wheel Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3111,8 +3112,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.8584906, g: 0.06074225, b: 0.21507235, a: 1}
-  m_Intensity: 1
-  m_Range: 3
+  m_Intensity: 0.2
+  m_Range: 5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -3365,8 +3366,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.8584906, g: 0.06074225, b: 0.21507235, a: 1}
-  m_Intensity: 1
-  m_Range: 3
+  m_Intensity: 0.2
+  m_Range: 5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -3730,7 +3731,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.2
   m_Range: 50
   m_SpotAngle: 40
   m_InnerSpotAngle: 21.80208

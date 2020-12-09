@@ -25,6 +25,7 @@ public class WaypointController : MonoBehaviour
 
     [Header("Vehicle State")]
     public float vehicleSpeed;
+    public bool park;
 
     private float turningRadiusMin;
     private Vector3 turningRadiusCenter;
@@ -111,9 +112,19 @@ public class WaypointController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        CheckWaypointDistance();
-        Steer();
-        Drive();
+        if (park)
+        {
+            steer = 0;
+            throttle = 0;
+            brake = 1;
+        }
+        else
+        {
+            CheckWaypointDistance();
+            Steer();
+            Drive();
+        }
+
         if (active) engine.Move(steer, throttle, brake, 0);
 
     }

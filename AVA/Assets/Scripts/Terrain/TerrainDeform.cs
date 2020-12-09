@@ -105,7 +105,7 @@ public class TerrainDeform : MonoBehaviour
     public Material defaultMaterial;
     public bool debug;
 
-    public GameObject wheelColliderMaster;
+    public GameObject[] wheelColliderMaster;
     private WheelCollider[] wheelColliders;
 
     [Space(10)]
@@ -134,7 +134,17 @@ public class TerrainDeform : MonoBehaviour
     private void Awake()
     {
         // Load all wheelcolliders from master
-        wheelColliders = wheelColliderMaster.GetComponentsInChildren<WheelCollider>();
+        List<WheelCollider> colliderList = new List<WheelCollider>();
+        foreach (GameObject _wheelColliderMaster in wheelColliderMaster)
+        {
+            foreach (WheelCollider wheelCollider in _wheelColliderMaster.GetComponentsInChildren<WheelCollider>())
+            {
+                colliderList.Add(wheelCollider);
+            }
+            
+        }
+        wheelColliders = colliderList.ToArray();
+
         InitTerrain();
         soilType = new SoilType(TerrainType.KRCFineGrain);
     }
@@ -644,7 +654,16 @@ public class TerrainDeform : MonoBehaviour
         }
 
         // Load all wheelcolliders from master
-        wheelColliders = wheelColliderMaster.GetComponentsInChildren<WheelCollider>();
+        List<WheelCollider> colliderList = new List<WheelCollider>();
+        foreach (GameObject _wheelColliderMaster in wheelColliderMaster)
+        {
+            foreach (WheelCollider wheelCollider in _wheelColliderMaster.GetComponentsInChildren<WheelCollider>())
+            {
+                colliderList.Add(wheelCollider);
+            }
+
+        }
+        wheelColliders = colliderList.ToArray();
     }
     public void WrapTerrain()
     {

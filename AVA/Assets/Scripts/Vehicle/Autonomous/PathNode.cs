@@ -5,7 +5,9 @@ public enum LeaderFollowerMode
 {
     Column,
     Diamond,
-    SideBySide
+    SideBySide,
+    EchelonRight,
+    EchelonLeft
 }
 
 public class PathNode : MonoBehaviour
@@ -26,7 +28,7 @@ public class PathNode : MonoBehaviour
 
 
     [Header("Leader Follower TBD")]
-    public WaypointGenerator[] leaderFollowers;
+    public WaypointGenerator[] followers;
     public EngineModel[] leaders;
     public bool leaderState;
     public LeaderFollowerMode leaderFollowerMode;
@@ -36,6 +38,7 @@ public class PathNode : MonoBehaviour
     public PathLoader[] pathMasters;
     public float driverRange;
     public bool driverActive;
+    public bool park;
     public bool skipPath;
     public bool uAVThreat;
 
@@ -70,7 +73,7 @@ public class PathNode : MonoBehaviour
 
         int index = 0;
 
-        if (leaderFollowers != null)
+        if (followers != null)
         {
             if(leaders.Length != 0)
             {
@@ -79,7 +82,7 @@ public class PathNode : MonoBehaviour
                 {
                     case LeaderFollowerMode.Column:
                         Vector3 columnFormation = new Vector3(0, 0, -4);
-                        foreach (WaypointGenerator waypointGenerator in leaderFollowers)
+                        foreach (WaypointGenerator waypointGenerator in followers)
                         {
                             waypointGenerator.leader = leaders[index];
                             waypointGenerator.offset = columnFormation;
@@ -88,7 +91,7 @@ public class PathNode : MonoBehaviour
                         break;
                     case LeaderFollowerMode.Diamond:
                         Vector3[] diamondFormation = { new Vector3(-5, 0, 4), new Vector3(5, 0, 4), new Vector3(0, 0, -4) };
-                        foreach (WaypointGenerator waypointGenerator in leaderFollowers)
+                        foreach (WaypointGenerator waypointGenerator in followers)
                         {
                             waypointGenerator.leader = leaders[index];
                             waypointGenerator.offset = diamondFormation[index];
@@ -96,11 +99,29 @@ public class PathNode : MonoBehaviour
                         }
                         break;
                     case LeaderFollowerMode.SideBySide:
-                        Vector3[] SideBySide = { new Vector3(0, 0, 0), new Vector3(5, 0, 11), new Vector3(5, 0, 0) };
-                        foreach (WaypointGenerator waypointGenerator in leaderFollowers)
+                        Vector3[] SideBySide = { new Vector3(0, 0, 0), new Vector3(5, 0, 13), new Vector3(5, 0, 0) };
+                        foreach (WaypointGenerator waypointGenerator in followers)
                         {
                             waypointGenerator.leader = leaders[index];
                             waypointGenerator.offset = SideBySide[index];
+                            index++;
+                        }
+                        break;
+                    case LeaderFollowerMode.EchelonRight:
+                        Vector3 EchelonRight = new Vector3(1, 0, -4);
+                        foreach (WaypointGenerator waypointGenerator in followers)
+                        {
+                            waypointGenerator.leader = leaders[index];
+                            waypointGenerator.offset = EchelonRight;
+                            index++;
+                        }
+                        break;
+                    case LeaderFollowerMode.EchelonLeft:
+                        Vector3 EchelonLeft = new Vector3(-1, 0, -4);
+                        foreach (WaypointGenerator waypointGenerator in followers)
+                        {
+                            waypointGenerator.leader = leaders[index];
+                            waypointGenerator.offset = EchelonLeft;
                             index++;
                         }
                         break;
@@ -110,7 +131,7 @@ public class PathNode : MonoBehaviour
             }
             
 
-            foreach (WaypointGenerator waypointGenerator in leaderFollowers)
+            foreach (WaypointGenerator waypointGenerator in followers)
             {
                 waypointGenerator.active = leaderState;
                 waypointGenerator.pathNode.activeNode = leaderState;
@@ -131,6 +152,8 @@ public class PathNode : MonoBehaviour
                     waypointController.currentNode = 0;
                     waypointController.currentPath = 0;
                 }
+
+                waypointController.park = park;
 
                 index++;
                 
