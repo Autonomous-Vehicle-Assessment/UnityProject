@@ -33,17 +33,17 @@ public class StandardWheel
 public class EngineModel : MonoBehaviour
 {
     // ----- Engine ----- // 
-    public int maxTorque = 450;           // [Nm]
-    public int maxPower = 340;            // [HP]
+    public int maxTorque = 450;
+    public int maxPower = 340;
 
-    public int maxTorqueRpm = 3500;       // [rpm]
-    public int maxPowerRpm = 6500;        // [rpm]
+    public int maxTorqueRpm = 3500;
+    public int maxPowerRpm = 6500;
 
-    public float engineRPM = 1000;          // [rpm]
-    public float engineTorque = 306;      // [rpm]
+    public float engineRPM = 1000;
+    public float engineTorque = 306;
 
     // ----- Vehicle ----- //
-    public float transmissionRPM = 0;       // [rpm]
+    public float transmissionRPM = 0;
     public float maximumInnerSteerAngle = 34f;
     public float maximumOuterSteerAngle = 30f;
     public float handbrakeTorque = 50000f;
@@ -56,6 +56,7 @@ public class EngineModel : MonoBehaviour
     public GameObject centerofMass;
     public List<StandardWheel> wheels;
     private float throttleInput;
+    private float coastDownCoefficient = 0.5f; // <---- Engine brake coefficient
 
     // Motor torque vs Speed
     public AnimationCurve motorCurve = new AnimationCurve();
@@ -89,7 +90,7 @@ public class EngineModel : MonoBehaviour
 
     //TerrainTracker
     public TerrainTracker terrainTracker;
-    private VehicleStats vehicleStats;
+    public VehicleStats vehicleStats;
 
     // Initialize
     public void Awake()
@@ -234,7 +235,7 @@ public class EngineModel : MonoBehaviour
         // Input to colliders
         float steerAngleInner = steer * maximumInnerSteerAngle;
         float steerAngleOuter = steer * maximumOuterSteerAngle;
-        float sransmissionTorque = TransmissionTorque() / (float)numberofDrivingWheels;
+        float transmissionTorque = TransmissionTorque() / (float)numberofDrivingWheels;
 
         for (int i = 0; i < numberofWheels; i++)
         {
@@ -275,7 +276,7 @@ public class EngineModel : MonoBehaviour
 
             if (wheels[i].drive)           // Apply torque
             {
-                wheels[i].collider.motorTorque = sransmissionTorque * throttle;
+                wheels[i].collider.motorTorque = transmissionTorque * throttle;
             }
 
             if (wheels[i].handBrake)       // Apply handbrake
@@ -293,7 +294,7 @@ public class EngineModel : MonoBehaviour
 
             if (footbrake == 0 && throttle == 0 && handbrake == 0)     // Motor braking
             {
-                wheels[i].collider.brakeTorque = sransmissionTorque * 0.5f;
+                wheels[i].collider.brakeTorque = transmissionTorque * coastDownCoefficient;
             }
         }
 
