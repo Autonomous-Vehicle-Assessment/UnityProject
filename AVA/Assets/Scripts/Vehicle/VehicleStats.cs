@@ -18,6 +18,8 @@ public class VehicleStats : MonoBehaviour
     private LineRenderer[] lineRenderers;
     private List<Vector3[]> points;
 
+    [Header("Data Logging")]
+    public bool active;
     private DataLogging dataLogger;
 
     // UI Elements
@@ -60,8 +62,8 @@ public class VehicleStats : MonoBehaviour
             gearField.text = string.Format("{0}{1}", engine.currentGear + 1, GenericFunctions.ToOrdinal(engine.currentGear + 1));
         }
 
+        if (active) dataLogger.UpdateLog();
 
-        // dataLogger.UpdateLog();
 
         UpdateLineRenderer();
     }
