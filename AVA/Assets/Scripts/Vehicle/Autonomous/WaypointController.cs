@@ -84,7 +84,7 @@ public class WaypointController : MonoBehaviour
     public float routeAngles = 50;
     public float objectDistance = 5f;
     public LayerMask avoidanceMask;
-    private static Vector3 boxDimensionsHalfs = new Vector3(2f, 1.2f, 2.6f);
+    private static Vector3 boxDimensionsHalfs = new Vector3(2f, 1.2f, 2.6f); // To do: change boxcast to having less length!
     private static Vector3 boxDimensions = boxDimensionsHalfs * 2;
 
 
