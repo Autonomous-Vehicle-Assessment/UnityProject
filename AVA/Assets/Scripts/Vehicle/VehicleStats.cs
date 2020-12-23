@@ -86,7 +86,7 @@ public class VehicleStats : MonoBehaviour
                 lineRenderers[i] = lineRenderer.AddComponent<LineRenderer>();
                 lineRenderers[i].material = new Material(Shader.Find("Sprites/Default"));
                 lineRenderers[i].material.color = ColorArray[i];
-                lineRenderers[i].widthMultiplier = 0.02f;
+                lineRenderers[i].widthMultiplier = .1f;//0.02f;
                 lineRenderers[i].positionCount = (int)(renderTime / Time.fixedDeltaTime);
 
                 points.Add(new Vector3[(int)(renderTime / Time.fixedDeltaTime)]);

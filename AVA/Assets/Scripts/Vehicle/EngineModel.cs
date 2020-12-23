@@ -47,7 +47,7 @@ public class EngineModel : MonoBehaviour
     public float maximumInnerSteerAngle = 34f;
     public float maximumOuterSteerAngle = 30f;
     public float handbrakeTorque = 50000f;
-    public float brakeTorque = 3000f;
+    private float brakeTorque = 3300f;
     public TransferCase transferCase;
     public Rigidbody rb;
     public int numberofWheels = 4;
@@ -56,7 +56,8 @@ public class EngineModel : MonoBehaviour
     public GameObject centerofMass;
     public List<StandardWheel> wheels;
     private float throttleInput;
-    private float coastDownCoefficient = 0.5f; // <---- Engine brake coefficient
+    private float coastDownCoefficient = -0.01f; // <---- Engine brake coefficient
+    private float steerSpeed = 3f;
 
     // Motor torque vs Speed
     public AnimationCurve motorCurve = new AnimationCurve();
@@ -243,8 +244,8 @@ public class EngineModel : MonoBehaviour
             {
                 float currentAngle = wheels[i].collider.steerAngle;
 
-                float appliedAngleOuter = Mathf.Lerp(currentAngle, steerAngleOuter, 3 * Time.deltaTime);
-                float appliedAngleInner = Mathf.Lerp(currentAngle, steerAngleInner, 3 * Time.deltaTime);
+                float appliedAngleOuter = Mathf.Lerp(currentAngle, steerAngleOuter, steerSpeed * Time.deltaTime);
+                float appliedAngleInner = Mathf.Lerp(currentAngle, steerAngleInner, steerSpeed * Time.deltaTime);
 
 
                 if (steer > 0) // Turning right, apply outer and inner steering angle
@@ -313,11 +314,11 @@ public class EngineModel : MonoBehaviour
         if (throttleInput >= 0)
         {
             if (currentGear < 0) currentGear = 1;
-            gearing = 1.7f * gearRatio[currentGear] * gearEff[currentGear] * transferCaseRatio[(int)currentTransferCase] * transferCaseEff[(int)currentTransferCase] * finalDriveRatio * finalDriveEff;
+            gearing = 1f * gearRatio[currentGear] * gearEff[currentGear] * transferCaseRatio[(int)currentTransferCase] * transferCaseEff[(int)currentTransferCase] * finalDriveRatio * finalDriveEff;
         }
         else
         {
-            gearing = -1.7f * reverseGearRatio * reverseGearEff * transferCaseRatio[(int)currentTransferCase] * transferCaseEff[(int)currentTransferCase] * finalDriveRatio * finalDriveEff;
+            gearing = -1f * reverseGearRatio * reverseGearEff * transferCaseRatio[(int)currentTransferCase] * transferCaseEff[(int)currentTransferCase] * finalDriveRatio * finalDriveEff;
         }
         
         return gearing;
