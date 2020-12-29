@@ -198,7 +198,7 @@ public class PathNode : MonoBehaviour
             if (returnPath)
             {
                 driver[0].currentPath--;
-                driver[0].currentNode = driver[0].storedNode;
+                driver[0].currentNode = driver[0].storedNode + 1;
             }
         }
 
