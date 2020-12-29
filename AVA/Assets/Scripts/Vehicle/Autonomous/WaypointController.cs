@@ -92,6 +92,7 @@ public class WaypointController : MonoBehaviour
     private List<WaypointPath> paths;
     private List<PathNode> pathNodes;
     private Vector3 wayPointPathLong;
+    [HideInInspector] public int storedNode;
 
 
     // Start is called before the first frame update

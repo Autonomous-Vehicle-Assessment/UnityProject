@@ -41,7 +41,7 @@ public class DataLogging : MonoBehaviour
     private void InitializeLogFile()
     {
         string LogTime = DateTime.UtcNow.ToLocalTime().ToString("dd_MM_HH_mm_ss");
-        filePath = (Application.dataPath).Replace("/Assets", "/Logs/DataLogging/" + LogTime + ".csv");
+        filePath = (Application.dataPath).Replace("/Assets", "/Logs/DataLogging/" + transform.name + "_" + LogTime + ".csv");
 
         if (File.Exists(filePath))
         {
