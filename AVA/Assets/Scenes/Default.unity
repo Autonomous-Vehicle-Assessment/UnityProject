@@ -177,8 +177,8 @@ MonoBehaviour:
   movePosition: {x: 0, y: 0, z: 0}
   moveOrientation: {x: 0, y: 0, z: 0}
   followers: []
+  followerState: 0
   leaders: []
-  leaderState: 0
   leaderFollowerMode: 0
   driver:
   - {fileID: 0}
@@ -186,6 +186,8 @@ MonoBehaviour:
   driverRange: 0
   driverActive: 0
   park: 0
+  returnPath: 0
+  surveyPath: 0
   skipPath: 0
   uAVThreat: 0
 --- !u!1 &88634515
@@ -352,8 +354,8 @@ MonoBehaviour:
   movePosition: {x: 0, y: 0, z: 0}
   moveOrientation: {x: 0, y: 0, z: 0}
   followers: []
+  followerState: 0
   leaders: []
-  leaderState: 0
   leaderFollowerMode: 0
   driver:
   - {fileID: 0}
@@ -361,6 +363,8 @@ MonoBehaviour:
   driverRange: 0
   driverActive: 0
   park: 0
+  returnPath: 0
+  surveyPath: 0
   skipPath: 0
   uAVThreat: 0
 --- !u!1 &138050165
@@ -581,8 +585,8 @@ MonoBehaviour:
   movePosition: {x: 0, y: 0, z: 0}
   moveOrientation: {x: 0, y: 0, z: 0}
   followers: []
+  followerState: 0
   leaders: []
-  leaderState: 0
   leaderFollowerMode: 0
   driver:
   - {fileID: 0}
@@ -590,6 +594,8 @@ MonoBehaviour:
   driverRange: 0
   driverActive: 0
   park: 0
+  returnPath: 0
+  surveyPath: 0
   skipPath: 0
   uAVThreat: 0
 --- !u!1001 &258551331
@@ -1085,8 +1091,8 @@ MonoBehaviour:
   movePosition: {x: 0, y: 0, z: 0}
   moveOrientation: {x: 0, y: 0, z: 0}
   followers: []
+  followerState: 0
   leaders: []
-  leaderState: 0
   leaderFollowerMode: 0
   driver:
   - {fileID: 0}
@@ -1094,6 +1100,8 @@ MonoBehaviour:
   driverRange: 0
   driverActive: 0
   park: 0
+  returnPath: 0
+  surveyPath: 0
   skipPath: 0
   uAVThreat: 0
 --- !u!1 &439534233
@@ -1494,8 +1502,8 @@ MonoBehaviour:
   movePosition: {x: 0, y: 0, z: 0}
   moveOrientation: {x: 0, y: 0, z: 0}
   followers: []
+  followerState: 0
   leaders: []
-  leaderState: 0
   leaderFollowerMode: 0
   driver:
   - {fileID: 0}
@@ -1503,6 +1511,8 @@ MonoBehaviour:
   driverRange: 0
   driverActive: 0
   park: 0
+  returnPath: 0
+  surveyPath: 0
   skipPath: 0
   uAVThreat: 0
 --- !u!1 &755664151
@@ -1702,8 +1712,8 @@ MonoBehaviour:
   movePosition: {x: 0, y: 0, z: 0}
   moveOrientation: {x: 0, y: 0, z: 0}
   followers: []
+  followerState: 0
   leaders: []
-  leaderState: 0
   leaderFollowerMode: 0
   driver:
   - {fileID: 0}
@@ -1711,6 +1721,8 @@ MonoBehaviour:
   driverRange: 0
   driverActive: 0
   park: 0
+  returnPath: 0
+  surveyPath: 0
   skipPath: 0
   uAVThreat: 0
 --- !u!1 &858933224
@@ -1873,7 +1885,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &945391447
 Transform:
   m_ObjectHideFlags: 0
@@ -2133,8 +2145,8 @@ MonoBehaviour:
   movePosition: {x: 0, y: 0, z: 0}
   moveOrientation: {x: 0, y: 0, z: 0}
   followers: []
+  followerState: 0
   leaders: []
-  leaderState: 0
   leaderFollowerMode: 0
   driver:
   - {fileID: 0}
@@ -2142,6 +2154,8 @@ MonoBehaviour:
   driverRange: 0
   driverActive: 0
   park: 0
+  returnPath: 0
+  surveyPath: 0
   skipPath: 0
   uAVThreat: 0
 --- !u!1 &1098003829
@@ -2762,8 +2776,8 @@ MonoBehaviour:
   movePosition: {x: 0, y: 0, z: 0}
   moveOrientation: {x: 0, y: 0, z: 0}
   followers: []
+  followerState: 0
   leaders: []
-  leaderState: 0
   leaderFollowerMode: 0
   driver:
   - {fileID: 0}
@@ -2771,6 +2785,8 @@ MonoBehaviour:
   driverRange: 0
   driverActive: 0
   park: 0
+  returnPath: 0
+  surveyPath: 0
   skipPath: 0
   uAVThreat: 0
 --- !u!1 &1251402305
@@ -2947,8 +2963,8 @@ MonoBehaviour:
   movePosition: {x: 0, y: 0, z: 0}
   moveOrientation: {x: 0, y: 0, z: 0}
   followers: []
+  followerState: 0
   leaders: []
-  leaderState: 0
   leaderFollowerMode: 0
   driver:
   - {fileID: 0}
@@ -2956,6 +2972,8 @@ MonoBehaviour:
   driverRange: 0
   driverActive: 0
   park: 0
+  returnPath: 0
+  surveyPath: 0
   skipPath: 0
   uAVThreat: 0
 --- !u!1 &1356476203
@@ -3463,8 +3481,8 @@ MonoBehaviour:
   movePosition: {x: 0, y: 0, z: 0}
   moveOrientation: {x: 0, y: 0, z: 0}
   followers: []
+  followerState: 0
   leaders: []
-  leaderState: 0
   leaderFollowerMode: 0
   driver:
   - {fileID: 0}
@@ -3472,6 +3490,8 @@ MonoBehaviour:
   driverRange: 0
   driverActive: 0
   park: 0
+  returnPath: 0
+  surveyPath: 0
   skipPath: 0
   uAVThreat: 0
 --- !u!1 &1511268078
@@ -3711,8 +3731,8 @@ MonoBehaviour:
   movePosition: {x: 0, y: 0, z: 0}
   moveOrientation: {x: 0, y: 0, z: 0}
   followers: []
+  followerState: 0
   leaders: []
-  leaderState: 0
   leaderFollowerMode: 0
   driver:
   - {fileID: 0}
@@ -3720,6 +3740,8 @@ MonoBehaviour:
   driverRange: 0
   driverActive: 0
   park: 0
+  returnPath: 0
+  surveyPath: 0
   skipPath: 0
   uAVThreat: 0
 --- !u!4 &1634197919
@@ -3788,8 +3810,8 @@ MonoBehaviour:
   movePosition: {x: 0, y: 0, z: 0}
   moveOrientation: {x: 0, y: 0, z: 0}
   followers: []
+  followerState: 0
   leaders: []
-  leaderState: 0
   leaderFollowerMode: 0
   driver:
   - {fileID: 0}
@@ -3797,6 +3819,8 @@ MonoBehaviour:
   driverRange: 0
   driverActive: 0
   park: 0
+  returnPath: 0
+  surveyPath: 0
   skipPath: 0
   uAVThreat: 0
 --- !u!1 &1651050681
@@ -4043,8 +4067,8 @@ MonoBehaviour:
   movePosition: {x: 0, y: 0, z: 0}
   moveOrientation: {x: 0, y: 0, z: 0}
   followers: []
+  followerState: 0
   leaders: []
-  leaderState: 0
   leaderFollowerMode: 0
   driver:
   - {fileID: 0}
@@ -4052,6 +4076,8 @@ MonoBehaviour:
   driverRange: 0
   driverActive: 0
   park: 0
+  returnPath: 0
+  surveyPath: 0
   skipPath: 0
   uAVThreat: 0
 --- !u!1 &1716421508
@@ -4106,8 +4132,8 @@ MonoBehaviour:
   movePosition: {x: 0, y: 0, z: 0}
   moveOrientation: {x: 0, y: 0, z: 0}
   followers: []
+  followerState: 0
   leaders: []
-  leaderState: 0
   leaderFollowerMode: 0
   driver:
   - {fileID: 0}
@@ -4115,6 +4141,8 @@ MonoBehaviour:
   driverRange: 0
   driverActive: 0
   park: 0
+  returnPath: 0
+  surveyPath: 0
   skipPath: 0
   uAVThreat: 0
 --- !u!1 &1750818499
@@ -4169,8 +4197,8 @@ MonoBehaviour:
   movePosition: {x: 0, y: 0, z: 0}
   moveOrientation: {x: 0, y: 0, z: 0}
   followers: []
+  followerState: 0
   leaders: []
-  leaderState: 0
   leaderFollowerMode: 0
   driver:
   - {fileID: 0}
@@ -4178,6 +4206,8 @@ MonoBehaviour:
   driverRange: 0
   driverActive: 0
   park: 0
+  returnPath: 0
+  surveyPath: 0
   skipPath: 0
   uAVThreat: 0
 --- !u!1 &1793959144
@@ -4278,8 +4308,8 @@ MonoBehaviour:
   movePosition: {x: 0, y: 0, z: 0}
   moveOrientation: {x: 0, y: 0, z: 0}
   followers: []
+  followerState: 0
   leaders: []
-  leaderState: 0
   leaderFollowerMode: 0
   driver:
   - {fileID: 0}
@@ -4287,6 +4317,8 @@ MonoBehaviour:
   driverRange: 0
   driverActive: 0
   park: 0
+  returnPath: 0
+  surveyPath: 0
   skipPath: 0
   uAVThreat: 0
 --- !u!1 &1804963366
@@ -4580,7 +4612,7 @@ PrefabInstance:
     - target: {fileID: 900966193508289108, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.47
+      value: -11.25
       objectReference: {fileID: 0}
     - target: {fileID: 900966193508289108, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
@@ -4660,6 +4692,11 @@ PrefabInstance:
     - target: {fileID: 1374262593387074049, guid: e741e23d882cb8a4488ef50ec8c7bf18,
         type: 3}
       propertyPath: useWheelAntiStuck
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567546975831580409, guid: e741e23d882cb8a4488ef50ec8c7bf18,
+        type: 3}
+      propertyPath: drawGizmo
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1567546975831580409, guid: e741e23d882cb8a4488ef50ec8c7bf18,
@@ -4914,8 +4951,8 @@ MonoBehaviour:
   movePosition: {x: 0, y: 0, z: 0}
   moveOrientation: {x: 0, y: 0, z: 0}
   followers: []
+  followerState: 0
   leaders: []
-  leaderState: 0
   leaderFollowerMode: 0
   driver:
   - {fileID: 0}
@@ -4923,6 +4960,8 @@ MonoBehaviour:
   driverRange: 0
   driverActive: 0
   park: 0
+  returnPath: 0
+  surveyPath: 0
   skipPath: 0
   uAVThreat: 0
 --- !u!1 &2002059767
@@ -4977,8 +5016,8 @@ MonoBehaviour:
   movePosition: {x: 0, y: 0, z: 0}
   moveOrientation: {x: 0, y: 0, z: 0}
   followers: []
+  followerState: 0
   leaders: []
-  leaderState: 0
   leaderFollowerMode: 0
   driver:
   - {fileID: 0}
@@ -4986,6 +5025,8 @@ MonoBehaviour:
   driverRange: 0
   driverActive: 0
   park: 0
+  returnPath: 0
+  surveyPath: 0
   skipPath: 0
   uAVThreat: 0
 --- !u!1 &2077158832

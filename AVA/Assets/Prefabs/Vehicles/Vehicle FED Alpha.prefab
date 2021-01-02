@@ -322,6 +322,7 @@ MonoBehaviour:
   raysMaxAngle: 180
   wheelWidth: 0.25
   wheelModel: {fileID: 3983875555201241841}
+  drawGizmo: 0
 --- !u!1 &900966193465278887
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,6 +402,7 @@ MonoBehaviour:
   raysMaxAngle: 180
   wheelWidth: 0.25
   wheelModel: {fileID: 1668473531522634381}
+  drawGizmo: 0
 --- !u!1 &900966193508289119
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,6 +420,7 @@ GameObject:
   - component: {fileID: 7513124977409783803}
   - component: {fileID: 2211430127117835933}
   - component: {fileID: 454163007198815611}
+  - component: {fileID: 3056037288471063515}
   m_Layer: 11
   m_Name: Vehicle FED Alpha
   m_TagString: Untagged
@@ -517,7 +520,6 @@ MonoBehaviour:
   maximumInnerSteerAngle: 34
   maximumOuterSteerAngle: 30
   handbrakeTorque: 50000
-  brakeTorque: 3000
   transferCase: 0
   rb: {fileID: 0}
   numberofWheels: 4
@@ -846,6 +848,7 @@ MonoBehaviour:
   avoidanceMask:
     serializedVersion: 2
     m_Bits: 16896
+  storedNode: 0
 --- !u!114 &2211430127117835933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -900,6 +903,33 @@ MonoBehaviour:
   maxRolloffDistance: 500
   dopplerLevel: 1
   useDoppler: 0
+--- !u!114 &3056037288471063515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900966193508289119}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00cf911ea1abb6a4ca5909877ff6b5d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensorLength: 2
+  frontSensorPosition: {x: 0, y: 1.755, z: 0.095}
+  sensorAngle: 20
+  angleChange: 1
+  sensorYaw: 360
+  numberOfRays: 24
+  showLidarCollision: 0
+  showLidarRays: 0
+  colorRays: 0
+  active: 0
+  frequency: 0
+  minDistance: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &900966194502703902
 GameObject:
   m_ObjectHideFlags: 0
@@ -979,6 +1009,7 @@ MonoBehaviour:
   raysMaxAngle: 180
   wheelWidth: 0.25
   wheelModel: {fileID: 6415878330690703331}
+  drawGizmo: 0
 --- !u!1 &1044539223762444939
 GameObject:
   m_ObjectHideFlags: 0
@@ -1267,7 +1298,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 0.8392157, a: 1}
-  m_Intensity: 0.2
+  m_Intensity: 1
   m_Range: 50
   m_SpotAngle: 40
   m_InnerSpotAngle: 21.80208
@@ -2157,6 +2188,7 @@ MonoBehaviour:
   raysMaxAngle: 180
   wheelWidth: 0.25
   wheelModel: {fileID: 108467468461279550}
+  drawGizmo: 0
 --- !u!1 &3642062902440318843
 GameObject:
   m_ObjectHideFlags: 0
@@ -3753,7 +3785,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 0.8392157, a: 1}
-  m_Intensity: 0.2
+  m_Intensity: 1
   m_Range: 50
   m_SpotAngle: 40
   m_InnerSpotAngle: 21.80208

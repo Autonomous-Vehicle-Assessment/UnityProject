@@ -188,7 +188,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bfa4d5e0e1b7c24d9f0530121bd93ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SpeedType: 0
+  speedType: 0
+  speed: 0
+  gear: 0
+  trackPoints: 0
+  renderTime: 3
+  active: 0
 --- !u!114 &900966193508289104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,9 +206,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da82fe0b55b2dee479a157abb8baf781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CurrentTransfercase: 1
-  TrackPoints: 0
-  RenderTime: 5
+  active: 0
+  speed: 0
+  currentTransfercase: 0
+  throttle: 0
+  brake: 0
+  handbrake: 0
+  steer: 0
 --- !u!114 &2315250435903404941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,9 +235,8 @@ MonoBehaviour:
   maximumInnerSteerAngle: 34
   maximumOuterSteerAngle: 30
   handbrakeTorque: 50000
-  brakeTorque: 3000
   transferCase: 0
-  rigidbody: {fileID: 0}
+  rb: {fileID: 0}
   numberofWheels: 4
   numberofDrivingWheels: 0
   speed: 0
@@ -286,6 +294,7 @@ MonoBehaviour:
   swayBarActive: 0
   antiRoll: 5000
   terrainTracker: {fileID: 0}
+  vehicleStats: {fileID: 0}
 --- !u!1 &900966194502703902
 GameObject:
   m_ObjectHideFlags: 0
@@ -1119,6 +1128,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8629081368222803419, guid: 3b3a434bedf6fb94a93821385fd4caad,
         type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8629081368222803419, guid: 3b3a434bedf6fb94a93821385fd4caad,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.00038226577
       objectReference: {fileID: 0}
@@ -1134,6 +1148,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8629081368222803419, guid: 3b3a434bedf6fb94a93821385fd4caad,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8629081368222803419, guid: 3b3a434bedf6fb94a93821385fd4caad,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0.0000000033196574
       objectReference: {fileID: 0}
@@ -1146,16 +1165,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.0000000054513016
-      objectReference: {fileID: 0}
-    - target: {fileID: 8629081368222803419, guid: 3b3a434bedf6fb94a93821385fd4caad,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8629081368222803419, guid: 3b3a434bedf6fb94a93821385fd4caad,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8629081368222803419, guid: 3b3a434bedf6fb94a93821385fd4caad,
         type: 3}

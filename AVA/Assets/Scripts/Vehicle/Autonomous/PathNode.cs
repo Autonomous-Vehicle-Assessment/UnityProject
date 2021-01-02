@@ -93,7 +93,7 @@ public class PathNode : MonoBehaviour
                         }
                         break;
                     case LeaderFollowerMode.Diamond:
-                        Vector3[] diamondFormation = { new Vector3(-10, 0, -3), new Vector3(10, 0, -3), new Vector3(0, 0, -15) };
+                        Vector3[] diamondFormation = { new Vector3(-10, 0, -3), new Vector3(10, 0, -3), new Vector3(0, 0, -20) };
                         foreach (WaypointGenerator waypointGenerator in followers)
                         {
                             waypointGenerator.leader = leaders[index];

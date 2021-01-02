@@ -80,19 +80,23 @@ public class DataLogging : MonoBehaviour
 
 
         string s_PositionZ = "0";
-        if (driver.brake == 1)
+
+        string s_Brake = "0";
+        if (driver != null)
         {
-            if (!brakeActive)
+            if (driver.brake == 1)
             {
-                brakeActive = true;
-                initPositionZ = transform.position.z;
+                if (!brakeActive)
+                {
+                    brakeActive = true;
+                    initPositionZ = transform.position.z;
+                }
+                s_PositionZ = (transform.position.z - initPositionZ).ToString();
             }
-            s_PositionZ = (transform.position.z - initPositionZ).ToString();
+
+            s_Brake = driver.brake.ToString();
         }
-
-      
-
-        string s_Brake = driver.brake.ToString();
+        
 
         float m_TransmissionTorque = 0;
         float m_WheelForce = 0;

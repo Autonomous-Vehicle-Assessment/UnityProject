@@ -19,6 +19,7 @@ public class WheelCollider_Fix : MonoBehaviour
     private WheelCollider _wheelCollider;
     private EngineModel carController;
     private float orgRadius;
+    public bool drawGizmo;
 
     void Awake()
     {
@@ -44,37 +45,37 @@ public class WheelCollider_Fix : MonoBehaviour
                 {
                     if (!hit.transform.IsChildOf(carController.transform) && !hit.collider.isTrigger)
                     {
-                        Debug.DrawLine(wheelModel.position, hit.point, Color.red);
+                        if(drawGizmo) Debug.DrawLine(wheelModel.position, hit.point, Color.red);
 
                         radiusOffset = Mathf.Max(radiusOffset, _wheelCollider.radius - hit.distance);
                     }
                 }
 
-                Debug.DrawRay(wheelModel.position, rayDirection * orgRadius, Color.green);
+                if (drawGizmo) Debug.DrawRay(wheelModel.position, rayDirection * orgRadius, Color.green);
 
                 if (Physics.Raycast(wheelModel.position + wheelModel.right * wheelWidth * .5f, rayDirection, out RaycastHit rightHit, _wheelCollider.radius))
                 {
                     if (!rightHit.transform.IsChildOf(carController.transform) && !rightHit.collider.isTrigger)
                     {
-                        Debug.DrawLine(wheelModel.position + wheelModel.right * wheelWidth * .5f, rightHit.point, Color.red);
+                        if (drawGizmo) Debug.DrawLine(wheelModel.position + wheelModel.right * wheelWidth * .5f, rightHit.point, Color.red);
 
                         radiusOffset = Mathf.Max(radiusOffset, _wheelCollider.radius - rightHit.distance);
                     }
                 }
 
-                Debug.DrawRay(wheelModel.position + wheelModel.right * wheelWidth * .5f, rayDirection * orgRadius, Color.green);
+                if (drawGizmo) Debug.DrawRay(wheelModel.position + wheelModel.right * wheelWidth * .5f, rayDirection * orgRadius, Color.green);
 
                 if (Physics.Raycast(wheelModel.position - wheelModel.right * wheelWidth * .5f, rayDirection, out RaycastHit leftHit, _wheelCollider.radius))
                 {
                     if (!leftHit.transform.IsChildOf(carController.transform) && !leftHit.collider.isTrigger)
                     {
-                        Debug.DrawLine(wheelModel.position - wheelModel.right * wheelWidth * .5f, leftHit.point, Color.red);
+                        if (drawGizmo) Debug.DrawLine(wheelModel.position - wheelModel.right * wheelWidth * .5f, leftHit.point, Color.red);
 
                         radiusOffset = Mathf.Max(radiusOffset, _wheelCollider.radius - leftHit.distance);
                     }
                 }
 
-                Debug.DrawRay(wheelModel.position - wheelModel.right * wheelWidth * .5f, rayDirection * orgRadius, Color.green);
+                if (drawGizmo) Debug.DrawRay(wheelModel.position - wheelModel.right * wheelWidth * .5f, rayDirection * orgRadius, Color.green);
             }
 
             _wheelCollider.radius = Mathf.LerpUnclamped(_wheelCollider.radius, orgRadius + radiusOffset, Time.deltaTime * 10f);
