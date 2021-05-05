@@ -3996,6 +3996,7 @@ GameObject:
   - component: {fileID: 3094354100495707705}
   - component: {fileID: 4104754444302098640}
   - component: {fileID: 1231699794670683149}
+  - component: {fileID: 1730591136856978400}
   m_Layer: 9
   m_Name: Cabine_Out
   m_TagString: Untagged
@@ -4066,6 +4067,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1730591136856978400
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8736143690907735387}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 82.7898, y: 120.23079, z: 139.7751}
+  m_Center: {x: 0, y: 116.8088, z: 47.50135}
 --- !u!1 &8750400334268629588
 GameObject:
   m_ObjectHideFlags: 0

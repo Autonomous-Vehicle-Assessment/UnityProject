@@ -56,7 +56,8 @@ public class VehicleStats : MonoBehaviour
 
         if (interfaceObject != null)
         {
-            graph.UpdateGraph(engine.speed, engine.engineRPM, engine.currentGear + 1);
+            float vVel = transform.InverseTransformVector(engine.rb.velocity).y;
+            graph.UpdateGraph(engine.speed, engine.engineRPM, engine.currentGear + 1, vVel);
             speedometer.UpdateDisplay(engine.speed, engine.engineRPM, GenericFunctions.SpeedTypeConverter(speedType).Item1);
 
             gearField.text = string.Format("{0}{1}", engine.currentGear + 1, GenericFunctions.ToOrdinal(engine.currentGear + 1));

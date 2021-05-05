@@ -25,6 +25,9 @@ public static class GenericFunctions
             // Check the last digit.
             switch (last_digits % 10)
             {
+                case -1:
+                    extension = "st";
+                    break;
                 case 1:
                     extension = "st";
                     break;
